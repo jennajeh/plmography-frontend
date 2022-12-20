@@ -5,5 +5,5 @@ Scenario('Visit the home page', ({ I }) => {
   I.amOnPage('/');
 
   // then
-  I.see('Hello, world!');
+  I.see('탐색');
 });
