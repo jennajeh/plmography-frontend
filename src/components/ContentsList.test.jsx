@@ -1,23 +1,23 @@
 import { render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import ExplorePage from './ExplorePage';
 import defaultTheme from '../styles/defaultTheme';
+import ContentsList from './ContentsList';
 
 const context = describe;
 
-describe('ExplorePage', () => {
-  function renderExplorePage() {
+describe('ContentsList', () => {
+  function renderContentsList() {
     render((
       <ThemeProvider theme={defaultTheme}>
         <MemoryRouter>
-          <ExplorePage />
+          <ContentsList />
         </MemoryRouter>
       </ThemeProvider>
     ));
   }
 
-  it('ExplorePage', () => {
-    renderExplorePage();
+  it('ContentsList', () => {
+    renderContentsList();
   });
 });
