@@ -1,6 +1,8 @@
 Feature('이벤트 - 고객은 진행중인 현재 진행되고 있거나 종료된 이벤트의 정보를 확인하기 위해 이벤트 메뉴를 클릭할 수 있다.');
 
 Before(({ I }) => {
+  I.setupDatabase();
+
   I.setupEvents();
 });
 
