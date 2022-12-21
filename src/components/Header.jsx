@@ -1,53 +1,53 @@
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-export default function Header() {
-  const Container = styled.header`
-    border-bottom: 1px solid #D9D9D9;
-    height: 4em;
-  `;
-
-  const Wrapper = styled.div`
-    display: flex;
-    justify-content: space-between;
-    padding-inline: calc((100% - 900px) / 2);
-    height: 100%;
-  `;
-
-  const MainMenu = styled.nav`
-    display: flex;
-    height: 100%;
+const Container = styled.header`
+border-bottom: 1px solid #D9D9D9;
+height: 4em;
 `;
 
-  const List = styled.ul`
-    display: flex;
-    align-items: center;
-    li {
-      font-weight: bold;
-      padding-right: 2.5em;
-    }
-  `;
+const Wrapper = styled.div`
+display: flex;
+justify-content: space-between;
+padding-inline: calc((100% - 900px) / 2);
+height: 100%;
+`;
 
-  const StyledLink = styled(Link)`
-    :hover {
-      text-decoration: underline solid #22daab .2em;
-      text-underline-position: under;
-    }
-  `;
+const MainMenu = styled.nav`
+display: flex;
+height: 100%;
+`;
 
-  const SideMenu = styled.nav`
-    display: flex;
-    align-items: center;
-  `;
+const List = styled.ul`
+display: flex;
+align-items: center;
+li {
+  font-weight: bold;
+  padding-right: 2.5em;
+}
+`;
 
-  const LogoutButton = styled.button`
-    font-size: 1em;
-    font-weight: bold;
-    background: none;
-    border: none;
-    cursor: pointer;
-  `;
+const StyledLink = styled(Link)`
+:hover {
+  text-decoration: underline solid #22daab .2em;
+  text-underline-position: under;
+}
+`;
 
+const SideMenu = styled.nav`
+display: flex;
+align-items: center;
+`;
+
+const LogoutButton = styled.button`
+font-size: 1em;
+font-weight: bold;
+background: none;
+border: none;
+cursor: pointer;
+`;
+
+export default function Header() {
   const navigate = useNavigate();
 
   const accessToken = '';
