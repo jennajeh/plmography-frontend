@@ -1,7 +1,9 @@
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import logo from '../assets/Plmography-logo.jpeg';
 
 const Container = styled.header`
+background-color: black;
 border-bottom: 1px solid #D9D9D9;
 height: 4em;
 `;
@@ -21,17 +23,33 @@ height: 100%;
 const List = styled.ul`
 display: flex;
 align-items: center;
+
 li {
   font-weight: bold;
   padding-right: 2.5em;
+
+  :hover {
+    margin-bottom: 10px;
+  }
 }
 `;
 
 const StyledLink = styled(Link)`
+  color: white;
+
 :hover {
-  text-decoration: underline solid #22daab .2em;
-  text-underline-position: under;
+  color: #ff006a;
+  /* text-decoration: underline solid .2em; */
+  /* text-underline-position: under; */
 }
+`;
+
+const LogoBox = styled.div`
+  width: 10em;
+
+  img {
+    width: 100%;
+  }
 `;
 
 const SideMenu = styled.nav`
@@ -62,7 +80,11 @@ export default function Header() {
         <MainMenu>
           <List>
             <li>
-              <StyledLink to="/">홈</StyledLink>
+              <StyledLink to="/">
+                <LogoBox>
+                  <img src={logo} alt="logo" />
+                </LogoBox>
+              </StyledLink>
             </li>
             <li>
               <StyledLink to="/recommendations">테마 추천</StyledLink>
