@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import config from '../../config';
+import apiConfig from '../../apiConfig';
 
 const List = styled.ul`
   display: grid;
@@ -44,7 +45,7 @@ export default function ContentsList() {
   const [movies, setMovies] = useState([]);
   const imageUrl = config.tmdbImageUrl;
   const apiUrl = config.tmdbApiUrl;
-  const apiKey = config.tmdbApiKey;
+  const apiKey = apiConfig.key;
 
   // const [mainMovieImage, setMainMovieImage] = useState(null);
 
