@@ -28,7 +28,6 @@ describe('Header', () => {
   it('헤더 메뉴 렌더링', () => {
     renderHeader();
 
-    screen.getByText('홈');
     screen.getByText('테마 추천');
     screen.getByText('커뮤니티');
     screen.getByText('탐색');

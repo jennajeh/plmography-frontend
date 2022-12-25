@@ -15,6 +15,7 @@ import GlobalStyle from './styles/GlobalStyle';
 
 const Main = styled.main`
   height: calc(100vh - 64px);
+  padding-inline: 2em;
 `;
 
 export default function App() {

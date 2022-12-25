@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Menu = styled.h1`
-  margin-top: 1em;
+  padding-block: 1em;
   font-weight: 700;
   font-size: 1.5em;
   text-align: center;

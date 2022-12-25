@@ -1,6 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import logo from '../assets/Plmography-logo.jpeg';
 
 const Container = styled.header`
 background-color: black;
@@ -39,8 +38,6 @@ const StyledLink = styled(Link)`
 
 :hover {
   color: #ff006a;
-  /* text-decoration: underline solid .2em; */
-  /* text-underline-position: under; */
 }
 `;
 
@@ -81,8 +78,9 @@ export default function Header() {
           <List>
             <li>
               <StyledLink to="/">
+                홈
                 <LogoBox>
-                  <img src={logo} alt="logo" />
+                  <img src="../assets/Plmography-logo.jpeg" alt="logo" />
                 </LogoBox>
               </StyledLink>
             </li>
