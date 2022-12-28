@@ -78,9 +78,8 @@ export default function Header() {
           <List>
             <li>
               <StyledLink to="/">
-                홈
                 <LogoBox>
-                  <img src="../assets/Plmography-logo.jpeg" alt="logo" />
+                  <img src="https://plmographybucket.s3.ap-northeast-2.amazonaws.com/%E1%84%8B%E1%85%A1%E1%86%AB%E1%84%82%E1%85%A7%E1%86%BC.png" alt="logo" />
                 </LogoBox>
               </StyledLink>
             </li>
