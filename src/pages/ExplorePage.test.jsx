@@ -1,23 +1,21 @@
-import { render } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import ExplorePage from './ExplorePage';
 import defaultTheme from '../styles/defaultTheme';
 
-const context = describe;
+test('ExplorePage', async () => {
+  render((
+    <ThemeProvider theme={defaultTheme}>
+      <MemoryRouter>
+        <ExplorePage />
+      </MemoryRouter>
+    </ThemeProvider>
+  ));
 
-describe('ExplorePage', () => {
-  function renderExplorePage() {
-    render((
-      <ThemeProvider theme={defaultTheme}>
-        <MemoryRouter>
-          <ExplorePage />
-        </MemoryRouter>
-      </ThemeProvider>
-    ));
-  }
+  screen.getByText(/작품이 존재하지 않습니다/);
 
-  it('ExplorePage', () => {
-    renderExplorePage();
+  await waitFor(() => {
+    screen.getByText(/작품 탐색/);
   });
 });
