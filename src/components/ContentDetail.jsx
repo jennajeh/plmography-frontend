@@ -1,5 +1,7 @@
 import styled from 'styled-components';
+import apiConfig from '../../apiConfig';
 import useContentStore from '../hooks/useContentStore';
+import Button from './common/Button';
 
 const Container = styled.article`
   height: 100%;
@@ -62,7 +64,7 @@ const TitleWrapper = styled.div`
 
   p {
     font-size: 14px;
-    color: #98a4b7;
+    color: #c3cad6;
     letter-spacing: -.1px;
     line-height: 20px;
     font-weight: 400;
@@ -115,6 +117,11 @@ const SmallPosterBox = styled.div`
   }
 `;
 
+const MyButtonArea = styled.div`
+  display: flex;
+  margin: 1em;
+`;
+
 export default function ContentDetail() {
   const rottenTomato = 'https://plmographybucket.s3.ap-northeast-2.amazonaws.com/rotten-tomato.png';
 
@@ -129,6 +136,10 @@ export default function ContentDetail() {
     korTitle, engTitle, releaseDate,
     popularity, type, platform, description,
   } = content;
+
+  const apiBaseUrl = apiConfig.tmdbApiUrl;
+
+  const apiKey = apiConfig.key;
 
   if (!content) {
     return (
@@ -147,19 +158,25 @@ export default function ContentDetail() {
             <h3>{korTitle}</h3>
             <p>
               <span>{engTitle}</span>
-              <span>{releaseDate}</span>
+              {' '}
+              -
+              {' '}
+              <span>{releaseDate?.substr(0, 4)}</span>
             </p>
             <RatingWrapper>
               <LogoBox>
                 <img src={rottenTomato} alt="rotten-tomato" />
+                {' '}
                 <p>82%</p>
               </LogoBox>
               <LogoBox>
                 <img src={imdbLogo} alt="imdb-logo" />
+                {' '}
                 <p>7.9</p>
               </LogoBox>
               <LogoBox>
                 <p>⭐️</p>
+                {' '}
                 <p>4.0</p>
               </LogoBox>
             </RatingWrapper>
@@ -169,6 +186,52 @@ export default function ContentDetail() {
           </SmallPosterBox>
         </ContentHeaderBox>
       </HeaderWrapper>
+      <MyButtonArea>
+        <button type="button">
+          {/* 이미지 넣기 */}
+          <p>찜하기</p>
+        </button>
+        <button type="button">
+          {/* 이미지 넣기 */}
+          <p>봤어요</p>
+        </button>
+        <button type="button">
+          {/* 이미지 넣기 */}
+          <p>리뷰쓰기</p>
+        </button>
+      </MyButtonArea>
+      <div>
+        <h3>여기서 감상할 수 있어요</h3>
+        <br />
+        <div>
+          <ul>
+            <li>
+              <a href="">{platform}</a>
+            </li>
+            <li>
+              <a href="">{platform}</a>
+            </li>
+            <li>
+              <a href="">{platform}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <br />
+      <div>
+        <h3>작품 정보</h3>
+        <br />
+        <p>{description}</p>
+      </div>
+      <br />
+      <div>
+        <h3>감독/출연</h3>
+        {/* 출연진 */}
+      </div>
+      <br />
+      <div>
+        <h3>예고편</h3>
+      </div>
     </Container>
   );
 }

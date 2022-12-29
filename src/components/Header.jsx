@@ -103,7 +103,12 @@ export default function Header() {
           <SideMenu>
             <List>
               <li>
-                <LogoutButton type="button" onClick={handleClickLogout}>로그아웃</LogoutButton>
+                <LogoutButton
+                  type="button"
+                  onClick={handleClickLogout}
+                >
+                  로그아웃
+                </LogoutButton>
               </li>
               <li>
                 <StyledLink to="/events">이벤트</StyledLink>
