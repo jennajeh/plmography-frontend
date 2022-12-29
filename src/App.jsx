@@ -4,7 +4,7 @@ import Header from './components/Header';
 import HomePage from './pages/HomePage';
 import RecommendationsPage from './pages/RecommendationsPage';
 import CommunityPage from './pages/CommunityPage';
-import ContentsDetailPage from './pages/ContentsDetailPage';
+import ContentDetailPage from './pages/ContentDetailPage';
 import ExplorePage from './pages/ExplorePage';
 import NewContentsPage from './pages/NewContentsPage';
 import LoginPage from './pages/LoginPage';
@@ -32,7 +32,7 @@ export default function App() {
           <Route path="/community" element={<CommunityPage />} />
           {/* <Route path="/community/post/:id" element={<CommunityPostDetailPage />} /> */}
           {/* <Route path="/community/history" element={<CommunityHistoryPage />} /> */}
-          <Route path="/contents/:id" element={<ContentsDetailPage />} />
+          <Route path="/contents/:id" element={<ContentDetailPage />} />
           <Route path="/explore" element={<ExplorePage />} />
           <Route path="/new-contents" element={<NewContentsPage />} />
           {/* <Route path="/ranking" element={<DailyRankingPage />} /> */}
