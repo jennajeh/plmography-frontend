@@ -63,6 +63,8 @@ cursor: pointer;
 `;
 
 export default function Header() {
+  const homeLogo = 'https://plmographybucket.s3.ap-northeast-2.amazonaws.com/%E1%84%8B%E1%85%A1%E1%86%AB%E1%84%82%E1%85%A7%E1%86%BC.png';
+
   const navigate = useNavigate();
 
   const accessToken = '';
@@ -79,7 +81,7 @@ export default function Header() {
             <li>
               <StyledLink to="/">
                 <LogoBox>
-                  <img src="https://plmographybucket.s3.ap-northeast-2.amazonaws.com/%E1%84%8B%E1%85%A1%E1%86%AB%E1%84%82%E1%85%A7%E1%86%BC.png" alt="logo" />
+                  <img src={homeLogo} alt="logo" />
                 </LogoBox>
               </StyledLink>
             </li>

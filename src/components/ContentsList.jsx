@@ -27,6 +27,12 @@ export default function ContentsList() {
 
   const [searchParams] = useSearchParams();
 
+  if (!contents) {
+    return (
+      <p>Loading...</p>
+    );
+  }
+
   return (
     <div>
       {contents.length ? (
