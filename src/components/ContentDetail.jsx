@@ -81,7 +81,7 @@ const LogoBox = styled.div`
   vertical-align: middle;
 
   img {
-    width: 20px;
+    width: 25px;
     height: 20px;
     display: inline-block;
     vertical-align: middle;
@@ -140,6 +140,8 @@ export default function ContentDetail() {
   const apiBaseUrl = apiConfig.tmdbApiUrl;
 
   const apiKey = apiConfig.key;
+
+  const platformList = platform.substring(1, platform.length - 2).split(',');
 
   if (!content) {
     return (
@@ -206,13 +208,13 @@ export default function ContentDetail() {
         <div>
           <ul>
             <li>
-              <a href="">{platform}</a>
+              <a href="">{platformList[0]}</a>
             </li>
             <li>
-              <a href="">{platform}</a>
+              <a href="">{platformList[1]}</a>
             </li>
             <li>
-              <a href="">{platform}</a>
+              <a href="">{platformList[2]}</a>
             </li>
           </ul>
         </div>
