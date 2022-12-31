@@ -14,7 +14,6 @@ h4 {
   img {
     border-radius: 0.6em;
     width: 100%;
-
   }
 `;
 

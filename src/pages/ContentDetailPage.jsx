@@ -8,11 +8,22 @@ export default function ContentsDetailPage() {
 
   const { id } = useParams();
 
+  const fetchData = async () => {
+    await contentStore.fetchContent(id);
+  };
+
   useEffect(() => {
-    contentStore.fetchContent(id);
+    fetchData();
   }, []);
+  const { content } = contentStore;
+
+  if (!content) {
+    <p>content 불러오는중...</p>;
+  }
 
   return (
-    <ContentDetail />
+    <ContentDetail
+      content={content}
+    />
   );
 }

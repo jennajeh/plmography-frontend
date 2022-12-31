@@ -6,7 +6,8 @@ export default class ContentStore extends Store {
     super();
 
     this.contents = [];
-    this.content = {};
+
+    this.content = '';
 
     this.totalPages = 0;
   }
