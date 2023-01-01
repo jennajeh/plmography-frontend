@@ -1,7 +1,7 @@
 import Store from './Store';
 import apiConfig from '../../apiConfig';
 
-export default class YoutubeApiStore extends Store {
+export default class TmdbYoutubeApiStore extends Store {
   constructor() {
     super();
 
@@ -29,4 +29,4 @@ export default class YoutubeApiStore extends Store {
   }
 }
 
-export const youtubeApiStore = new YoutubeApiStore();
+export const tmdbYoutubeApiStore = new TmdbYoutubeApiStore();

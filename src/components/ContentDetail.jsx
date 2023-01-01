@@ -4,6 +4,7 @@ import useContentStore from '../hooks/useContentStore';
 import ContentDetailHeader from './ContentDetailHeader';
 import ContentDetailInformation from './ContentDetailInformation';
 import ContentDetailPlatform from './ContentDetailPlatform';
+import ContentDetailReviews from './ContentDetailReviews';
 
 const Container = styled.article`
   height: 100%;
@@ -23,6 +24,7 @@ export default function ContentDetail() {
       <ContentDetailHeader />
       <ContentDetailPlatform />
       <ContentDetailInformation />
+      <ContentDetailReviews />
     </Container>
   );
 }

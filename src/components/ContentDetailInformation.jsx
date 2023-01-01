@@ -1,7 +1,9 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react/prop-types */
 import { useEffect } from 'react';
 import useContentStore from '../hooks/useContentStore';
-import useYoutubeApiStore from '../hooks/useYoutubeApiStore';
+import useTmdbCreditsApiStore from '../hooks/useTmdbCreditsApiStore';
+import useTmdbYoutubeApiStore from '../hooks/useTmdbYoutubeApiStore';
 
 export default function ContentDetailInformation() {
   const contentStore = useContentStore();
@@ -10,15 +12,28 @@ export default function ContentDetailInformation() {
 
   const { tmdbId, type, description } = content;
 
-  const youtubeApiStore = useYoutubeApiStore();
+  const tmdbYoutubeApiStore = useTmdbYoutubeApiStore();
 
-  const { videoUrl } = youtubeApiStore;
+  const { videoUrl } = tmdbYoutubeApiStore;
+
+  const tmdbCreditsApiStore = useTmdbCreditsApiStore();
+
+  const { credits, actors } = tmdbCreditsApiStore;
 
   useEffect(() => {
     if (tmdbId) {
-      youtubeApiStore.fetchVideo(tmdbId, type);
+      tmdbYoutubeApiStore.fetchVideo(tmdbId, type);
+      tmdbCreditsApiStore.fetchCredits(tmdbId, type);
     }
   }, [tmdbId]);
+
+  useEffect(() => {
+    tmdbCreditsApiStore.fetchActors();
+  }, [credits]);
+
+  if (!credits) {
+    <p>Loading...</p>;
+  }
 
   return (
     <>
@@ -29,8 +44,26 @@ export default function ContentDetailInformation() {
       </div>
       <br />
       <div>
-        <h3>감독/출연</h3>
-        {/* 출연진 */}
+        <h3>출연</h3>
+        <ul>
+          {credits ? (
+            <li>
+              {actors.map((element) => (
+                <div key={element.id}>
+                  <p>
+                    {element.character}
+                    {' '}
+                    역 -
+                    {' '}
+                    {element.name}
+                  </p>
+                </div>
+              ))}
+            </li>
+          ) : (
+            <p>정보가 존재하지 않습니다.</p>
+          )}
+        </ul>
       </div>
       <br />
       <div>
@@ -50,7 +83,6 @@ export default function ContentDetailInformation() {
             <p>영상이 존재하지 않습니다.</p>
           )}
       </div>
-
     </>
   );
 }
