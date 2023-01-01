@@ -31,7 +31,6 @@ export default class ContentApiService {
 
     const { data } = await axios.get(url);
 
-    console.log('data', data);
     return data;
   }
 }
