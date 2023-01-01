@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import styled from 'styled-components';
-import apiConfig from '../../apiConfig';
-import useYoutubeStore from '../hooks/useYoutubeStore';
+import useContentStore from '../hooks/useContentStore';
+import useYoutubeApiStore from '../hooks/useYoutubeApiStore';
 
 const Container = styled.article`
   height: 100%;
@@ -123,144 +123,147 @@ const MyButtonArea = styled.div`
   margin: 1em;
 `;
 
-export default function ContentDetail({
-  content,
-}) {
+export default function ContentDetail() {
   const rottenTomato = 'https://plmographybucket.s3.ap-northeast-2.amazonaws.com/rotten-tomato.png';
 
   const imdbLogo = 'https://plmographybucket.s3.ap-northeast-2.amazonaws.com/imdb-logo.png';
 
+  const contentStore = useContentStore();
+
+  const { content } = contentStore;
+
   const {
-    tmdbId, korTitle, engTitle, imageUrl,
+    tmdbId, korTitle, engTitle, imageUrl, type,
     releaseDate, platform, description,
   } = content;
 
-  const youtubeStore = useYoutubeStore();
+  const youtubeApiStore = useYoutubeApiStore();
 
-  const { videoUrl } = youtubeStore;
+  const { videoUrl } = youtubeApiStore;
 
   const platformList = platform?.substring(1, platform.length - 2).split(',');
 
-  
   useEffect(() => {
     if (tmdbId) {
-      youtubeStore.fetchVideo(tmdbId);
+      youtubeApiStore.fetchVideo(tmdbId, type);
     }
   }, [tmdbId]);
 
-  console.log('videoUrl', videoUrl);
+  if (!content) {
+    <p>Loading...</p>;
+  }
 
-    return(
-      <Container>
-        <HeaderWrapper>
-          <BackgroundImageBox>
-            <img src={imageUrl} alt={korTitle} />
-          </BackgroundImageBox>
-          <ContentHeaderBox>
-            <TitleWrapper>
-              <h3>{korTitle}</h3>
-              <p>
-                <span>{engTitle}</span>
+  return (
+    <Container>
+      <HeaderWrapper>
+        <BackgroundImageBox>
+          <img src={imageUrl} alt={korTitle} />
+        </BackgroundImageBox>
+        <ContentHeaderBox>
+          <TitleWrapper>
+            <h3>{korTitle}</h3>
+            <p>
+              <span>{engTitle}</span>
+              {' '}
+              -
+              {' '}
+              <span>{releaseDate?.substr(0, 4)}</span>
+            </p>
+            <RatingWrapper>
+              <LogoBox>
+                <img src={rottenTomato} alt="rotten-tomato" />
                 {' '}
-                -
+                <p>82%</p>
+              </LogoBox>
+              <LogoBox>
+                <img src={imdbLogo} alt="imdb-logo" />
                 {' '}
-                <span>{releaseDate?.substr(0, 4)}</span>
-              </p>
-              <RatingWrapper>
-                <LogoBox>
-                  <img src={rottenTomato} alt="rotten-tomato" />
-                  {' '}
-                  <p>82%</p>
-                </LogoBox>
-                <LogoBox>
-                  <img src={imdbLogo} alt="imdb-logo" />
-                  {' '}
-                  <p>7.9</p>
-                </LogoBox>
-                <LogoBox>
-                  <p>⭐️</p>
-                  {' '}
-                  <p>4.0</p>
-                </LogoBox>
-              </RatingWrapper>
-            </TitleWrapper>
-            <SmallPosterBox>
-              <img src={imageUrl} alt="poster" />
-            </SmallPosterBox>
-          </ContentHeaderBox>
-        </HeaderWrapper>
-        <MyButtonArea>
-          <button type="button">
-            {/* 이미지 넣기 */}
-            <p>찜하기</p>
-          </button>
-          <button type="button">
-            {/* 이미지 넣기 */}
-            <p>봤어요</p>
-          </button>
-          <button type="button">
-            {/* 이미지 넣기 */}
-            <p>리뷰쓰기</p>
-          </button>
-        </MyButtonArea>
-        <div>
-          <h3>여기서 감상할 수 있어요</h3>
-          <br />
-          <div>
-            <ul>
-              <li>
-                <a href="">
-                  {platformList?.[0]}
-                  {' '}
-                  바로가기
-                </a>
-              </li>
-              <li>
-                <a href="">
-                  {platformList?.[1]}
-                  {' '}
-                  바로가기
-                </a>
-              </li>
-              <li>
-                <a href="">
-                  {platformList?.[2]}
-                  {' '}
-                  바로가기
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
+                <p>7.9</p>
+              </LogoBox>
+              <LogoBox>
+                <p>⭐️</p>
+                {' '}
+                <p>4.0</p>
+              </LogoBox>
+            </RatingWrapper>
+          </TitleWrapper>
+          <SmallPosterBox>
+            <img src={imageUrl} alt="poster" />
+          </SmallPosterBox>
+        </ContentHeaderBox>
+      </HeaderWrapper>
+      <MyButtonArea>
+        <button type="button">
+          {/* 이미지 넣기 */}
+          <p>찜하기</p>
+        </button>
+        <button type="button">
+          {/* 이미지 넣기 */}
+          <p>봤어요</p>
+        </button>
+        <button type="button">
+          {/* 이미지 넣기 */}
+          <p>리뷰쓰기</p>
+        </button>
+      </MyButtonArea>
+      <div>
+        <h3>여기서 감상할 수 있어요</h3>
         <br />
         <div>
-          <h3>작품 정보</h3>
-          <br />
-          <p>{description}</p>
+          <ul>
+            <li>
+              <a href="">
+                {platformList?.[0]}
+                {' '}
+                바로가기
+              </a>
+            </li>
+            <li>
+              <a href="">
+                {platformList?.[1]}
+                {' '}
+                바로가기
+              </a>
+            </li>
+            <li>
+              <a href="">
+                {platformList?.[2]}
+                {' '}
+                바로가기
+              </a>
+            </li>
+          </ul>
         </div>
+      </div>
+      <br />
+      <div>
+        <h3>작품 정보</h3>
         <br />
-        <div>
-          <h3>감독/출연</h3>
-          {/* 출연진 */}
-        </div>
-        <br />
-        <div>
-          <h3>예고편</h3>
-        </div>
-        <div>
-          {videoUrl && videoUrl.results.length > 0
-            ? (
-              <iframe
-                title="video"
-                src={`https://www.youtube.com/embed/${videoUrl.results[0].key}?autoplay=0&mute=1&loop=0`}
-                width="420"
-                height="280"
-              />
-            )
-            : (
-              <p>영상이 존재하지 않습니다.</p>
-            )}
-        </div>
-      </Container>,
-    );
+        <p>{description}</p>
+      </div>
+      <br />
+      <div>
+        <h3>감독/출연</h3>
+        {/* 출연진 */}
+      </div>
+      <br />
+      <div>
+        <h3>관련 영상</h3>
+      </div>
+      <div>
+        {videoUrl && videoUrl.results.length > 0
+          ? (
+            <iframe
+              title="video"
+              src={`https://www.youtube-nocookie.com/embed/${videoUrl.results[0].key}?autoplay=0&mute=1&loop=0`}
+              width="420"
+              height="280"
+            />
+          )
+          : (
+            <p>영상이 존재하지 않습니다.</p>
+          )}
+      </div>
+    </Container>
+  );
 }
