@@ -1,5 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
+import { useLocalStorage } from 'usehooks-ts';
+import { useEffect } from 'react';
 import Header from './components/Header';
 import HomePage from './pages/HomePage';
 import RecommendationsPage from './pages/RecommendationsPage';
@@ -12,6 +14,7 @@ import EventsPage from './pages/EventsPage';
 import SupportPage from './pages/SupportPage';
 import defaultTheme from './styles/defaultTheme';
 import GlobalStyle from './styles/GlobalStyle';
+import { userApiService } from './services/UserApiService';
 
 const Main = styled.main`
   height: calc(100vh - 64px);
@@ -19,6 +22,12 @@ const Main = styled.main`
 `;
 
 export default function App() {
+  const [accessToken] = useLocalStorage('accessToken', '');
+
+  useEffect(() => {
+    userApiService.setAccessToken(accessToken);
+  }, [accessToken]);
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <GlobalStyle />
