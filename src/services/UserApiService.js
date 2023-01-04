@@ -49,20 +49,15 @@ export default class UserApiService {
     return data;
   }
 
-  async countUserEmail(email) {
-    const { data } = await this.instance.get(`/users?countOnly=true&email=${email}`);
+  async countEmailAndNickname(email, nickname) {
+    const { data } = await this.instance.get(`/users?countOnly=true&email=${email}&nickname=${nickname}`);
 
-    return data.countEmail;
-  }
-
-  async countUserNickname(nickname) {
-    const { data } = await this.instance.get(`/users?countOnly=true&nickname=${nickname}`);
-
-    return data.countNickname;
+    return data;
   }
 
   async postSession({ email, password }) {
     const { data } = await this.instance.post('/session', { email, password });
+
     return {
       accessToken: data.accessToken,
     };

@@ -14,7 +14,7 @@ afterEach(() => {
   cleanup();
 });
 
-test('ContentDetail', async () => {
+test('ContentDetail', async () => async (act) => {
   render((
     <ThemeProvider theme={defaultTheme}>
       <ContentDetail />

@@ -15,7 +15,7 @@ afterEach(() => {
   cleanup();
 });
 
-test('ExplorePage', async () => {
+test('ExplorePage', async () => async (act) => {
   render((
     <ThemeProvider theme={defaultTheme}>
       <MemoryRouter>

@@ -16,6 +16,8 @@ import defaultTheme from './styles/defaultTheme';
 import GlobalStyle from './styles/GlobalStyle';
 import { userApiService } from './services/UserApiService';
 import { contentApiService } from './services/ContentApiService';
+import ProfilePage from './pages/ProfilePage';
+import SignupPage from './pages/SignupPage';
 
 const Main = styled.main`
   height: calc(100vh - 64px);
@@ -52,14 +54,14 @@ export default function App() {
           {/* <Route path="/articles/themes/:id" element={<ArticlesThemeDetailPage />} /> */}
           {/* <Route path="/articles/stories/:id" element={<ArticlesStoryDetailPage />} /> */}
           {/* <Route path="/articles/interviews/:id" element={<ArticlesInterviewsDetailPage />} /> */}
-          {/* <Route path="/users/:id" element={<ProfilePage />} /> */}
+          <Route path="/users/:id" element={<ProfilePage />} />
           {/* <Route path="/users/:id/edit" element={<ProfileEditPage />} /> */}
           {/* <Route path="/users/:id/reset-password" element={<ResetPasswordPage />} /> */}
           {/* <Route path="/users/:id/reviews" element={<ReviewsPage />} /> */}
           {/* <Route path="/users/:id/services/edit" element={<ServiceChoicePage />} /> */}
           {/* <Route path="/users/:id/favorites" element={<FavoriteContentsPage />} /> */}
           {/* <Route path="/users/:id/likes" element={<LikeContentsPage />} /> */}
-          {/* <Route path="/signup" element={<SignupPage />} /> */}
+          <Route path="/signup" element={<SignupPage />} />
           {/* <Route path="/signup/greeting" element={<GreetingPage />} /> */}
           <Route path="/login" element={<LoginPage />} />
           <Route path="/events" element={<EventsPage />} />

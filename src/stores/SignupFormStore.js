@@ -33,7 +33,7 @@ export default class SignupFormStore extends Store {
     this.patterns = {
       email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
       password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-      nickname: /[^a-zA-Z0-9ㄱ-힣]/g,
+      nickname: /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]+$/,
     };
 
     this.reset();
@@ -85,7 +85,7 @@ export default class SignupFormStore extends Store {
   }
 
   async validate() {
-    this.validateNickname();
+    await this.validateNickname();
     await this.validateEmail();
     this.validatePassword();
     this.validatePasswordCheck();
@@ -106,7 +106,10 @@ export default class SignupFormStore extends Store {
       return;
     }
 
-    const countNickname = await userApiService.countUserNickname(this.fields.nickname);
+    const { data } = await userApiService
+      .countEmailAndNickname(this.fields.email, this.fields.nickname);
+
+    const { countNickname } = data;
 
     if (countNickname !== 0) {
       this.errors.nickname = this.errorMessages.nickname.exist;
@@ -130,7 +133,10 @@ export default class SignupFormStore extends Store {
       return;
     }
 
-    const countEmail = await userApiService.countUserEmail(this.fields.email);
+    const { data } = await userApiService
+      .countEmailAndNickname(this.fields.email, this.fields.nickname);
+
+    const { countEmail } = data;
 
     if (countEmail !== 0) {
       this.errors.email = this.errorMessages.email.exist;

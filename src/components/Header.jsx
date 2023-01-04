@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useLocalStorage } from 'usehooks-ts';
 
 const Container = styled.header`
 background-color: black;
@@ -67,9 +68,10 @@ export default function Header() {
 
   const navigate = useNavigate();
 
-  const accessToken = '';
+  const [accessToken, setAccessToken] = useLocalStorage('accessToken', '');
 
   const handleClickLogout = () => {
+    setAccessToken('');
     navigate('/');
   };
 
@@ -111,6 +113,9 @@ export default function Header() {
                 </LogoutButton>
               </li>
               <li>
+                <StyledLink to="/users/:id">마이페이지</StyledLink>
+              </li>
+              <li>
                 <StyledLink to="/events">이벤트</StyledLink>
               </li>
               <li>
@@ -121,6 +126,9 @@ export default function Header() {
         ) : (
           <SideMenu>
             <List>
+              <li>
+                <button type="button">체험하기</button>
+              </li>
               <li>
                 <StyledLink to="/login">로그인</StyledLink>
               </li>
