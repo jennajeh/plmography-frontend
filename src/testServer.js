@@ -26,6 +26,34 @@ const server = setupServer(
     return res(ctx.status(400));
   }),
 
+  rest.get(`${baseUrl}/users`, async (req, res, ctx) => {
+    const countOnly = req.url.searchParams.get('countOnly');
+    const email = req.url.searchParams.get('email');
+    const nickname = req.url.searchParams.get('nickname');
+
+    if (countOnly && email === 'exist@gmail.com' && nickname === '전제나') {
+      return res(ctx.json({
+        countEmail: 1, countNickname: 0,
+      }));
+    }
+
+    if (countOnly && email === 'jenna@gmail.com' && nickname === 'exist') {
+      return res(ctx.json({
+        countEmail: 0, countNickname: 1,
+      }));
+    }
+
+    if (countOnly && email === 'exist@gmail.com' && nickname === 'exist') {
+      return res(ctx.json({
+        countEmail: 1, countNickname: 1,
+      }));
+    }
+
+    return res(ctx.json({
+      count: 0,
+    }));
+  }),
+
   rest.post(`${baseUrl}/session`, async (req, res, ctx) => {
     const {
       email, password,

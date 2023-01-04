@@ -2,18 +2,18 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import defaultTheme from '../styles/defaultTheme';
-import LoginPage from './LoginPage';
+import SignupPage from './SignupPage';
 
-describe('LoginPage', () => {
-  it('로그인 버튼이 보인다', () => {
+describe('SignupPage', () => {
+  it('회원가입 버튼이 보인다', () => {
     render((
-      <MemoryRouter initialEntries={['/login']}>
+      <MemoryRouter initialEntries={['/signup']}>
         <ThemeProvider theme={defaultTheme}>
-          <LoginPage />
+          <SignupPage />
         </ThemeProvider>
       </MemoryRouter>
     ));
 
-    screen.getByText('로그인');
+    screen.getByText('회원가입');
   });
 });

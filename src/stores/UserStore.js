@@ -13,18 +13,18 @@ export default class UserStore extends Store {
   }
 
   async signup({
-    email, nickname, password,
+    email, nickname, password, gender, birthYear,
   }) {
     this.changeSignupStatus('processing');
 
     try {
-      const { id } = await userApiService.createUser({
-        email, nickname, password,
+      const { data } = await userApiService.createUser({
+        email, nickname, password, gender, birthYear,
       });
 
       this.changeSignupStatus('successful');
 
-      return id;
+      return data;
     } catch (e) {
       this.changeSignupStatus('failed');
 

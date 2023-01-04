@@ -24,15 +24,13 @@ export default class UserApiService {
   }
 
   async createUser({
-    email, nickname, password,
+    email, nickname, password, gender, birthYear,
   }) {
     const { data } = await this.instance.post('/users', {
-      email, nickname, password,
+      email, nickname, password, gender, birthYear,
     });
 
-    return {
-      userId: data.userId,
-    };
+    return data;
   }
 
   async fetchUser(userId) {
@@ -49,10 +47,15 @@ export default class UserApiService {
     return data;
   }
 
-  async countEmailAndNickname(email, nickname) {
+  async countEmailAndNickname({ email, nickname }) {
     const { data } = await this.instance.get(`/users?countOnly=true&email=${email}&nickname=${nickname}`);
 
-    return data;
+    console.log('INNnnnnnn', data);
+
+    return {
+      countEmail: data.countEmail,
+      countNickname: data.countNickname,
+    };
   }
 
   async postSession({ email, password }) {

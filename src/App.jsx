@@ -18,6 +18,7 @@ import { userApiService } from './services/UserApiService';
 import { contentApiService } from './services/ContentApiService';
 import ProfilePage from './pages/ProfilePage';
 import SignupPage from './pages/SignupPage';
+import GreetingPage from './pages/GreetingPage';
 
 const Main = styled.main`
   height: calc(100vh - 64px);
@@ -62,7 +63,7 @@ export default function App() {
           {/* <Route path="/users/:id/favorites" element={<FavoriteContentsPage />} /> */}
           {/* <Route path="/users/:id/likes" element={<LikeContentsPage />} /> */}
           <Route path="/signup" element={<SignupPage />} />
-          {/* <Route path="/signup/greeting" element={<GreetingPage />} /> */}
+          <Route path="/greeting" element={<GreetingPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/events" element={<EventsPage />} />
           {/* <Route path="/events/:id" element={<EventsDetailPage />} /> */}

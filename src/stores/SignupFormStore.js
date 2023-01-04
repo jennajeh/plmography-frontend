@@ -28,6 +28,12 @@ export default class SignupFormStore extends Store {
         invalid: '닉네임을 다시 확인해 주세요.',
         exist: '이미 존재하는 닉네임 입니다.',
       },
+      gender: {
+        notSelected: '성별을 선택해 주세요.',
+      },
+      birth: {
+        notSelected: '출생연도를 선택해 주세요.',
+      },
     };
 
     this.patterns = {
@@ -76,6 +82,20 @@ export default class SignupFormStore extends Store {
     this.publish();
   }
 
+  changeGender(gender) {
+    this.fields.gender = gender;
+    this.validateGender();
+
+    this.publish();
+  }
+
+  changeBirth(birth) {
+    this.fields.birth = birth;
+    this.validateBirth();
+
+    this.publish();
+  }
+
   reset() {
     this.fields = {};
     this.errors = {};
@@ -89,6 +109,8 @@ export default class SignupFormStore extends Store {
     await this.validateEmail();
     this.validatePassword();
     this.validatePasswordCheck();
+    this.validateGender();
+    this.validateBirth();
 
     this.publish();
   }
@@ -177,6 +199,26 @@ export default class SignupFormStore extends Store {
     }
 
     this.errors.passwordCheck = '';
+  }
+
+  validateGender() {
+    if (!this.fields.gender?.checked) {
+      this.errors.gender = this.errorMessages.gender.notSelected;
+
+      return;
+    }
+
+    this.errors.gender = '';
+  }
+
+  validateBirth() {
+    if (!this.fields.birth?.checked) {
+      this.errors.gender = this.errorMessages.birth.notSelected;
+
+      return;
+    }
+
+    this.errors.birth = '';
   }
 
   get isValidateSuccessful() {
