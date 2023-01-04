@@ -1,5 +1,5 @@
 import axios from 'axios';
-import config from '../../config';
+import config from '../config';
 
 const baseUrl = config.apiBaseUrl;
 
@@ -38,14 +38,7 @@ export default class UserApiService {
   async fetchUser(userId) {
     const { data } = await this.instance.get(`/users/${userId}`);
 
-    return {
-      userId: data.userId,
-      email: data.email,
-      nickname: data.nickname,
-      gender: data.gender,
-      birthYear: data.birthYear,
-      profileImage: data.profileImage,
-    };
+    return data;
   }
 
   async updateUser({
@@ -53,16 +46,23 @@ export default class UserApiService {
   }) {
     const { data } = await this.instance.patch(`/users/${userId}`, { password, nickname, profileImage });
 
-    return {
-      password: data.password,
-      nickname: data.nickname,
-      profileImage: data.profileImage,
-    };
+    return data;
+  }
+
+  async countUserEmail(email) {
+    const { data } = await this.instance.get(`/users?countOnly=true&email=${email}`);
+
+    return data.countEmail;
+  }
+
+  async countUserNickname(nickname) {
+    const { data } = await this.instance.get(`/users?countOnly=true&nickname=${nickname}`);
+
+    return data.countNickname;
   }
 
   async postSession({ email, password }) {
     const { data } = await this.instance.post('/session', { email, password });
-
     return {
       accessToken: data.accessToken,
     };

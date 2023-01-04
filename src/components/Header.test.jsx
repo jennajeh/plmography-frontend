@@ -1,5 +1,7 @@
 /* eslint-disable react/prop-types */
-import { render, screen } from '@testing-library/react';
+import {
+  cleanup, render, screen, waitFor,
+} from '@testing-library/react';
 import Header from './Header';
 
 const navigate = jest.fn();
@@ -21,19 +23,29 @@ jest.mock('react-router-dom', () => ({
 const context = describe;
 
 describe('Header', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  afterEach(() => {
+    cleanup();
+  });
+
   function renderHeader() {
     render(<Header />);
   }
 
-  it('헤더 메뉴 렌더링', () => {
+  it('헤더 메뉴 렌더링', async () => {
     renderHeader();
 
-    screen.getByText('테마 추천');
-    screen.getByText('커뮤니티');
-    screen.getByText('탐색');
-    screen.getByText('신작');
-    screen.getByText('이벤트');
-    screen.getByText('작품 제안');
+    await waitFor(() => {
+      screen.getByText('테마 추천');
+      screen.getByText('커뮤니티');
+      screen.getByText('탐색');
+      screen.getByText('신작');
+      screen.getByText('이벤트');
+      screen.getByText('작품 제안');
+    });
   });
 
   // context('로그인 했을 때', () => {

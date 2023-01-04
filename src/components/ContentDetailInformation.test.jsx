@@ -1,11 +1,9 @@
 import {
   cleanup, render, screen, waitFor,
 } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import { act } from 'react-dom/test-utils';
-import ExplorePage from './ExplorePage';
 import defaultTheme from '../styles/defaultTheme';
+import ContentDetailInformation from './ContentDetailInformation';
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -15,17 +13,16 @@ afterEach(() => {
   cleanup();
 });
 
-test('ExplorePage', async () => {
+test('ContentDetailInformation', async () => {
   render((
     <ThemeProvider theme={defaultTheme}>
-      <MemoryRouter>
-        <ExplorePage />
-      </MemoryRouter>
+      <ContentDetailInformation />
     </ThemeProvider>
   ));
 
-  // await waitFor(() => {
-  act(() => {
-    screen.findByText(/작품 탐색/);
+  await waitFor(() => {
+    screen.getByText(/작품 정보/);
+    screen.getByText(/출연/);
+    screen.getByText(/관련 영상/);
   });
 });

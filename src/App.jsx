@@ -15,6 +15,7 @@ import SupportPage from './pages/SupportPage';
 import defaultTheme from './styles/defaultTheme';
 import GlobalStyle from './styles/GlobalStyle';
 import { userApiService } from './services/UserApiService';
+import { contentApiService } from './services/ContentApiService';
 
 const Main = styled.main`
   height: calc(100vh - 64px);
@@ -26,6 +27,7 @@ export default function App() {
 
   useEffect(() => {
     userApiService.setAccessToken(accessToken);
+    contentApiService.setAccessToken(accessToken);
   }, [accessToken]);
 
   return (

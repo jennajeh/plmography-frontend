@@ -5,10 +5,6 @@ export default class UserStore extends Store {
   constructor() {
     super();
 
-    this.nickname = '';
-    this.profileImage = '';
-    this.password = '';
-
     this.user = {};
 
     this.loginStatus = '';
@@ -66,13 +62,11 @@ export default class UserStore extends Store {
     this.changeEditStatus('processing');
 
     try {
-      const { data } = await userApiService.updateUser({
+      const data = await userApiService.updateUser({
         userId, password, nickname, profileImage,
       });
 
-      this.password = data.password;
-      this.nickname = data.nickname;
-      this.profileImage = data.profileImage;
+      this.user = data;
 
       this.changeEditStatus('successful');
 
