@@ -35,20 +35,10 @@ const InputWrapper = styled.div`
   }
 `;
 
-const Label = styled.label`
-  display: block;
-  margin-bottom: 8px;
-  font-size: 15px;
-  font-weight: 700;
-`;
-
 export default function SignupForm() {
   const navigate = useNavigate();
-
   const userStore = useUserStore();
-
   const signupFormStore = useSignupFormStore();
-
   const [, setAccessToken] = useLocalStorage('accessToken', '');
 
   const { nickname, email, password } = signupFormStore.fields;
@@ -60,18 +50,26 @@ export default function SignupForm() {
 
     if (signupFormStore.isValidateSuccessful) {
       await userStore.signup({ email, nickname, password });
+
+      const accessToken = await userStore.login({ email, password });
+
+      setAccessToken(accessToken);
+
+      if (userStore.signupSuccessful) {
+        navigate('/greeting');
+      }
     }
 
-    const accessToken = await userStore.login({ email, password });
+    // const accessToken = await userStore.login({ email, password });
 
-    setAccessToken(accessToken);
+    // setAccessToken(accessToken);
   };
 
-  useEffect(() => {
-    if (userStore.signupSuccessful) {
-      navigate('/greeting');
-    }
-  }, [userStore.signupSuccessful]);
+  // useEffect(() => {
+  //   if (userStore.signupSuccessful) {
+  //     navigate('/greeting');
+  //   }
+  // }, [userStore.signupSuccessful]);
 
   return (
     <Container>
@@ -79,22 +77,20 @@ export default function SignupForm() {
         <Title>SIGN UP</Title>
         <Inputs>
           <InputWrapper>
-            <Label htmlFor="input-email">이메일:</Label>
             <Input
-              id="input-email"
-              type="text"
               name="email"
+              label="이메일:"
+              type="text"
               value={signupFormStore.fields.email || ''}
               onChange={(e) => signupFormStore.changeEmail(e.target.value)}
               errorMessage={signupFormStore.errors.email}
             />
           </InputWrapper>
           <InputWrapper>
-            <Label htmlFor="input-password">비밀번호:</Label>
             <Input
-              id="input-password"
-              type="text"
               name="password"
+              label="비밀번호:"
+              type="text"
               value={signupFormStore.fields.password || ''}
               onChange={(e) => signupFormStore.changePassword(e.target.value)}
               message="8글자 이상의 영문(대소문자), 숫자, 특수문자가 모두 포함되어야 합니다."
@@ -102,25 +98,23 @@ export default function SignupForm() {
             />
           </InputWrapper>
           <InputWrapper>
-            <Label htmlFor="input-passwordCheck">비밀번호 확인:</Label>
             <Input
-              id="input-passwordCheck"
-              type="password"
               name="passwordCheck"
+              label="비밀번호 확인:"
+              type="password"
               value={signupFormStore.fields.passwordCheck || ''}
               onChange={(e) => signupFormStore.changePasswordCheck(e.target.value)}
               errorMessage={signupFormStore.errors.passwordCheck}
             />
           </InputWrapper>
           <InputWrapper>
-            <Label htmlFor="input-nickname">닉네임:</Label>
             <Input
-              id="input-nickname"
-              type="text"
               name="nickname"
+              label="닉네임:"
+              type="text"
               value={signupFormStore.fields.nickname || ''}
               onChange={(e) => signupFormStore.changeNickname(e.target.value)}
-              message="특수문자는 사용할 수 없습니다."
+              message="특수문자를 제외하고 입력해 주세요."
               errorMessage={signupFormStore.errors.nickname}
             />
           </InputWrapper>

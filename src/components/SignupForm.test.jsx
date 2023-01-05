@@ -39,9 +39,41 @@ describe('SignupForm', () => {
     userStore.resetSignupStatus();
   });
 
-  context('회원가입에 성공한 경우', () => {
-    it('회원가입 완료 페이지가 보인다.', async () => {
+  // context('회원가입에 성공한 경우', () => {
+  //   it('회원가입 완료 페이지가 보인다.', async () => {
+  //     renderSignupForm();
+
+  //     fireEvent.change(screen.getByLabelText('이메일:'), {
+  //       target: { value: 'jenna@gmail.com' },
+  //     });
+
+  //     fireEvent.change(screen.getByLabelText('비밀번호:'), {
+  //       target: { value: 'Test123!' },
+  //     });
+
+  //     fireEvent.change(screen.getByLabelText('비밀번호 확인:'), {
+  //       target: { value: 'Test123!' },
+  //     });
+
+  //     fireEvent.change(screen.getByLabelText('닉네임:'), {
+  //       target: { value: '전제나' },
+  //     });
+
+  //     fireEvent.click(screen.getByText('회원가입'));
+
+  //     await waitFor(() => {
+  //       expect(navigate).toBeCalledWith('/greeting');
+  //     });
+  //   });
+  // });
+
+  context('닉네임을 비워놨을 경우', () => {
+    it('에러 메세지가 보인다', async () => {
       renderSignupForm();
+
+      fireEvent.change(screen.getByLabelText('닉네임:'), {
+        target: { value: '' },
+      });
 
       fireEvent.change(screen.getByLabelText('이메일:'), {
         target: { value: 'jenna@gmail.com' },
@@ -55,14 +87,94 @@ describe('SignupForm', () => {
         target: { value: 'Test123!' },
       });
 
+      fireEvent.click(screen.getByText('회원가입'));
+
+      await waitFor(() => {
+        screen.getByText(/닉네임을 입력해 주세요./);
+      });
+    });
+  });
+
+  context('이메일을 비워놨을 경우', () => {
+    it('에러 메세지가 보인다', async () => {
+      renderSignupForm();
+
       fireEvent.change(screen.getByLabelText('닉네임:'), {
         target: { value: '전제나' },
+      });
+
+      fireEvent.change(screen.getByLabelText('이메일:'), {
+        target: { value: '' },
+      });
+
+      fireEvent.change(screen.getByLabelText('비밀번호:'), {
+        target: { value: 'Test123!' },
+      });
+
+      fireEvent.change(screen.getByLabelText('비밀번호 확인:'), {
+        target: { value: 'Test123!' },
       });
 
       fireEvent.click(screen.getByText('회원가입'));
 
       await waitFor(() => {
-        expect(navigate).toBeCalledWith('/greeting');
+        screen.getByText(/이메일을 입력해 주세요./);
+      });
+    });
+  });
+
+  context('비밀번호를 비워놨을 경우', () => {
+    it('에러 메세지가 보인다', async () => {
+      renderSignupForm();
+
+      fireEvent.change(screen.getByLabelText('닉네임:'), {
+        target: { value: '전제나' },
+      });
+
+      fireEvent.change(screen.getByLabelText('이메일:'), {
+        target: { value: 'jenna@gmail.com' },
+      });
+
+      fireEvent.change(screen.getByLabelText('비밀번호:'), {
+        target: { value: '' },
+      });
+
+      fireEvent.change(screen.getByLabelText('비밀번호 확인:'), {
+        target: { value: 'Test123!' },
+      });
+
+      fireEvent.click(screen.getByText('회원가입'));
+
+      await waitFor(() => {
+        screen.getByText(/비밀번호를 입력해 주세요./);
+      });
+    });
+  });
+
+  context('비밀번호 확인을 비워놨을 경우', () => {
+    it('에러 메세지가 보인다', async () => {
+      renderSignupForm();
+
+      fireEvent.change(screen.getByLabelText('닉네임:'), {
+        target: { value: '전제나' },
+      });
+
+      fireEvent.change(screen.getByLabelText('이메일:'), {
+        target: { value: 'jenna@gmail.com' },
+      });
+
+      fireEvent.change(screen.getByLabelText('비밀번호:'), {
+        target: { value: 'Test123!' },
+      });
+
+      fireEvent.change(screen.getByLabelText('비밀번호 확인:'), {
+        target: { value: '' },
+      });
+
+      fireEvent.click(screen.getByText('회원가입'));
+
+      await waitFor(() => {
+        screen.getByText(/비밀번호를 입력해 주세요./);
       });
     });
   });

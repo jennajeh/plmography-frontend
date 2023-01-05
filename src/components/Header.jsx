@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useLocalStorage } from 'usehooks-ts';
+import { userStore } from '../stores/UserStore';
 
 const Container = styled.header`
 background-color: black;
@@ -58,6 +59,7 @@ align-items: center;
 const LogoutButton = styled.button`
 font-size: 1em;
 font-weight: bold;
+color: white;
 background: none;
 border: none;
 cursor: pointer;
@@ -73,6 +75,11 @@ export default function Header() {
   const handleClickLogout = () => {
     setAccessToken('');
     navigate('/');
+  };
+
+  const handleClickTestLogin = () => {
+    setAccessToken(userStore.login({ email: 'test@gmail.com', password: 'Test123!' }));
+    navigate(-1);
   };
 
   return (
@@ -127,7 +134,12 @@ export default function Header() {
           <SideMenu>
             <List>
               <li>
-                <button type="button">체험하기</button>
+                <button
+                  type="button"
+                  onClick={handleClickTestLogin}
+                >
+                  체험하기
+                </button>
               </li>
               <li>
                 <StyledLink to="/login">로그인</StyledLink>

@@ -50,8 +50,6 @@ export default class UserApiService {
   async countEmailAndNickname({ email, nickname }) {
     const { data } = await this.instance.get(`/users?countOnly=true&email=${email}&nickname=${nickname}`);
 
-    console.log('INNnnnnnn', data);
-
     return {
       countEmail: data.countEmail,
       countNickname: data.countNickname,

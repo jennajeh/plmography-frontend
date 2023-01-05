@@ -5,10 +5,6 @@ export default class SignupFormStore extends Store {
   constructor() {
     super();
 
-    this.fields = {};
-    this.errors = {};
-    this.timer = null;
-
     this.errorMessages = {
       email: {
         empty: '이메일을 입력해 주세요.',
@@ -128,10 +124,11 @@ export default class SignupFormStore extends Store {
       return;
     }
 
-    const { data } = await userApiService
-      .countEmailAndNickname(this.fields.email, this.fields.nickname);
+    const fieldEmail = this.fields.email;
+    const fieldNickname = this.fields.nickname;
 
-    const { countNickname } = data;
+    const { countNickname } = await userApiService
+      .countEmailAndNickname({ fieldEmail, fieldNickname });
 
     if (countNickname !== 0) {
       this.errors.nickname = this.errorMessages.nickname.exist;
@@ -155,10 +152,11 @@ export default class SignupFormStore extends Store {
       return;
     }
 
-    const { data } = await userApiService
-      .countEmailAndNickname(this.fields.email, this.fields.nickname);
+    const fieldEmail = this.fields.email;
+    const fieldNickname = this.fields.nickname;
 
-    const { countEmail } = data;
+    const { countEmail } = await userApiService
+      .countEmailAndNickname({ fieldEmail, fieldNickname });
 
     if (countEmail !== 0) {
       this.errors.email = this.errorMessages.email.exist;

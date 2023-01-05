@@ -37,7 +37,7 @@ const server = setupServer(
       }));
     }
 
-    if (countOnly && email === 'jenna@gmail.com' && nickname === 'exist') {
+    if (countOnly && email === 'new@gmail.com' && nickname === 'exist') {
       return res(ctx.json({
         countEmail: 0, countNickname: 1,
       }));
@@ -50,7 +50,7 @@ const server = setupServer(
     }
 
     return res(ctx.json({
-      count: 0,
+      countEmail: 0, countNickname: 0,
     }));
   }),
 
