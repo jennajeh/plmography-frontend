@@ -57,13 +57,13 @@ export default class UserStore extends Store {
   }
 
   async updateUser({
-    userId, password, nickname, profileImage,
+    userId, nickname, profileImage,
   }) {
     this.changeEditStatus('processing');
 
     try {
       const data = await userApiService.updateUser({
-        userId, password, nickname, profileImage,
+        userId, nickname, profileImage,
       });
 
       this.user = data;

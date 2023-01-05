@@ -85,12 +85,9 @@ const server = setupServer(
   }))),
 
   rest.patch(`${baseUrl}/users/1`, async (req, res, ctx) => {
-    const {
-      password, nickname, profileImage,
-    } = await req.json();
+    const { nickname, profileImage } = await req.json();
 
-    if (password === 'Asdf123!'
-    && nickname === '강보니'
+    if (nickname === '강보니'
     && profileImage === 'https://source.boringavatars.com/beam/120/nickname=bboni') {
       return res(
         ctx.json({

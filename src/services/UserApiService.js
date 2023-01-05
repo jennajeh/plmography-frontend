@@ -40,9 +40,9 @@ export default class UserApiService {
   }
 
   async updateUser({
-    userId, password, nickname, profileImage,
+    userId, nickname, profileImage,
   }) {
-    const { data } = await this.instance.patch(`/users/${userId}`, { password, nickname, profileImage });
+    const { data } = await this.instance.patch(`/users/${userId}`, { nickname, profileImage });
 
     return data;
   }

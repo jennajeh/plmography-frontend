@@ -56,7 +56,6 @@ describe('UserStore', () => {
     it('해당 유저의 프로필 정보를 바꾼다', async () => {
       await userStore.updateUser({
         userId: 1,
-        password: 'Asdf123!',
         nickname: '강보니',
         profileImage: 'https://source.boringavatars.com/beam/120/nickname=bboni',
       });
