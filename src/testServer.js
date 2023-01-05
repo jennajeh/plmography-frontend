@@ -8,17 +8,21 @@ const baseUrl = config.apiBaseUrl;
 const server = setupServer(
   rest.post(`${baseUrl}/users`, async (req, res, ctx) => {
     const {
-      email, nickname, password,
+      email, nickname, password, gender, birthYear,
     } = await req.json();
 
     if (email === 'jenna@gmail.com'
     && nickname === '전제나'
-    && password === 'Test123!') {
+    && password === 'Test123!'
+    && gender === '여성'
+    && birthYear === '1990') {
       return res(
         ctx.json({
           id: 1,
           email: 'jenna@gmail.com',
           nickname: '전제나',
+          gender: '여성',
+          birthYear: '1990',
         }),
       );
     }

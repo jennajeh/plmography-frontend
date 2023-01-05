@@ -17,6 +17,11 @@ const StyledInput = styled.input`
   }
 `;
 
+const Radio = styled.input`
+  display: flex;
+  gap: 1em;
+`;
+
 const Label = styled.label`
   font-weight: 700;
   display: block;
@@ -62,6 +67,23 @@ export default function Input({
       {errorMessage
         ? <Error>{errorMessage}</Error>
         : <Message>{message}</Message>}
+    </>
+  );
+}
+
+export function RadioInput({
+  name, label, type, value, onChange,
+}) {
+  return (
+    <>
+      <Label htmlFor={`input-${name}`}>{label}</Label>
+      <Radio
+        type={type}
+        name={name}
+        id={`input-${name}`}
+        value={value}
+        onChange={onChange}
+      />
     </>
   );
 }

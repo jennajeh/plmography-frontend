@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { useLocalStorage } from 'usehooks-ts';
 import useUserStore from '../hooks/useUserStore';
 import useSignupFormStore from '../hooks/useSignupFormStore';
-import Input from './common/Input';
+import Input, { RadioInput } from './common/Input';
 import Button from './common/Button';
 
 const Container = styled.article`
@@ -41,7 +41,9 @@ export default function SignupForm() {
   const signupFormStore = useSignupFormStore();
   const [, setAccessToken] = useLocalStorage('accessToken', '');
 
-  const { nickname, email, password } = signupFormStore.fields;
+  const {
+    nickname, email, password, gender, birthYear,
+  } = signupFormStore.fields;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -49,15 +51,17 @@ export default function SignupForm() {
     await signupFormStore.validate();
 
     if (signupFormStore.isValidateSuccessful) {
-      await userStore.signup({ email, nickname, password });
+      await userStore.signup({
+        email, nickname, password, gender, birthYear,
+      });
 
       const accessToken = await userStore.login({ email, password });
 
       setAccessToken(accessToken);
 
-      if (userStore.signupSuccessful) {
-        navigate('/greeting');
-      }
+      // if (userStore.signupSuccessful) {
+      //   navigate('/greeting');
+      // }
     }
 
     // const accessToken = await userStore.login({ email, password });
@@ -65,11 +69,11 @@ export default function SignupForm() {
     // setAccessToken(accessToken);
   };
 
-  // useEffect(() => {
-  //   if (userStore.signupSuccessful) {
-  //     navigate('/greeting');
-  //   }
-  // }, [userStore.signupSuccessful]);
+  useEffect(() => {
+    if (userStore.signupSuccessful) {
+      navigate('/greeting');
+    }
+  }, [userStore.signupSuccessful]);
 
   return (
     <Container>
@@ -119,36 +123,35 @@ export default function SignupForm() {
             />
           </InputWrapper>
         </Inputs>
-        {/* <Label htmlFor="radio-gender">성별:</Label>
-        <input
-          id="radio-gender"
-          type="radio"
+        <label htmlFor="radio-gender">성별:</label>
+        <RadioInput
           name="gender"
-          value={signupFormStore.fields.gender || ''}
-          onClick={(e) => signupFormStore.changeGender(e.target.value)}
-          // message="성별을 선택해 주세요."
-          // errorMessage={signupFormStore.errors.gender}
-        />
-        <label htmlFor="radio-woman">여성</label>
-        <input
-          id="radio-gender"
           type="radio"
-          name="gender"
+          label="여성"
+          checked="checked"
           value={signupFormStore.fields.gender || ''}
-          onClick={(e) => signupFormStore.changeGender(e.target.value)}
-          // message="성별을 선택해 주세요."
-          // errorMessage={signupFormStore.errors.gender}
+          onChange={(e) => signupFormStore.changeGender(e.target.value)}
         />
-        <label htmlFor="radio-man">남성</label>
-        <Label htmlFor="select-birth">출생연도:</Label>
-        <select name="birth" value={signupFormStore.fields.birth || ''} onChange={(e) => signupFormStore.changeBirth(e.target.value)}>
-          <option value="">출생 연도</option>
+        <RadioInput
+          name="gender"
+          type="radio"
+          label="남성"
+          value={signupFormStore.fields.gender || ''}
+          onChange={(e) => signupFormStore.changeGender(e.target.value)}
+        />
+        <label htmlFor="select-birth">출생연도:</label>
+        <select
+          id="select-birth"
+          name="birth"
+          value={signupFormStore.fields.birth || ''}
+          onChange={(e) => signupFormStore.changeBirth(e.target.value)}
+        >
           <option value="1990">1990</option>
           <option value="1991">1991</option>
           <option value="1992">1992</option>
           <option value="1993">1993</option>
           <option value="1994">1994</option>
-        </select> */}
+        </select>
         <Button type="submit">회원가입</Button>
       </form>
     </Container>

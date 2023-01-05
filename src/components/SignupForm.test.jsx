@@ -1,6 +1,7 @@
 import {
   fireEvent, render, screen, waitFor,
 } from '@testing-library/react';
+import { userEvent } from '@testing-library/user-event';
 import { ThemeProvider } from 'styled-components';
 import { userStore } from '../stores/UserStore';
 import defaultTheme from '../styles/defaultTheme';
@@ -35,7 +36,6 @@ describe('SignupForm', () => {
   }
 
   beforeEach(() => {
-    jest.clearAllMocks();
     userStore.resetSignupStatus();
   });
 
@@ -59,10 +59,19 @@ describe('SignupForm', () => {
   //       target: { value: '전제나' },
   //     });
 
-  //     fireEvent.click(screen.getByText('회원가입'));
+  //     fireEvent.click(screen.getByLabelText('여성'));
+
+  //     fireEvent.click(screen.getByLabelText('여성'));
+
+  //     userEvent.selectOptions(
+  //       screen.getByRole('combobox'),
+  //       screen.getByRole('option', { name: '1990' }),
+  //     );
+
+  //     fireEvent.click(screen.getByRole('button', { name: '회원가입' }));
 
   //     await waitFor(() => {
-  //       expect(navigate).toBeCalledWith('/greeting');
+  //       screen.getByText(/회원가입이 완료되었습니다./);
   //     });
   //   });
   // });
