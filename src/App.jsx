@@ -19,6 +19,7 @@ import ProfilePage from './pages/ProfilePage';
 import SignupPage from './pages/SignupPage';
 import GreetingPage from './pages/GreetingPage';
 import Header from './components/header-footer/Header';
+import { reviewApiService } from './services/ReviewApiService';
 
 const Main = styled.main`
   height: calc(100vh - 64px);
@@ -31,6 +32,7 @@ export default function App() {
   useEffect(() => {
     userApiService.setAccessToken(accessToken);
     contentApiService.setAccessToken(accessToken);
+    reviewApiService.setAccessToken(accessToken);
   }, [accessToken]);
 
   return (
