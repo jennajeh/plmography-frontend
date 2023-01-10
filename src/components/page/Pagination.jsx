@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import styled from 'styled-components';
 
-import usePagination from '../hooks/usePagination';
+import usePagination from '../../hooks/usePagination';
 
 export default function Pagination({ url, total, current }) {
   const navigate = useNavigate();

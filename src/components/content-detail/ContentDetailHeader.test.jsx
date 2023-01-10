@@ -2,8 +2,8 @@ import {
   cleanup, render, screen, waitFor,
 } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
-import defaultTheme from '../styles/defaultTheme';
-import ContentDetailInformation from './ContentDetailInformation';
+import defaultTheme from '../../styles/defaultTheme';
+import ContentDetailHeader from './ContentDetailHeader';
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -13,16 +13,16 @@ afterEach(() => {
   cleanup();
 });
 
-test('ContentDetailInformation', async () => {
+test('ContentDetailHeader', async () => {
   render((
     <ThemeProvider theme={defaultTheme}>
-      <ContentDetailInformation />
+      <ContentDetailHeader />
     </ThemeProvider>
   ));
 
   await waitFor(() => {
-    screen.getByText(/작품 정보/);
-    screen.getByText(/출연/);
-    screen.getByText(/관련 영상/);
+    screen.getByText(/찜하기/);
+    screen.getByText(/봤어요/);
+    screen.getByText(/리뷰쓰기/);
   });
 });

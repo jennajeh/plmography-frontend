@@ -4,8 +4,8 @@ import {
 import { act } from 'react-dom/test-utils';
 import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import { contentStore } from '../stores/ContentStore';
-import defaultTheme from '../styles/defaultTheme';
+import { contentStore } from '../../stores/ContentStore';
+import defaultTheme from '../../styles/defaultTheme';
 import ContentsList from './ContentsList';
 
 let contents;

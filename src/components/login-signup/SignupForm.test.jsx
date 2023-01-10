@@ -1,10 +1,9 @@
 import {
   fireEvent, render, screen, waitFor,
 } from '@testing-library/react';
-import { userEvent } from '@testing-library/user-event';
 import { ThemeProvider } from 'styled-components';
-import { userStore } from '../stores/UserStore';
-import defaultTheme from '../styles/defaultTheme';
+import { userStore } from '../../stores/UserStore';
+import defaultTheme from '../../styles/defaultTheme';
 import SignupForm from './SignupForm';
 
 /* eslint-disable react/prop-types */

@@ -1,9 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react/prop-types */
 import { useEffect } from 'react';
-import useContentStore from '../hooks/useContentStore';
-import useTmdbCreditsApiStore from '../hooks/useTmdbCreditsApiStore';
-import useTmdbYoutubeApiStore from '../hooks/useTmdbYoutubeApiStore';
+import useContentStore from '../../hooks/useContentStore';
+import useTmdbYoutubeApiStore from '../../hooks/useTmdbYoutubeApiStore';
+import useTmdbCreditsApiStore from '../../hooks/useTmdbCreditsApiStore';
 
 export default function ContentDetailInformation() {
   const contentStore = useContentStore();
@@ -38,13 +38,13 @@ export default function ContentDetailInformation() {
   return (
     <>
       <div>
-        <h3>작품 정보</h3>
+        <h3 style={{ color: 'red' }}>작품 정보</h3>
         <br />
         <p>{description}</p>
       </div>
       <br />
       <div>
-        <h3>출연</h3>
+        <h3 style={{ color: 'red' }}>출연</h3>
         <ul>
           {credits ? (
             <li>
@@ -67,7 +67,7 @@ export default function ContentDetailInformation() {
       </div>
       <br />
       <div>
-        <h3>관련 영상</h3>
+        <h3 style={{ color: 'red' }}>관련 영상</h3>
       </div>
       <div>
         {videoUrl && videoUrl.results.length > 0

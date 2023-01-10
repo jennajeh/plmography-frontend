@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useEffect } from 'react';
 import { useLocalStorage } from 'usehooks-ts';
-import useUserStore from '../hooks/useUserStore';
-import useSignupFormStore from '../hooks/useSignupFormStore';
-import Input, { RadioInput } from './common/Input';
-import Button from './common/Button';
+import useUserStore from '../../hooks/useUserStore';
+import useSignupFormStore from '../../hooks/useSignupFormStore';
+import Input, { RadioInput } from '../common/Input';
+import Button from '../common/Button';
 
 const Container = styled.article`
   display: flex;

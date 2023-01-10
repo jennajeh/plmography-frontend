@@ -2,7 +2,6 @@ import { Route, Routes } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
 import { useLocalStorage } from 'usehooks-ts';
 import { useEffect } from 'react';
-import Header from './components/Header';
 import HomePage from './pages/HomePage';
 import RecommendationsPage from './pages/RecommendationsPage';
 import CommunityPage from './pages/CommunityPage';
@@ -19,6 +18,7 @@ import { contentApiService } from './services/ContentApiService';
 import ProfilePage from './pages/ProfilePage';
 import SignupPage from './pages/SignupPage';
 import GreetingPage from './pages/GreetingPage';
+import Header from './components/header-footer/Header';
 
 const Main = styled.main`
   height: calc(100vh - 64px);

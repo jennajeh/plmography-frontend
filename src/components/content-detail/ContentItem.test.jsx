@@ -3,8 +3,8 @@ import { ThemeProvider } from 'styled-components';
 import {
   cleanup, render, screen, waitFor,
 } from '@testing-library/react';
-import defaultTheme from '../styles/defaultTheme';
-import { contentStore } from '../stores/ContentStore';
+import defaultTheme from '../../styles/defaultTheme';
+import { contentStore } from '../../stores/ContentStore';
 import ContentItem from './ContentItem';
 
 beforeEach(() => {

@@ -2,10 +2,10 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useLocalStorage } from 'usehooks-ts';
 import styled from 'styled-components';
-import useUserStore from '../hooks/useUserStore';
-import useLoginFormStore from '../hooks/useLoginFormStore';
-import Input from './common/Input';
-import Button from './common/Button';
+import useUserStore from '../../hooks/useUserStore';
+import useLoginFormStore from '../../hooks/useLoginFormStore';
+import Input from '../common/Input';
+import Button from '../common/Button';
 
 const Container = styled.article`
   display: flex;

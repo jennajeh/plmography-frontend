@@ -1,7 +1,7 @@
 import { useLocation, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
-import useContentStore from '../hooks/useContentStore';
-import Pagination from './Pagination';
+import useContentStore from '../../hooks/useContentStore';
+import Pagination from '../page/Pagination';
 import ContentItem from './ContentItem';
 
 const List = styled.ul`

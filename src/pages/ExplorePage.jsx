@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
-import ContentsList from '../components/ContentsList';
-import ModalCategory from '../components/ModalCategory';
+import ContentsList from '../components/content-detail/ContentsList';
+import ModalCategory from '../components/modal/ModalCategory';
 import useContentStore from '../hooks/useContentStore';
 
 const Container = styled.div`

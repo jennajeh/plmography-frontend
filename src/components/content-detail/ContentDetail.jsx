@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import styled from 'styled-components';
-import useContentStore from '../hooks/useContentStore';
+import useContentStore from '../../hooks/useContentStore';
 import ContentDetailHeader from './ContentDetailHeader';
 import ContentDetailInformation from './ContentDetailInformation';
 import ContentDetailPlatform from './ContentDetailPlatform';

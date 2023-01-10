@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useLocalStorage } from 'usehooks-ts';
-import { userStore } from '../stores/UserStore';
+import { userStore } from '../../stores/UserStore';
 
 const Container = styled.header`
 background-color: black;

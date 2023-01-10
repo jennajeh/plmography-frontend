@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import SignupForm from '../components/SignupForm';
+import SignupForm from '../components/login-signup/SignupForm';
 import useSignupFormStore from '../hooks/useSignupFormStore';
 import useUserStore from '../hooks/useUserStore';
 

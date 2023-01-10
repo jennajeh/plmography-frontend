@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react/prop-types */
-import useContentStore from '../hooks/useContentStore';
+import useContentStore from '../../hooks/useContentStore';
 
 export default function ContentDetailPlatform() {
   const contentStore = useContentStore();
@@ -13,7 +13,7 @@ export default function ContentDetailPlatform() {
 
   return (
     <div>
-      <h3>여기서 감상할 수 있어요</h3>
+      <h3 style={{ color: 'red' }}>여기서 감상할 수 있어요</h3>
       <br />
       <div>
         <ul>

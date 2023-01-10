@@ -2,8 +2,8 @@ import {
   cleanup, render, screen, waitFor,
 } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
-import { contentStore } from '../stores/ContentStore';
-import defaultTheme from '../styles/defaultTheme';
+import { contentStore } from '../../stores/ContentStore';
+import defaultTheme from '../../styles/defaultTheme';
 import ContentDetail from './ContentDetail';
 
 beforeEach(() => {
