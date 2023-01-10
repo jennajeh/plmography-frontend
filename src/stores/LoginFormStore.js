@@ -4,9 +4,6 @@ export default class LoginFormStore extends Store {
   constructor() {
     super();
 
-    this.fields = {};
-    this.errors = {};
-
     this.errorMessages = {
       email: {
         empty: '이메일을 입력해 주세요.',
