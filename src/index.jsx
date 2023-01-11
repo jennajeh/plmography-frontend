@@ -2,6 +2,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import { contentApiService } from './services/ContentApiService';
+import { reviewApiService } from './services/ReviewApiService';
 import { userApiService } from './services/UserApiService';
 
 const container = document.getElementById('app');
@@ -12,6 +13,7 @@ const accessToken = JSON.parse(data);
 
 userApiService.setAccessToken(accessToken);
 contentApiService.setAccessToken(accessToken);
+reviewApiService.setAccessToken(accessToken);
 
 root.render((
   <BrowserRouter>
