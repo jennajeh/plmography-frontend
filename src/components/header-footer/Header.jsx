@@ -77,9 +77,10 @@ export default function Header() {
     navigate('/');
   };
 
-  const handleClickTestLogin = () => {
-    setAccessToken(userStore.login({ email: 'test@gmail.com', password: 'Test123!' }));
-    navigate(-1);
+  const handleClickTestLogin = async () => {
+    const token = await userStore.login({ email: 'jenna@gmail.com', password: 'Test123!' });
+
+    setAccessToken(token);
   };
 
   return (
