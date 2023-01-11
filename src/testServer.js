@@ -208,7 +208,7 @@ const server = setupServer(
 
   rest.get(`${baseUrl}/reviews/1`, async (req, res, ctx) => res(ctx.json({
     id: 1,
-    writer: { id: 1, nickname: '최쩨쩨' },
+    writer: { id: 1, nickname: '최쩨쩨', profileImage: 'https://source.boringavatars.com/beam/120/?nickname=zzezze' },
     contentId: 1,
     starRate: 4,
     reviewBody: '오랜만에 힐링함',
