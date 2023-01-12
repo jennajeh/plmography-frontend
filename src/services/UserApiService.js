@@ -33,22 +33,45 @@ export default class UserApiService {
     return data;
   }
 
-  async fetchUser(userId) {
-    const { data } = await this.instance.get(`/users/${userId}`);
+  async fetchMe() {
+    const { data } = await this.instance.get('/users/me');
 
-    return data;
+    return {
+      accessToken: data.accessToken,
+      email: data.email,
+      nickname: data.nickname,
+      gender: data.gender,
+      birthYear: data.birthYear,
+      profileImage: data.profileImage,
+    };
   }
 
-  async updateUser({
-    userId, nickname, profileImage,
-  }) {
-    const { data } = await this.instance.patch(`/users/${userId}`, { nickname, profileImage });
+  async fetchUser(nickname) {
+    const { data } = await this.instance.get('/users/profile', {
+      params: {
+        nickname,
+      },
+    });
+
+    return { data };
+  }
+
+  async fetchUsers() {
+    const { data } = await this.instance.get('/users');
+
+    const { users } = data;
+
+    return users;
+  }
+
+  async changeProfile({ nickname, profileImage }) {
+    const { data } = await this.instance.patch('/users', { nickname, profileImage });
 
     return data;
   }
 
   async countEmailAndNickname({ email, nickname }) {
-    const { data } = await this.instance.get(`/users?countOnly=true&email=${email}&nickname=${nickname}`);
+    const { data } = await this.instance.get(`/users/checkDuplicate?countOnly=true&email=${email}&nickname=${nickname}`);
 
     return {
       countEmail: data.countEmail,

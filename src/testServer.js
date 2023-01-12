@@ -30,7 +30,7 @@ const server = setupServer(
     return res(ctx.status(400));
   }),
 
-  rest.get(`${baseUrl}/users`, async (req, res, ctx) => {
+  rest.get(`${baseUrl}/users/checkDuplicate`, async (req, res, ctx) => {
     const countOnly = req.url.searchParams.get('countOnly');
     const email = req.url.searchParams.get('email');
     const nickname = req.url.searchParams.get('nickname');
@@ -58,6 +58,17 @@ const server = setupServer(
     }));
   }),
 
+  rest.get(`${baseUrl}/users/me`, async (req, res, ctx) => res(
+    ctx.json({
+      accessToken: 'ACCESS.TOKEN',
+      email: 'jenna@gmail.com',
+      nickname: '전제나',
+      gender: '여성',
+      birthYear: '1990',
+      profileImage: 'https://source.boringavatars.com/beam/120/?nickname=jenna',
+    }),
+  )),
+
   rest.post(`${baseUrl}/session`, async (req, res, ctx) => {
     const {
       email, password,
@@ -74,32 +85,56 @@ const server = setupServer(
     return res(ctx.status(400));
   }),
 
-  rest.get(`${baseUrl}/users/1`, async (req, res, ctx) => res(ctx.json({
-    id: 1,
-    email: 'jenna@gmail.com',
-    nickname: '전제나',
-    password: 'Test123!',
-    gender: '여성',
-    birthYear: 1994,
-    profileImage: 'https://source.boringavatars.com/beam/120/nickname=jenna',
-  }))),
+  rest.get(`${baseUrl}/users/profile`, async (req, res, ctx) => {
+    const param = req.url.searchParams.get('nickname');
 
-  rest.patch(`${baseUrl}/users/1`, async (req, res, ctx) => {
-    const { nickname, profileImage } = await req.json();
-
-    if (nickname === '강보니'
-    && profileImage === 'https://source.boringavatars.com/beam/120/nickname=bboni') {
-      return res(
-        ctx.json({
-          id: 1,
-          nickname: '강보니',
-          profileImage: 'https://source.boringavatars.com/beam/120/nickname=bboni',
-        }),
-      );
+    if (param === 'jenna') {
+      return res(ctx.json({
+        id: 1,
+        email: 'jenna@gmail.com',
+        nickname: 'jenna',
+        gender: '여성',
+        birthYear: 1994,
+        profileImage: 'https://source.boringavatars.com/beam/120/nickname=jenna',
+      }));
     }
 
-    return res(ctx.status(400));
+    return res.status(400);
   }),
+
+  rest.patch(`${baseUrl}/users`, async (req, res, ctx) => res(ctx.json({
+    nickname: '강보니',
+    profileImage: 'image',
+  }))),
+
+  rest.get(`${baseUrl}/users`, async (req, res, ctx) => res(ctx.json({
+    users: [
+      {
+        id: 1,
+        email: 'jenna@gmail.com',
+        nickname: 'jenna',
+        gender: '여성',
+        birthYear: 1994,
+        profileImage: 'https://source.boringavatars.com/beam/120/nickname=jenna',
+      },
+      {
+        id: 2,
+        email: 'boni@gmail.com',
+        nickname: 'boni',
+        gender: '여성',
+        birthYear: 1995,
+        profileImage: 'https://source.boringavatars.com/beam/120/nickname=boni',
+      },
+      {
+        id: 3,
+        email: 'zzezze@gmail.com',
+        nickname: 'zzezze',
+        gender: '남성',
+        birthYear: 1998,
+        profileImage: 'https://source.boringavatars.com/beam/120/nickname=zzezze',
+      },
+    ],
+  }))),
 
   rest.get(`${baseUrl}/contents`, async (req, res, ctx) => res(
     ctx.json({

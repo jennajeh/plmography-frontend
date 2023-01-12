@@ -6,6 +6,10 @@ export default class UserStore extends Store {
     super();
 
     this.user = {};
+    this.users = [];
+
+    this.nickname = '';
+    this.profileImage = '';
 
     this.loginStatus = '';
     this.signupStatus = '';
@@ -48,29 +52,50 @@ export default class UserStore extends Store {
     }
   }
 
-  async fetchUser(userId) {
-    const user = await userApiService.fetchUser(userId);
+  async fetchMe() {
+    const {
+      email, nickname, gender, birthYear, profileImage,
+    } = await userApiService.fetchMe();
 
-    this.user = user;
+    this.user.email = email;
+    this.user.nickname = nickname;
+    this.user.gender = gender;
+    this.user.birthYear = birthYear;
+    this.user.profileImage = profileImage;
 
     this.publish();
   }
 
-  async updateUser({
-    userId, nickname, profileImage,
-  }) {
+  async fetchUser(userNickname) {
+    const { nickname, profileImage } = await userApiService.fetchUser(userNickname);
+
+    this.nickname = nickname;
+    this.profileImage = profileImage;
+
+    this.publish();
+  }
+
+  async fetchUsers() {
+    const users = await userApiService.fetchUsers();
+
+    this.users = users;
+
+    this.publish();
+  }
+
+  async changeProfile({ nickname, profileImage }) {
     this.changeEditStatus('processing');
 
     try {
-      const data = await userApiService.updateUser({
-        userId, nickname, profileImage,
+      const user = await userApiService.changeProfile({
+        nickname, profileImage,
       });
 
-      this.user = data;
+      this.user = user;
 
       this.changeEditStatus('successful');
 
-      return data;
+      return user;
     } catch (e) {
       this.changeEditStatus('failed');
 
