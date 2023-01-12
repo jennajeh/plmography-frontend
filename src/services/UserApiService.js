@@ -64,7 +64,7 @@ export default class UserApiService {
     return users;
   }
 
-  async changeProfile({ nickname, profileImage }) {
+  async changeProfile(nickname, profileImage) {
     const { data } = await this.instance.patch('/users', { nickname, profileImage });
 
     return data;
@@ -85,6 +85,12 @@ export default class UserApiService {
     return {
       accessToken: data.accessToken,
     };
+  }
+
+  async uploadImage(formData) {
+    const { data } = await this.instance.post('/users/upload-image', formData);
+
+    return data;
   }
 }
 

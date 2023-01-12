@@ -5,6 +5,7 @@ import config from './config';
 
 const baseUrl = config.apiBaseUrl;
 
+// Users
 const server = setupServer(
   rest.post(`${baseUrl}/users`, async (req, res, ctx) => {
     const {
@@ -136,6 +137,11 @@ const server = setupServer(
     ],
   }))),
 
+  rest.post(`${baseUrl}/users/upload-image`, async (req, res, ctx) => res(ctx.json({
+    profileImage: 'image url',
+  }))),
+
+  // Contents
   rest.get(`${baseUrl}/contents`, async (req, res, ctx) => res(
     ctx.json({
       contents: [
@@ -192,6 +198,7 @@ const server = setupServer(
     }),
   )),
 
+  // Reviews
   rest.get(`${baseUrl}/reviews`, async (req, res, ctx) => res(
     ctx.json({
       reviews: [
