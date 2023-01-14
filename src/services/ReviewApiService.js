@@ -51,8 +51,8 @@ export default class ReviewApiService {
     };
   }
 
-  async fetchReview(id) {
-    const { data } = await this.instance.get(`/reviews/${id}`);
+  async fetchMyReview() {
+    const { data } = await this.instance.get('/reviews/me');
 
     return data;
   }

@@ -38,6 +38,7 @@ export default class UserApiService {
 
     return {
       accessToken: data.accessToken,
+      id: data.id,
       email: data.email,
       nickname: data.nickname,
       gender: data.gender,

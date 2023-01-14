@@ -52,13 +52,13 @@ export default class ReviewStore extends Store {
     }
   }
 
-  async fetchReview(id) {
+  async fetchMyReview() {
     this.startReviewLoad();
 
     try {
-      const review = await reviewApiService.fetchReview(id);
+      const data = await reviewApiService.fetchMyReview();
 
-      this.completeReviewLoad(review);
+      this.completeReviewLoad(data);
     } catch (e) {
       this.failReviewLoad();
     }
@@ -109,8 +109,16 @@ export default class ReviewStore extends Store {
     this.publish();
   }
 
-  isMyReview(userId) {
-    return this.review?.writer.id === userId;
+  isMyReview(tmdbId) {
+    return this.review.contentId === tmdbId;
+  }
+
+  isOtherReview(userId) {
+    return this.reviews.filter((review) => review.writer.id !== userId);
+  }
+
+  isSameContentReview(tmdbId) {
+    return this.reviews.filter((review) => review.contentId === tmdbId);
   }
 
   reset() {
