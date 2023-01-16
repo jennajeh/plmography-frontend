@@ -6,6 +6,7 @@ export default class ReviewStore extends Store {
     super();
 
     this.reviews = [];
+    this.myReviews = [];
     this.review = {};
 
     this.isReviewsLoading = false;
@@ -52,26 +53,29 @@ export default class ReviewStore extends Store {
     }
   }
 
-  async fetchMyReview() {
-    this.startReviewLoad();
+  async fetchMyReviews() {
+    this.startMyReviewsLoad();
 
     try {
-      const data = await reviewApiService.fetchMyReview();
+      const data = await reviewApiService.fetchMyReviews();
 
-      this.completeReviewLoad(data);
+      this.isReviewLoading = false;
+
+      this.myReviews = data;
+
+      this.publish();
     } catch (e) {
-      this.failReviewLoad();
+      this.failMyReviewsLoad();
     }
   }
 
-  async modify({ reviewBody }) {
+  async modify(body, id) {
     this.startModify();
 
     try {
-      await reviewApiService.modifyReview({
-        ...this.review,
-        reviewBody,
-      });
+      await reviewApiService.modifyReview(body, id);
+
+      this.review.reviewBody = body;
 
       this.completeModify();
 
@@ -107,20 +111,21 @@ export default class ReviewStore extends Store {
     this.publish();
   }
 
-  isMyReview(tmdbId) {
-    return this.review.contentId === tmdbId;
-  }
-
   isOtherReview(userId) {
     return this.reviews.filter((review) => review.writer.id !== userId);
   }
 
-  isSameContentReview(tmdbId) {
+  isMySameContentReview(tmdbId) {
+    return this.myReviews.filter((review) => review.contentId === tmdbId);
+  }
+
+  isOtherSameContentReview(tmdbId) {
     return this.reviews.filter((review) => review.contentId === tmdbId);
   }
 
   reset() {
     this.reviews = [];
+    this.myReviews = [];
     this.review = {};
 
     this.createStatus = '';
@@ -144,16 +149,16 @@ export default class ReviewStore extends Store {
     this.publish();
   }
 
-  startReviewLoad() {
+  startMyReviewsLoad() {
     this.isReviewLoading = true;
-    this.review = {};
+    this.myReviews = [];
 
     this.publish();
   }
 
-  completeReviewLoad(review) {
+  completeMyReviewsLoad(myReviews) {
     this.isReviewLoading = false;
-    this.review = review;
+    this.myReviews = myReviews;
 
     this.publish();
   }
@@ -165,9 +170,9 @@ export default class ReviewStore extends Store {
     this.publish();
   }
 
-  failReviewLoad() {
+  failMyReviewsLoad() {
     this.isReviewLoading = false;
-    this.review = {};
+    this.myReviews = [];
 
     this.publish();
   }

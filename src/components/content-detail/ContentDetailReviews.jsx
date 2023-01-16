@@ -20,22 +20,20 @@ export default function ContentDetailReviews() {
   const reviewStore = useReviewStore();
   const userStore = useUserStore();
   const contentStore = useContentStore();
-  const reviewFormStore = useReviewFormStore();
   const location = useLocation();
   const [searchParams] = useSearchParams();
 
   const page = searchParams.get('page') ?? 1;
   const { user } = userStore;
-  const { reviews, review } = reviewStore;
+  const { myReviews } = reviewStore;
+
   const { content } = contentStore;
 
   const { id: userId } = user;
 
-  const myReview = reviewStore.isMyReview(Number(content.tmdbId));
-  const otherReview = reviewStore.isOtherReview(userId);
-  const sameContentReview = reviewStore.isSameContentReview(Number(content.tmdbId));
-
-  console.log(review);
+  const otherReviews = reviewStore.isOtherReview(userId);
+  const mySameContentReview = reviewStore.isMySameContentReview(Number(content.tmdbId));
+  const otherSameContentReview = reviewStore.isOtherSameContentReview(Number(content.tmdbId));
 
   const handleClickLike = () => {
     if (!accessToken) {
@@ -48,29 +46,10 @@ export default function ContentDetailReviews() {
   };
 
   const handleClickDelete = async () => {
-    await reviewStore.delete(review.id);
+    await reviewStore.delete(mySameContentReview[0].id);
 
-    reviewStore.fetchMyReview();
-    // TODO : 등록된 나의 리뷰가 없을 때 400 에러 나는 것 고쳐야 함.
+    reviewStore.fetchMyReviews();
   };
-
-  const handleClickSubmit = (e) => {
-    e.preventDefault();
-
-    reviewFormStore.validate();
-
-    if (reviewFormStore.isValidateSuccessful) {
-      reviewStore.modify({
-        body: reviewFormStore.body,
-      });
-
-      reviewFormStore.reset();
-    }
-  };
-
-  useEffect(() => {
-    reviewFormStore.fillFields(review);
-  }, [review]);
 
   if (reviewStore.isReviewLoading || !reviewStore.review) {
     return (
@@ -88,43 +67,49 @@ export default function ContentDetailReviews() {
             <h3 style={{ color: 'red' }}>리뷰</h3>
             <div>
               <h4 style={{ color: 'blue' }}>내가 쓴 리뷰</h4>
-              {review && myReview ? (
-                <>
-                  <p>
-                    createdAt:
-                    {' '}
-                    {dateFormat(review.updatedAt)}
-                  </p>
-                  <p>
-                    nickname:
-                    {' '}
-                    {review.writer?.nickname}
-                  </p>
-                  <p>
-                    profileImage:
-                    {' '}
-                    {review.writer?.profileImage}
-                  </p>
-                  <p>
-                    starRate:
-                    {' '}
-                    {review.starRate}
-                  </p>
-                  <p>
-                    reviewBody:
-                    {' '}
-                    {review.reviewBody}
-                  </p>
-                  <Link to={`/reviews/${review.id}/edit`}>
-                    수정하기
-                  </Link>
-                  <Modal
-                    buttonName="삭제하기"
-                    content="정말 삭제하시겠습니까?"
-                    onClose={handleClickDelete}
-                  />
-                </>
-              ) : (
+              {myReviews.length && mySameContentReview && (
+                <ul>
+                  {mySameContentReview.map((review) => (
+                    <li key={review.id}>
+                      <p>
+                        createdAt:
+                        {' '}
+                        {dateFormat(review.updatedAt)}
+                      </p>
+                      <p>
+                        nickname:
+                        {' '}
+                        {review.writer?.nickname}
+                      </p>
+                      <p>
+                        profileImage:
+                        {' '}
+                        {review.writer?.profileImage}
+                      </p>
+                      <p>
+                        starRate:
+                        {' '}
+                        {review.starRate}
+                      </p>
+                      <p>
+                        reviewBody:
+                        {' '}
+                        {review.reviewBody}
+                      </p>
+                      <Link to={`/reviews/${review.id}/edit`}>
+                        수정하기
+                      </Link>
+                      <Modal
+                        buttonName="삭제하기"
+                        content="정말 삭제하시겠습니까?"
+                        onClose={handleClickDelete}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {(!myReviews || !mySameContentReview) && (
+              // TODO : 안나오는 것 처리
                 <div>
                   <p>⭐️ 짧게라도 좋으니 작품에 대해 감상을 기록해보세요.</p>
                   <button type="submit">리뷰 작성하기</button>
@@ -136,37 +121,37 @@ export default function ContentDetailReviews() {
       ) : null}
       <div>
         <h4 style={{ color: 'blue' }}>모든 리뷰</h4>
-        {reviews.length && otherReview && sameContentReview ? (
+        {otherReviews.length && otherSameContentReview ? (
           <ul>
-            {sameContentReview.map((userReview) => (
-              <li key={userReview.id}>
+            {otherSameContentReview.map((review) => (
+              <li key={review.id}>
                 <p>
                   createdAt:
                   {' '}
-                  {dateFormat(userReview.updatedAt)}
+                  {dateFormat(review.updatedAt)}
                 </p>
                 <p>
                   nickname:
                   {' '}
-                  {userReview.writer.nickname}
+                  {review.writer.nickname}
                 </p>
                 <p>
                   profile:
                   {' '}
-                  {userReview.writer.profileImage}
+                  {review.writer.profileImage}
                 </p>
                 <p>
                   starRate:
                   {' '}
-                  {userReview.starRate}
+                  {review.starRate}
                 </p>
                 <p>
                   reviewBody:
                   {' '}
-                  {userReview.reviewBody}
+                  {review.reviewBody}
                 </p>
                 <Likes
-                  count={userReview.likeUserIds.length}
+                  count={review.likeUserIds.length}
                   onClick={handleClickLike}
                 />
                 <button type="button">댓글달기</button>

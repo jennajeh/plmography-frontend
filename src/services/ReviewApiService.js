@@ -51,15 +51,17 @@ export default class ReviewApiService {
     };
   }
 
-  async fetchMyReview() {
+  async fetchMyReviews() {
     const { data } = await this.instance.get('/reviews/me');
 
-    return data;
+    const { myReviews } = data;
+
+    return myReviews;
   }
 
-  async modifyReview(review) {
-    const { data } = await this.instance.patch(`/reviews/${review.id}`, {
-      ...review,
+  async modifyReview(reviewBody, id) {
+    const { data } = await this.instance.patch(`/reviews/${id}`, {
+      reviewBody, id,
     });
 
     return {

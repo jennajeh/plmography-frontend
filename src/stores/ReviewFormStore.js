@@ -21,7 +21,7 @@ export default class ReviewFormStore extends Store {
   }
 
   fillFields(review) {
-    this.body = review.body;
+    this.body = review.reviewBody;
 
     this.publish();
   }

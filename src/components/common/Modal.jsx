@@ -26,7 +26,9 @@ const Dialog = styled.div`
   }
 `;
 
-export default function Modal({ buttonName, content, onClose }) {
+export default function Modal({
+  buttonName, content, onClose,
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const modalRef = useRef(null);
 
@@ -36,7 +38,7 @@ export default function Modal({ buttonName, content, onClose }) {
     }
   };
 
-  const handleClickClose = () => {
+  const handleClickDelete = () => {
     setIsOpen(false);
     onClose();
   };
@@ -69,7 +71,8 @@ export default function Modal({ buttonName, content, onClose }) {
             <div>
               {content}
             </div>
-            <button type="button" onClick={handleClickClose}>예</button>
+            <button type="button" onClick={handleClickDelete}>예</button>
+            <button type="button" onClick={() => setIsOpen(false)}>아니오</button>
           </Dialog>
         </Container>
       )}

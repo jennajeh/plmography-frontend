@@ -28,7 +28,7 @@ export default function ContentsDetailPage() {
   useEffect(() => {
     userStore.fetchUsers();
     userStore.fetchMe();
-    reviewStore.fetchMyReview();
+    reviewStore.fetchMyReviews();
   }, []);
 
   return (
