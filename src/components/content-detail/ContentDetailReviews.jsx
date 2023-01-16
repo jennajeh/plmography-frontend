@@ -1,17 +1,18 @@
-import { useEffect, useState } from 'react';
 import {
   Link,
   useLocation, useNavigate, useParams, useSearchParams,
 } from 'react-router-dom';
 import { useLocalStorage } from 'usehooks-ts';
-import useContentStore from '../../hooks/useContentStore';
-import useReviewFormStore from '../../hooks/useReviewFormStore';
-import useReviewStore from '../../hooks/useReviewStore';
-import useUserStore from '../../hooks/useUserStore';
-import dateFormat from '../../utils/dateFormat';
+
+import Pagination from '../page/Pagination';
 import Likes from '../common/Likes';
 import Modal from '../common/Modal';
-import Pagination from '../page/Pagination';
+
+import useContentStore from '../../hooks/useContentStore';
+import useReviewStore from '../../hooks/useReviewStore';
+import useUserStore from '../../hooks/useUserStore';
+
+import dateFormat from '../../utils/dateFormat';
 
 export default function ContentDetailReviews() {
   const navigate = useNavigate();
@@ -34,6 +35,8 @@ export default function ContentDetailReviews() {
   const otherReviews = reviewStore.isOtherReview(userId);
   const mySameContentReview = reviewStore.isMySameContentReview(Number(content.tmdbId));
   const otherSameContentReview = reviewStore.isOtherSameContentReview(Number(content.tmdbId));
+  const isDeleted = mySameContentReview[0]?.deleted;
+  console.log(isDeleted);
 
   const handleClickLike = () => {
     if (!accessToken) {
@@ -67,7 +70,7 @@ export default function ContentDetailReviews() {
             <h3 style={{ color: 'red' }}>리뷰</h3>
             <div>
               <h4 style={{ color: 'blue' }}>내가 쓴 리뷰</h4>
-              {myReviews.length && mySameContentReview && (
+              {myReviews.length && mySameContentReview && !isDeleted && (
                 <ul>
                   {mySameContentReview.map((review) => (
                     <li key={review.id}>
@@ -106,7 +109,7 @@ export default function ContentDetailReviews() {
                       />
                     </li>
                   ))}
-                </ul>
+                </ul>,
               )}
               {(!myReviews || !mySameContentReview) && (
               // TODO : 안나오는 것 처리

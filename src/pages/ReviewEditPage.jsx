@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { useEffect } from 'react';
 import styled from 'styled-components';
 import { useLocalStorage } from 'usehooks-ts';
@@ -24,12 +25,12 @@ export default function ReviewEditPage() {
   const { content } = contentStore;
 
   useEffect(() => {
-    reviewStore.fetchMyReview();
+    reviewStore.fetchMyReviews();
     userStore.fetchMe();
   }, []);
 
   if (!accessToken
-    || (!reviewStore.isReviewLoading && !reviewStore.isMyReview(Number(content.tmdbId)))) {
+    || (!reviewStore.isReviewLoading && !reviewStore.isMySameContentReview(Number(content.tmdbId)))) {
     return (
       <Container>
         <p>

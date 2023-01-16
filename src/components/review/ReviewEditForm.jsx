@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import useContentStore from '../../hooks/useContentStore';
 import useReviewFormStore from '../../hooks/useReviewFormStore';
 import useReviewStore from '../../hooks/useReviewStore';
 
@@ -7,9 +8,18 @@ export default function ReviewEditForm() {
   const navigate = useNavigate();
   const reviewFormStore = useReviewFormStore();
   const reviewStore = useReviewStore();
-  const { review } = reviewStore;
+  const contentStore = useContentStore();
+  const { myReviews } = reviewStore;
+  const { content } = contentStore;
 
-  const tmdbId = review.contentId;
+  const mySameContentReview = reviewStore.isMySameContentReview(Number(content.tmdbId));
+
+  console.log('@@', mySameContentReview);
+  console.log('##########', myReviews);
+
+  const tmdbId = mySameContentReview[0].contentId;
+
+  console.log(tmdbId);
 
   const location = useLocation();
   const reviewId = location.pathname.split('/')[2];
@@ -29,8 +39,8 @@ export default function ReviewEditForm() {
   };
 
   useEffect(() => {
-    reviewFormStore.fillFields(review);
-  }, [review]);
+    reviewFormStore.fillFields(mySameContentReview[0]);
+  }, []);
 
   return (
     <>
@@ -42,7 +52,7 @@ export default function ReviewEditForm() {
           value={reviewFormStore.body}
           onChange={(e) => reviewFormStore.changeBody(e.target.value)}
         />
-        <button type="button">
+        <button type="button" onClick={() => navigate(-1)}>
           취소하기
         </button>
         <button type="submit">
