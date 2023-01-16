@@ -8,6 +8,7 @@ import CommunityPage from './pages/CommunityPage';
 import ContentDetailPage from './pages/ContentDetailPage';
 import ExplorePage from './pages/ExplorePage';
 import NewContentsPage from './pages/NewContentsPage';
+import ReviewEditPage from './pages/ReviewEditPage';
 import LoginPage from './pages/LoginPage';
 import EventsPage from './pages/EventsPage';
 import SupportPage from './pages/SupportPage';
@@ -49,6 +50,7 @@ export default function App() {
           {/* <Route path="/community/post/:id" element={<CommunityPostDetailPage />} /> */}
           {/* <Route path="/community/history" element={<CommunityHistoryPage />} /> */}
           <Route path="/contents/:id" element={<ContentDetailPage />} />
+          <Route path="/reviews/:id/edit" element={<ReviewEditPage />} />
           <Route path="/explore" element={<ExplorePage />} />
           <Route path="/new-contents" element={<NewContentsPage />} />
           {/* <Route path="/ranking" element={<DailyRankingPage />} /> */}

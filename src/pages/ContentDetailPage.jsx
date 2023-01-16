@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import ContentDetail from '../components/content-detail/ContentDetail';
 import useContentStore from '../hooks/useContentStore';
 import useReviewStore from '../hooks/useReviewStore';
@@ -11,13 +11,15 @@ export default function ContentsDetailPage() {
   const userStore = useUserStore();
 
   const [searchParams] = useSearchParams();
-  const { id } = useParams();
+  const location = useLocation();
+
+  const tmdbId = location.pathname.split('/')[2];
 
   const page = searchParams.get('page') ?? 1;
 
   useEffect(() => {
-    contentStore.fetchContent(id);
-  }, [id]);
+    contentStore.fetchContent(tmdbId);
+  }, [tmdbId]);
 
   useEffect(() => {
     reviewStore.fetchReviews({ page, size: 5 });

@@ -26,8 +26,8 @@ export default class ContentApiService {
     };
   }
 
-  async fetchContent(id) {
-    const url = `${baseUrl}/contents/${id}`;
+  async fetchContent(tmdbId) {
+    const url = `${baseUrl}/contents/detail?tmdbId=${tmdbId}`;
 
     const { data } = await axios.get(url);
 

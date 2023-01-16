@@ -89,8 +89,6 @@ export default class ReviewStore extends Store {
     try {
       await reviewApiService.deleteReview(id);
 
-      this.reviews = this.reviews.filter((review) => review.id !== id);
-
       this.completeDelete();
 
       this.publish();

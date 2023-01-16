@@ -21,8 +21,8 @@ export default class ContentStore extends Store {
     this.publish();
   }
 
-  async fetchContent(id) {
-    this.content = await contentApiService.fetchContent(id);
+  async fetchContent(tmdbId) {
+    this.content = await contentApiService.fetchContent(tmdbId);
 
     this.publish();
   }

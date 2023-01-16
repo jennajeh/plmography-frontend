@@ -18,10 +18,12 @@ h4 {
 `;
 
 export default function ContentItem({ content }) {
-  const { id, imageUrl, korTitle } = content;
+  const {
+    tmdbId, imageUrl, korTitle,
+  } = content;
 
   return (
-    <Link to={`/contents/${id}`}>
+    <Link to={`/contents/${tmdbId}`}>
       <ImgWrapper>
         <img src={imageUrl} alt="img" />
         <h4>{korTitle}</h4>
