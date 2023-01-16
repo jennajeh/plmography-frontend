@@ -36,7 +36,6 @@ export default function ContentDetailReviews() {
   const mySameContentReview = reviewStore.isMySameContentReview(Number(content.tmdbId));
   const otherSameContentReview = reviewStore.isOtherSameContentReview(Number(content.tmdbId));
   const isDeleted = mySameContentReview[0]?.deleted;
-  console.log(isDeleted);
 
   const handleClickLike = () => {
     if (!accessToken) {
@@ -70,7 +69,7 @@ export default function ContentDetailReviews() {
             <h3 style={{ color: 'red' }}>리뷰</h3>
             <div>
               <h4 style={{ color: 'blue' }}>내가 쓴 리뷰</h4>
-              {myReviews.length && mySameContentReview && !isDeleted && (
+              {myReviews.length && mySameContentReview.length && !isDeleted ? (
                 <ul>
                   {mySameContentReview.map((review) => (
                     <li key={review.id}>
@@ -109,13 +108,11 @@ export default function ContentDetailReviews() {
                       />
                     </li>
                   ))}
-                </ul>,
-              )}
-              {(!myReviews || !mySameContentReview) && (
-              // TODO : 안나오는 것 처리
+                </ul>
+              ) : (
                 <div>
-                  <p>⭐️ 짧게라도 좋으니 작품에 대해 감상을 기록해보세요.</p>
-                  <button type="submit">리뷰 작성하기</button>
+                  <p>⭐️ 짧게라도 좋으니 작품에 대한 감상을 기록해보세요.</p>
+                  <Link to="/reviews/create">리뷰 작성하기</Link>
                 </div>
               )}
             </div>
@@ -124,7 +121,7 @@ export default function ContentDetailReviews() {
       ) : null}
       <div>
         <h4 style={{ color: 'blue' }}>모든 리뷰</h4>
-        {otherReviews.length && otherSameContentReview ? (
+        {otherReviews.length && otherSameContentReview.length ? (
           <ul>
             {otherSameContentReview.map((review) => (
               <li key={review.id}>

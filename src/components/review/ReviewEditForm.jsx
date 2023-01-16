@@ -1,25 +1,19 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import useContentStore from '../../hooks/useContentStore';
-import useReviewFormStore from '../../hooks/useReviewFormStore';
+import useReviewEditFormStore from '../../hooks/useReviewEditFormStore';
 import useReviewStore from '../../hooks/useReviewStore';
 
 export default function ReviewEditForm() {
   const navigate = useNavigate();
-  const reviewFormStore = useReviewFormStore();
+  const reviewEditFormStore = useReviewEditFormStore();
   const reviewStore = useReviewStore();
   const contentStore = useContentStore();
-  const { myReviews } = reviewStore;
   const { content } = contentStore;
 
   const mySameContentReview = reviewStore.isMySameContentReview(Number(content.tmdbId));
 
-  console.log('@@', mySameContentReview);
-  console.log('##########', myReviews);
-
-  const tmdbId = mySameContentReview[0].contentId;
-
-  console.log(tmdbId);
+  const tmdbId = mySameContentReview[0]?.contentId;
 
   const location = useLocation();
   const reviewId = location.pathname.split('/')[2];
@@ -27,10 +21,10 @@ export default function ReviewEditForm() {
   const handleClickSubmit = async (e) => {
     e.preventDefault();
 
-    await reviewFormStore.validate();
+    await reviewEditFormStore.validate();
 
-    if (reviewFormStore.isValidateSuccessful) {
-      const { body } = reviewFormStore;
+    if (reviewEditFormStore.isValidateSuccessful) {
+      const { body } = reviewEditFormStore;
 
       await reviewStore.modify(body, reviewId);
 
@@ -39,7 +33,7 @@ export default function ReviewEditForm() {
   };
 
   useEffect(() => {
-    reviewFormStore.fillFields(mySameContentReview[0]);
+    reviewEditFormStore.fillFields(mySameContentReview[0]);
   }, []);
 
   return (
@@ -49,8 +43,8 @@ export default function ReviewEditForm() {
         <textarea
           name="input-review"
           type="text"
-          value={reviewFormStore.body}
-          onChange={(e) => reviewFormStore.changeBody(e.target.value)}
+          value={reviewEditFormStore.body}
+          onChange={(e) => reviewEditFormStore.changeBody(e.target.value)}
         />
         <button type="button" onClick={() => navigate(-1)}>
           취소하기

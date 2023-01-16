@@ -19,15 +19,11 @@ export default class ReviewStore extends Store {
     this.totalPages = 0;
   }
 
-  async create({
-    contentId, starRate, reviewBody,
-  }) {
+  async create(contentId, starRate, reviewBody) {
     this.startWrite();
 
     try {
-      await reviewApiService.createReview({
-        contentId, starRate, reviewBody,
-      });
+      await reviewApiService.createReview(contentId, starRate, reviewBody);
 
       this.completeWrite();
 
@@ -127,6 +123,9 @@ export default class ReviewStore extends Store {
     this.reviews = [];
     this.myReviews = [];
     this.review = {};
+
+    this.isReviewsLoading = false;
+    this.isReviewLoading = false;
 
     this.createStatus = '';
     this.modifyStatus = '';

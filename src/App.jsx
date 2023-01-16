@@ -19,6 +19,7 @@ import { contentApiService } from './services/ContentApiService';
 import ProfilePage from './pages/ProfilePage';
 import SignupPage from './pages/SignupPage';
 import GreetingPage from './pages/GreetingPage';
+import ReviewCreatePage from './pages/ReviewCreatePage';
 import Header from './components/header-footer/Header';
 import { reviewApiService } from './services/ReviewApiService';
 
@@ -50,6 +51,7 @@ export default function App() {
           {/* <Route path="/community/post/:id" element={<CommunityPostDetailPage />} /> */}
           {/* <Route path="/community/history" element={<CommunityHistoryPage />} /> */}
           <Route path="/contents/:id" element={<ContentDetailPage />} />
+          <Route path="/reviews/create" element={<ReviewCreatePage />} />
           <Route path="/reviews/:id/edit" element={<ReviewEditPage />} />
           <Route path="/explore" element={<ExplorePage />} />
           <Route path="/new-contents" element={<NewContentsPage />} />

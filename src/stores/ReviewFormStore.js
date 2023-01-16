@@ -5,6 +5,9 @@ export default class ReviewFormStore extends Store {
     super();
 
     this.errorMessages = {
+      starRate: {
+        notSelect: '별점을 선택해 주세요',
+      },
       body: {
         empty: '내용을 입력해 주세요',
       },
@@ -16,12 +19,14 @@ export default class ReviewFormStore extends Store {
   reset() {
     this.body = '';
     this.errors = {};
+    this.starRate = 0;
 
     this.publish();
   }
 
-  fillFields(review) {
-    this.body = review.reviewBody;
+  changeBody(body) {
+    this.body = body;
+    this.validateBody();
 
     this.publish();
   }
@@ -55,15 +60,9 @@ export default class ReviewFormStore extends Store {
     this.publish();
   }
 
-  changeBody(body) {
-    this.body = body;
+  validate() {
     this.validateBody();
-
-    this.publish();
-  }
-
-  async validate() {
-    this.validateBody();
+    this.validateStarRate();
 
     this.publish();
   }
@@ -76,6 +75,20 @@ export default class ReviewFormStore extends Store {
     }
 
     this.errors.body = '';
+  }
+
+  validateStarRate() {
+    if (this.starRate < 1) {
+      this.errors.starRate = this.errorMessages.starRate.notSelect;
+
+      return;
+    }
+
+    this.errors.starRate = '';
+  }
+
+  get isRateEmpty() {
+    return this.starRate < 1;
   }
 
   get isValidateSuccessful() {

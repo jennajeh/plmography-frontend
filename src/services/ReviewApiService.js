@@ -29,16 +29,12 @@ export default class ReviewApiService {
     });
   }
 
-  async createReview({
-    contentId, starRate, reviewBody,
-  }) {
+  async createReview(contentId, starRate, reviewBody) {
     const { data } = await this.instance.post('/reviews', {
       contentId, starRate, reviewBody,
     });
 
-    return {
-      id: data.id,
-    };
+    return { data };
   }
 
   async fetchReviews({ page = 1, size }) {
