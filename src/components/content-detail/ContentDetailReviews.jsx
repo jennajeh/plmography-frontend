@@ -16,7 +16,6 @@ import dateFormat from '../../utils/dateFormat';
 
 export default function ContentDetailReviews() {
   const navigate = useNavigate();
-  const { id } = useParams();
   const [accessToken] = useLocalStorage('accessToken', '');
   const reviewStore = useReviewStore();
   const userStore = useUserStore();
@@ -34,21 +33,23 @@ export default function ContentDetailReviews() {
 
   const otherReviews = reviewStore.isOtherReview(userId);
   const mySameContentReview = reviewStore.isMySameContentReview(Number(content.tmdbId));
+  const notDeleted = reviewStore.isDeleted(mySameContentReview);
   const otherSameContentReview = reviewStore.isOtherSameContentReview(Number(content.tmdbId));
-  const isDeleted = mySameContentReview[0]?.deleted;
 
-  const handleClickLike = () => {
+  console.log(otherSameContentReview[0]);
+
+  const handleClickLike = (review) => {
     if (!accessToken) {
       navigate('/login');
 
       return;
     }
 
-    reviewStore.toggleLike(id);
+    reviewStore.toggleLike(review.id);
   };
 
   const handleClickDelete = async () => {
-    await reviewStore.delete(mySameContentReview[0].id);
+    await reviewStore.delete(notDeleted[0].id);
 
     reviewStore.fetchMyReviews();
   };
@@ -69,9 +70,9 @@ export default function ContentDetailReviews() {
             <h3 style={{ color: 'red' }}>리뷰</h3>
             <div>
               <h4 style={{ color: 'blue' }}>내가 쓴 리뷰</h4>
-              {myReviews.length && mySameContentReview.length && !isDeleted ? (
+              {myReviews.length && mySameContentReview.length && notDeleted.length ? (
                 <ul>
-                  {mySameContentReview.map((review) => (
+                  {notDeleted.map((review) => (
                     <li key={review.id}>
                       <p>
                         createdAt:
@@ -152,7 +153,7 @@ export default function ContentDetailReviews() {
                 </p>
                 <Likes
                   count={review.likeUserIds.length}
-                  onClick={handleClickLike}
+                  onClick={() => handleClickLike(review)}
                 />
                 <button type="button">댓글달기</button>
               </li>

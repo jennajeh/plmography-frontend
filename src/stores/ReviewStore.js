@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import { reviewApiService } from '../services/ReviewApiService';
 import Store from './Store';
 
@@ -113,6 +114,10 @@ export default class ReviewStore extends Store {
 
   isMySameContentReview(tmdbId) {
     return this.myReviews.filter((review) => review.contentId === tmdbId);
+  }
+
+  isDeleted(myReviews) {
+    return myReviews.filter((review) => !review.deleted);
   }
 
   isOtherSameContentReview(tmdbId) {
