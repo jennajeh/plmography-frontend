@@ -131,3 +131,6 @@ dist
 
 # CodeceptJS
 /output/
+
+# API Key
+apiConfig.js
