@@ -2,6 +2,16 @@ import { Route, Routes } from 'react-router-dom';
 import styled, { ThemeProvider } from 'styled-components';
 import { useLocalStorage } from 'usehooks-ts';
 import { useEffect } from 'react';
+
+import { userApiService } from './services/UserApiService';
+import { contentApiService } from './services/ContentApiService';
+import { reviewApiService } from './services/ReviewApiService';
+import { commentApiService } from './services/CommentApiService';
+import { articleApiService } from './services/ArticleApiService';
+
+import defaultTheme from './styles/defaultTheme';
+
+import Header from './components/header-footer/Header';
 import HomePage from './pages/HomePage';
 import RecommendationsPage from './pages/RecommendationsPage';
 import CommunityPage from './pages/CommunityPage';
@@ -12,16 +22,13 @@ import ReviewEditPage from './pages/ReviewEditPage';
 import LoginPage from './pages/LoginPage';
 import EventsPage from './pages/EventsPage';
 import SupportPage from './pages/SupportPage';
-import defaultTheme from './styles/defaultTheme';
 import GlobalStyle from './styles/GlobalStyle';
-import { userApiService } from './services/UserApiService';
-import { contentApiService } from './services/ContentApiService';
 import ProfilePage from './pages/ProfilePage';
 import SignupPage from './pages/SignupPage';
 import GreetingPage from './pages/GreetingPage';
 import ReviewCreatePage from './pages/ReviewCreatePage';
-import Header from './components/header-footer/Header';
-import { reviewApiService } from './services/ReviewApiService';
+import ArticlesPage from './pages/ArticlesPage';
+import ArticleDetailPage from './pages/ArticleDetailPage';
 
 const Main = styled.main`
   height: calc(100vh - 64px);
@@ -35,6 +42,8 @@ export default function App() {
     userApiService.setAccessToken(accessToken);
     contentApiService.setAccessToken(accessToken);
     reviewApiService.setAccessToken(accessToken);
+    commentApiService.setAccessToken(accessToken);
+    articleApiService.setAccessToken(accessToken);
   }, [accessToken]);
 
   return (
@@ -57,10 +66,8 @@ export default function App() {
           <Route path="/new-contents" element={<NewContentsPage />} />
           {/* <Route path="/ranking" element={<DailyRankingPage />} /> */}
           {/* <Route path="/next-contents" element={<NextContentsPage />} /> */}
-          {/* <Route path="/articles" element={<ArticlesPage />} /> */}
-          {/* <Route path="/articles/themes/:id" element={<ArticlesThemeDetailPage />} /> */}
-          {/* <Route path="/articles/stories/:id" element={<ArticlesStoryDetailPage />} /> */}
-          {/* <Route path="/articles/interviews/:id" element={<ArticlesInterviewsDetailPage />} /> */}
+          <Route path="/articles" element={<ArticlesPage />} />
+          <Route path="/articles/:id" element={<ArticleDetailPage />} />
           <Route path="/users/:id" element={<ProfilePage />} />
           {/* <Route path="/users/:id/edit" element={<ProfileEditPage />} /> */}
           {/* <Route path="/users/:id/reset-password" element={<ResetPasswordPage />} /> */}

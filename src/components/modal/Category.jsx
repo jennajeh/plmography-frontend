@@ -7,7 +7,7 @@ const Menu = styled.h1`
   text-align: center;
 `;
 
-export default function ModalCategory() {
+export default function Category() {
   return (
     <>
       <Menu>작품 탐색</Menu>

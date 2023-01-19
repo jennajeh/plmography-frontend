@@ -33,7 +33,7 @@ export default function ReviewEditForm() {
   };
 
   useEffect(() => {
-    reviewEditFormStore.fillFields(mySameContentReview[0]);
+    reviewEditFormStore.fillFields(reviewStore.review);
   }, []);
 
   return (
@@ -43,7 +43,7 @@ export default function ReviewEditForm() {
         <textarea
           name="input-review"
           type="text"
-          value={reviewEditFormStore.body}
+          value={reviewEditFormStore.body || ''}
           onChange={(e) => reviewEditFormStore.changeBody(e.target.value)}
         />
         <button type="button" onClick={() => navigate(-1)}>

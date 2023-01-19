@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
-import ContentsList from '../components/content-detail/ContentsList';
-import ModalCategory from '../components/modal/ModalCategory';
+import ContentsList from '../components/content/ContentsList';
+import Category from '../components/modal/Category';
 import useContentStore from '../hooks/useContentStore';
 
 const Container = styled.div`
@@ -22,7 +22,7 @@ export default function ExplorePage() {
 
   return (
     <Container>
-      <ModalCategory />
+      <Category />
       <ContentsList />
     </Container>
   );

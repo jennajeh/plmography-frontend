@@ -1,9 +1,9 @@
 import { cleanup, render } from '@testing-library/react';
-import ModalCategory from './ModalCategory';
+import Category from './Category';
 
 const context = describe;
 
-describe('ModalCategory', () => {
+describe('Category', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -14,7 +14,7 @@ describe('ModalCategory', () => {
 
   function renderModalCategory() {
     render((
-      <ModalCategory />
+      <Category />
     ));
   }
 
