@@ -26,7 +26,7 @@ const Dialog = styled.div`
   }
 `;
 
-export default function Modal({
+export default function ReviewModal({
   buttonName, content, onClose,
 }) {
   const [isOpen, setIsOpen] = useState(false);

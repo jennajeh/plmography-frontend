@@ -13,6 +13,8 @@ export default function ReviewEditForm() {
 
   const mySameContentReview = reviewStore.isMySameContentReview(Number(content.tmdbId));
 
+  const notDeleted = reviewStore.isDeleted(mySameContentReview);
+
   const tmdbId = mySameContentReview[0]?.contentId;
 
   const location = useLocation();
@@ -33,7 +35,7 @@ export default function ReviewEditForm() {
   };
 
   useEffect(() => {
-    reviewEditFormStore.fillFields(reviewStore.review);
+    reviewEditFormStore.fillFields(notDeleted[0]);
   }, []);
 
   return (
