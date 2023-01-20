@@ -10,6 +10,25 @@ describe('ReviewStore', () => {
     reviewStore = new ReviewStore();
   });
 
+  describe('fetchReviews', () => {
+    it('리뷰 목록을 출력한다', async () => {
+      await reviewStore.fetchReviews({ page: 1, size: 5 });
+
+      expect(reviewStore.reviews[0].reviewBody).toBe('너무 너무 재미있어요!');
+      expect(reviewStore.totalPages).toBe(1);
+    });
+  });
+
+  describe('fetchMyReviews', () => {
+    it('내가 쓴 리뷰 목록을 출력한다', async () => {
+      await reviewStore.fetchMyReviews();
+
+      expect(reviewStore.myReviews).toBeTruthy();
+      expect(reviewStore.myReviews[0].reviewBody).toBe('오랜만에 힐링함');
+      expect(reviewStore.myReviews[1].reviewBody).toBe('나의 인생작!');
+    });
+  });
+
   describe('create', () => {
     context('리뷰 등록에 성공한 경우', () => {
       it('createStatus 가 successful 로 바뀐다', async () => {
@@ -17,9 +36,7 @@ describe('ReviewStore', () => {
         const starRate = 4;
         const reviewBody = '정말 재미있었습니다!';
 
-        await reviewStore.create({
-          contentId, starRate, reviewBody,
-        });
+        await reviewStore.create(contentId, starRate, reviewBody);
 
         expect(reviewStore.isCreateSuccessful).toBeTruthy();
       });
@@ -31,9 +48,7 @@ describe('ReviewStore', () => {
         const starRate = 4;
         const reviewBody = '';
 
-        await reviewStore.create({
-          contentId, starRate, reviewBody,
-        });
+        await reviewStore.create(contentId, starRate, reviewBody);
 
         expect(reviewStore.isCreateFailed).toBeTruthy();
       });
@@ -43,13 +58,11 @@ describe('ReviewStore', () => {
   describe('modify', () => {
     context('리뷰 수정에 성공한 경우', () => {
       it('modifyStatus 가 successful 로 바뀐다', async () => {
-        await reviewStore.fetchReview(1);
+        await reviewStore.fetchMyReviews();
 
         const reviewBody = '오랜만에 힐링함';
 
-        await reviewStore.modify({
-          reviewBody,
-        });
+        await reviewStore.modify(reviewBody, 1);
 
         expect(reviewStore.isModifySuccessful).toBeTruthy();
       });
@@ -57,13 +70,11 @@ describe('ReviewStore', () => {
 
     context('리뷰 수정에 실패한 경우', () => {
       it('modifyStatus 가 failed 로 바뀐다', async () => {
-        await reviewStore.fetchReview(1);
+        await reviewStore.fetchMyReviews();
 
         const reviewBody = '';
 
-        await reviewStore.modify({
-          reviewBody,
-        });
+        await reviewStore.modify(reviewBody, 1);
 
         expect(reviewStore.isModifyFailed).toBeTruthy();
       });
@@ -102,30 +113,6 @@ describe('ReviewStore', () => {
       reviewStore.reset();
 
       expect(reviewStore.createStatus).toBeFalsy();
-    });
-  });
-
-  describe('isMyReview', () => {
-    context('리뷰가 본인이 쓴 글이면', () => {
-      it('true 를 반환한다', async () => {
-        const postId = 1;
-        const userId = 1;
-
-        await reviewStore.fetchReview(postId);
-
-        expect(reviewStore.isMyReview(userId)).toBeTruthy();
-      });
-    });
-
-    context('리뷰가 본인이 쓴 글이 아니면', () => {
-      it('false 를 반환한다', async () => {
-        const postId = 1;
-        const userId = 2;
-
-        await reviewStore.fetchReview(postId);
-
-        expect(reviewStore.isMyReview(userId)).toBeFalsy();
-      });
     });
   });
 });

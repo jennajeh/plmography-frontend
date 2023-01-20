@@ -44,23 +44,24 @@ describe('UserStore', () => {
     });
   });
 
-  describe('fetchUser(userId)', () => {
+  describe('fetchUser(userNickname)', () => {
     it('해당 유저의 상세 프로필을 보여준다', async () => {
-      await userStore.fetchUser(1);
+      const nickname = 'jenna';
 
-      expect(userStore.user.id).toBe(1);
+      await userStore.fetchUser(nickname);
+
+      expect(userStore.user.nickname).toBeTruthy();
     });
   });
 
-  describe('updateUser', () => {
+  describe('changeProfile', () => {
     it('해당 유저의 프로필 정보를 바꾼다', async () => {
-      await userStore.updateUser({
-        userId: 1,
-        nickname: '강보니',
-        profileImage: 'https://source.boringavatars.com/beam/120/nickname=bboni',
-      });
+      const nickname = '강보니';
+      const profileImage = 'https://source.boringavatars.com/beam/120/nickname=bboni';
 
-      expect(userStore.user.nickname).toBe('강보니');
+      await userStore.changeProfile(nickname, profileImage);
+
+      expect(userStore.editStatus).toBe('successful');
     });
   });
 
