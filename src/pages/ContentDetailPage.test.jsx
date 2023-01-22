@@ -7,7 +7,7 @@ import { contentStore } from '../stores/ContentStore';
 import defaultTheme from '../styles/defaultTheme';
 import ContentDetailPage from './ContentDetailPage';
 
-test('ContentDetailPage', async () => {
+test('ContentDetailPage', async () => async (act) => {
   contentStore.fetchContent(1);
 
   render((

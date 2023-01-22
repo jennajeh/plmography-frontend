@@ -36,15 +36,7 @@ export default class UserApiService {
   async fetchMe() {
     const { data } = await this.instance.get('/users/me');
 
-    return {
-      accessToken: data.accessToken,
-      id: data.id,
-      email: data.email,
-      nickname: data.nickname,
-      gender: data.gender,
-      birthYear: data.birthYear,
-      profileImage: data.profileImage,
-    };
+    return { data };
   }
 
   async fetchUser(nickname) {

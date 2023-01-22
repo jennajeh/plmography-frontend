@@ -103,7 +103,10 @@ export default class ReviewStore extends Store {
   async toggleLike(id) {
     const likeUserIds = await reviewApiService.toggleLikeReview(id);
 
-    this.review.likeUserIds = likeUserIds;
+    this.review = {
+      ...this.review,
+      likeUserIds,
+    };
 
     this.publish();
   }

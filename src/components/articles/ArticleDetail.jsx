@@ -71,7 +71,9 @@ export default function ArticleDetail() {
       </Information>
       <Title>
         <Link to={`/contents/${contentId}`}>
-          &lt;아바타: 물의 길&gt; 보러 가는 길 👉🏻 클릭!
+          {title}
+          {' '}
+          👉🏻 클릭!
         </Link>
       </Title>
       <Video>

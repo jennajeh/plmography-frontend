@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import styled from 'styled-components';
 
-const StyledInput = styled.input`
+const StyledTextArea = styled.textarea`
   width: 100%;
   padding: 1.5em;
   border: ${(props) => (`1px solid${props.error ? '#FF424D' : '#D8D8D8'}`)};
@@ -15,11 +15,6 @@ const StyledInput = styled.input`
     border: ${(props) => (`1px solid${props.error ? '#FF424D' : '#22DAAB'}`)};
     color: #666666;
   }
-`;
-
-const Radio = styled.input`
-  display: flex;
-  gap: 1em;
 `;
 
 const Label = styled.label`
@@ -40,7 +35,7 @@ const Error = styled.p`
   color: #FF424D;
 `;
 
-export default function Input({
+export default function TextArea({
   name, label, type, value, maxLength = '', onChange, message, errorMessage, required = false,
 }) {
   return (
@@ -55,7 +50,7 @@ export default function Input({
           )
           : null}
       </Label>
-      <StyledInput
+      <StyledTextArea
         type={type}
         name={name}
         id={`input-${name}`}

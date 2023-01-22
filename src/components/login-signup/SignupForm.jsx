@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { useLocalStorage } from 'usehooks-ts';
 import useUserStore from '../../hooks/useUserStore';
 import useSignupFormStore from '../../hooks/useSignupFormStore';
-import Input, { RadioInput } from '../common/Input';
+import Input from '../common/Input';
 import Button from '../common/Button';
 
 const Container = styled.article`
@@ -123,22 +123,6 @@ export default function SignupForm() {
             />
           </InputWrapper>
         </Inputs>
-        <label htmlFor="radio-gender">성별:</label>
-        <RadioInput
-          name="gender"
-          type="radio"
-          label="여성"
-          checked="checked"
-          value={signupFormStore.fields.gender || ''}
-          onChange={(e) => signupFormStore.changeGender(e.target.value)}
-        />
-        <RadioInput
-          name="gender"
-          type="radio"
-          label="남성"
-          value={signupFormStore.fields.gender || ''}
-          onChange={(e) => signupFormStore.changeGender(e.target.value)}
-        />
         <label htmlFor="select-birth">출생연도:</label>
         <select
           id="select-birth"

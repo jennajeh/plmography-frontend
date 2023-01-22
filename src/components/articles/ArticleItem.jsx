@@ -33,11 +33,11 @@ const Title = styled.p`
 `;
 
 export default function ArticleItem({ article }) {
-  const { id, title, image } = article;
+  const { contentId, title, image } = article;
 
   return (
     <Container>
-      <Link to={`/articles/${id}`}>
+      <Link to={`/articles/${contentId}`}>
         <ImgWrapper>
           <img src={image} alt={title} />
         </ImgWrapper>

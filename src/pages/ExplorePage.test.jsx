@@ -24,7 +24,6 @@ test('ExplorePage', async () => async (act) => {
     </ThemeProvider>
   ));
 
-  // await waitFor(() => {
   act(() => {
     screen.findByText(/작품 탐색/);
   });

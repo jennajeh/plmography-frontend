@@ -4,7 +4,7 @@ import useContentStore from '../../hooks/useContentStore';
 import ContentDetailHeader from './ContentDetailHeader';
 import ContentDetailInformation from './ContentDetailInformation';
 import ContentDetailPlatform from './ContentDetailPlatform';
-import ContentDetailReport from './ContentDetailReport';
+import ContentDetailArticle from './ContentDetailArticle';
 import ContentDetailReviews from './ContentDetailReviews';
 
 const Container = styled.article`
@@ -26,7 +26,7 @@ export default function ContentDetail() {
       <ContentDetailPlatform />
       <ContentDetailInformation />
       <ContentDetailReviews />
-      <ContentDetailReport />
+      <ContentDetailArticle />
       {/* <ContentDetailCollection /> */}
     </Container>
   );

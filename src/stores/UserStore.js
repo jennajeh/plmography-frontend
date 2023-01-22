@@ -53,25 +53,17 @@ export default class UserStore extends Store {
   }
 
   async fetchMe() {
-    const {
-      id, email, nickname, gender, birthYear, profileImage,
-    } = await userApiService.fetchMe();
+    const { data } = await userApiService.fetchMe();
 
-    this.user.id = id;
-    this.user.email = email;
-    this.user.nickname = nickname;
-    this.user.gender = gender;
-    this.user.birthYear = birthYear;
-    this.user.profileImage = profileImage;
+    this.user = data;
 
     this.publish();
   }
 
   async fetchUser(userNickname) {
-    const { nickname, profileImage } = await userApiService.fetchUser(userNickname);
+    const { data } = await userApiService.fetchUser(userNickname);
 
-    this.nickname = nickname;
-    this.profileImage = profileImage;
+    this.user = data;
 
     this.publish();
   }
