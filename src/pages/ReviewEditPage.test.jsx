@@ -1,5 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
+import { ThemeProvider } from 'styled-components';
+import defaultTheme from '../styles/defaultTheme';
 import ReviewEditPage from './ReviewEditPage';
 
 const context = describe;
@@ -24,9 +26,11 @@ jest.mock('react-router-dom', () => ({
 
 describe('ReviewEditPage', () => {
   function renderReviewEditPage() {
-    render(
-      <ReviewEditPage />,
-    );
+    render((
+      <ThemeProvider theme={defaultTheme}>
+        <ReviewEditPage />
+      </ThemeProvider>
+    ));
   }
 
   context('로그인 하지 않고 접근한 경우', () => {

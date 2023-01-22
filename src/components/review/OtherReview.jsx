@@ -1,6 +1,5 @@
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useLocalStorage } from 'usehooks-ts';
-import { useEffect, useState } from 'react';
 import useCommentStore from '../../hooks/useCommentStore';
 
 import Likes from '../common/Likes';

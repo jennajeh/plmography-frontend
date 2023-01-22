@@ -1,19 +1,19 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import defaultTheme from '../styles/defaultTheme';
-import SignupPage from './SignupPage';
+import defaultTheme from '../../styles/defaultTheme';
+import ArticleDetail from './ArticleDetail';
 
-describe('SignupPage', () => {
-  it('회원가입 버튼이 보인다', () => {
+describe('ArticleDetail', () => {
+  it('renders ArticleDetail', () => {
     render((
       <MemoryRouter>
         <ThemeProvider theme={defaultTheme}>
-          <SignupPage />
+          <ArticleDetail />
         </ThemeProvider>
       </MemoryRouter>
     ));
 
-    screen.getByText('회원가입');
+    screen.getByText(/클릭/);
   });
 });

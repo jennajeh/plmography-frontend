@@ -12,13 +12,13 @@ describe('Category', () => {
     cleanup();
   });
 
-  function renderModalCategory() {
+  function renderCategory() {
     render((
       <Category />
     ));
   }
 
-  it('ModalCategory', () => {
-    renderModalCategory();
+  it('Category', () => {
+    renderCategory();
   });
 });

@@ -1,6 +1,7 @@
 import {
   fireEvent, render, screen, waitFor,
 } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { userStore } from '../../stores/UserStore';
 import defaultTheme from '../../styles/defaultTheme';
@@ -9,28 +10,14 @@ import SignupForm from './SignupForm';
 /* eslint-disable react/prop-types */
 const context = describe;
 
-const navigate = jest.fn();
-
-jest.mock('react-router-dom', () => ({
-  Link({ children, to }) {
-    return (
-      <a href={to}>
-        {children}
-      </a>
-    );
-  },
-
-  useNavigate() {
-    return navigate;
-  },
-}));
-
 describe('SignupForm', () => {
   function renderSignupForm() {
     render((
-      <ThemeProvider theme={defaultTheme}>
-        <SignupForm />
-      </ThemeProvider>
+      <MemoryRouter>
+        <ThemeProvider theme={defaultTheme}>
+          <SignupForm />
+        </ThemeProvider>
+      </MemoryRouter>
     ));
   }
 
