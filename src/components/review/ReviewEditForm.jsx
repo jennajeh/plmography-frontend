@@ -18,7 +18,7 @@ export default function ReviewEditForm() {
   const tmdbId = mySameContentReview[0]?.contentId;
 
   const location = useLocation();
-  const reviewId = location.pathname.split('/')[2];
+  const reviewId = location.pathname?.split('/')[2];
 
   const handleClickSubmit = async (e) => {
     e.preventDefault();

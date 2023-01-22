@@ -77,7 +77,7 @@ export default function ReviewForm() {
 
   return (
     <Container>
-      <h1>리뷰 등록하기</h1>
+      <h1>리뷰 작성하기</h1>
       <form onSubmit={handleSubmit}>
         <RateSection>
           <label htmlFor="rate-select">평점</label>

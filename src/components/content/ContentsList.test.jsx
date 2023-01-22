@@ -1,7 +1,6 @@
 import {
   cleanup, render, screen, waitFor,
 } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
 import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { contentStore } from '../../stores/ContentStore';
