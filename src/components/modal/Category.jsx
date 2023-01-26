@@ -1,9 +1,7 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable react/prop-types */
-/* eslint-disable camelcase */
-/* eslint-disable no-unused-expressions */
 import { useEffect, useState } from 'react';
-import { useLocation, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import GENRES from '../../constants/genres';
 import PLATFORMS from '../../constants/platforms';
@@ -85,9 +83,9 @@ export default function Category() {
   const handleSearchContents = (e) => {
     e.preventDefault();
 
-    const result = e.target.search.value;
+    const searchTitle = e.target.search.value;
 
-    setFilter({ ...filter, result });
+    setFilter({ searchTitle });
   };
 
   const handleFilterPlatforms = (platformData) => {
@@ -122,7 +120,7 @@ export default function Category() {
         <SearchBar>
           <h1>검색하기</h1>
           <form onSubmit={handleSearchContents}>
-            <label hidden htmlFor="input-content">컨텐츠 검색</label>
+            <label hidden htmlFor="input-search">컨텐츠 검색</label>
             <input name="search" placeholder="검색" id="input-search" type="text" />
             <button type="submit">검색</button>
           </form>
