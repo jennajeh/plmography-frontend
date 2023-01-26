@@ -13,17 +13,29 @@ export default class ContentApiService {
     this.accessToken = accessToken;
   }
 
-  async fetchContents({ page, size }) {
-    const url = `${baseUrl}/contents?page=${page}&size=${size}`;
+  async fetchContents({ page, size, filter }) {
+    const filterQuery = filter
+      ? `?${['platformData', 'type', 'genre', 'date']
+        .map((key) => (filter[key] ? `${key}=${filter[key]}` : ''))
+        .filter((query) => query)
+        .join('&')}`
+      : '';
+
+    const pageQuery = page ? `page=${page}` : '';
+
+    const sizeQuery = size ? `size=${size}` : '';
+
+    const query = [filterQuery, pageQuery, sizeQuery]
+      .filter((elem) => elem)
+      .join('&');
+
+    const url = `${baseUrl}/contents${query}`;
 
     const { data } = await axios.get(url);
 
     const { contents, pages } = data;
 
-    return {
-      contents,
-      pages,
-    };
+    return { contents, pages };
   }
 
   async fetchContent(tmdbId) {

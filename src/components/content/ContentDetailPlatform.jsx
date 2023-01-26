@@ -9,7 +9,7 @@ export default function ContentDetailPlatform() {
 
   const { platform } = content;
 
-  const platformList = platform?.substring(1, platform.length - 2).split(',');
+  const platformList = platform?.split(',');
 
   return (
     <div>

@@ -12,8 +12,8 @@ export default class ContentStore extends Store {
     this.totalPages = 0;
   }
 
-  async fetchContents({ page, size }) {
-    const { contents, pages } = await contentApiService.fetchContents({ page, size });
+  async fetchContents({ page, size, filter } = {}) {
+    const { contents, pages } = await contentApiService.fetchContents({ page, size, filter });
 
     this.contents = contents;
     this.totalPages = pages.totalPages;

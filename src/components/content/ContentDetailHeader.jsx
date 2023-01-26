@@ -144,7 +144,7 @@ export default function ContentDetailHeader() {
               {' '}
               -
               {' '}
-              <span>{releaseDate?.substr(0, 4)}</span>
+              <span>{releaseDate}</span>
             </p>
             <RatingWrapper>
               <LogoBox>

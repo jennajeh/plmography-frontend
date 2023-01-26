@@ -14,20 +14,10 @@ const Container = styled.div`
 `;
 
 export default function ExplorePage() {
-  const contentStore = useContentStore();
-
-  const [searchParams] = useSearchParams();
-
-  const page = searchParams.get('page') ?? 1;
-
-  useEffect(() => {
-    contentStore.fetchContents({ page, size: 8 });
-  }, [page]);
-
   return (
     <Container>
       <Category />
-      <ContentsList />
+      {/* <ContentsList /> */}
     </Container>
   );
 }

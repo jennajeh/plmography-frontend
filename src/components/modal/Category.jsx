@@ -1,62 +1,123 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable react/prop-types */
+/* eslint-disable camelcase */
+/* eslint-disable no-unused-expressions */
+import { useEffect, useState } from 'react';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
+import GENRES from '../../constants/genres';
+import PLATFORMS from '../../constants/platforms';
+import RELEASEDATES from '../../constants/releaseDates';
+import TYPES from '../../constants/types';
+import useContentStore from '../../hooks/useContentStore';
+import ContentItem from '../content/ContentItem';
+import Pagination from '../page/Pagination';
 
-const Container = styled.article`
-  display: block;
-  z-index: 9000;
+const Container = styled.div`
+  display: flex;
+  padding: 2rem;
+  `;
+
+const Main = styled.div`
   width: 100%;
-  max-width: 700px;
+  padding-inline: 2rem;
 `;
 
-const Title = styled.h1`
-  padding-block: 1em;
-  font-weight: 700;
-  font-size: 1.5em;
-  text-align: center;
-`;
-
-const PlatformWrapper = styled.div`
-  padding: 4px 0 4px 16px;
-  max-width: 684px;
-`;
-
-const PlatFormButton = styled.button`
-  opacity: 1;
-  margin-left: 4px;
-  padding: 4px 4px 0 2px;
-  position: relative;
-  background: none;
-  border: none;
-
-  img {
-    display: inline-block;
-    width: 4em;
-    object-fit: contain;
-    vertical-align: middle;
+const SearchBar = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  >div{
+    display: flex;
   }
 `;
 
-const FilterWrapper = styled.div`
-  max-width: 700px;
+const Categories = styled.ul`
+  width: 15%;
+  li{
+    padding: 1rem;
+    border: 1px solid #e4e4e4;
+    background: #fafafa;
+  }
+  a{
+    display: flex;
+    justify-content: space-between;
+  }
+`;
+
+const Tags = styled.ul`
   display: flex;
   align-items: center;
-  padding: 10px 16px 12px;
+  li{
+    margin-inline-end: 1rem;
+  }
 `;
 
-const Filter = styled.div`
-  flex-shrink: 0;
-  border-radius: 100em;
-  margin: 1em;
-
-  button {
-  font-size: .9em;
-  font-weight: bold;
-  background-color: #1c1c85;
-  color: white;
-  border: none;
-  width: 6em;
-  height: 2em;
-  border-radius: 10px;
+const Skills = styled.div`
+  display: flex;
+  > div {
+    display: flex;
+    margin-inline-end: 1rem;
   }
+  ul{
+    flex-wrap: wrap;
+  }
+`;
+
+const Filters = styled.div`
+  display: flex;
+  margin-block: .5rem 3rem;
+`;
+
+const PlatformFilter = styled.button`
+  border: none;
+  padding: .5rem 1rem;
+
+  img {
+    width: 5em;
+  }
+  `;
+
+const TypeFilter = styled.button`
+border: none;
+padding: .5rem 1rem;
+border-radius: 2rem;
+background: #e4e4e4;
+`;
+
+const DateFilter = styled.button`
+border: none;
+padding: .5rem 1rem;
+border-radius: 2rem;
+background: #e4e4e4;
+`;
+
+const GenreFilter = styled.button`
+  border: none;
+  padding: .5rem 1rem;
+  border-radius: 2rem;
+  background: #9be2e2;
+`;
+
+const RefreshButton = styled.button`
+  display: block;
+  background: none;
+  border: 1px solid #d5dbe2;
+  border-radius: 50%;
+`;
+
+const List = styled.ul`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 1em;
+`;
+
+const Error = styled.p`
+  margin: 80px;
+  font-weight: 700;
+  font-size: ${((props) => props.theme.size.h4)};
+  text-align: center;
 `;
 
 export default function Category() {
@@ -67,45 +128,129 @@ export default function Category() {
   const watcha = 'https://plmographybucket.s3.ap-northeast-2.amazonaws.com/btn_watcha.png';
   const wavve = 'https://plmographybucket.s3.ap-northeast-2.amazonaws.com/btn_wavve.png';
 
+  const location = useLocation();
+  const [searchParams] = useSearchParams();
+  const [filter, setFilter] = useState({});
+  const contentStore = useContentStore();
+
+  const page = searchParams.get('page') ?? 1;
+
+  const { contents } = contentStore;
+
+  const handleSearchContents = (e) => {
+    e.preventDefault();
+
+    const result = e.target.search.value;
+
+    setFilter({ ...filter, result });
+  };
+
+  const handleFilterPlatforms = (platformData) => {
+    setFilter({ ...filter, platformData });
+  };
+
+  const handleFilterTypes = (type) => {
+    setFilter({ ...filter, type });
+  };
+
+  const handleFilterGenres = (genre) => {
+    setFilter({ ...filter, genre });
+  };
+
+  const handleFilterReleaseDate = (date) => {
+    setFilter({ ...filter, date });
+  };
+
+  const handleRefreshFilter = () => {
+    setFilter({});
+  };
+
+  useEffect(() => {
+    contentStore.fetchContents({ page, size: 8, filter });
+  }, [page, filter]);
+
+  console.log(filter);
+
   return (
     <Container>
-      <Title>작품 탐색</Title>
-      <PlatformWrapper>
-        <PlatFormButton>
-          <img src={netflix} alt="netflix" />
-        </PlatFormButton>
-        <PlatFormButton>
-          <img src={appleTv} alt="appleTv" />
-        </PlatFormButton>
-        <PlatFormButton>
-          <img src={disneyPlus} alt="disneyPlus" />
-        </PlatFormButton>
-        <PlatFormButton>
-          <img src={tving} alt="tving" />
-        </PlatFormButton>
-        <PlatFormButton>
-          <img src={watcha} alt="watcha" />
-        </PlatFormButton>
-        <PlatFormButton>
-          <img src={wavve} alt="wavve" />
-        </PlatFormButton>
-      </PlatformWrapper>
-      <FilterWrapper>
-        <Filter>
-          <button type="button">영화/드라마</button>
-        </Filter>
-        <Filter>
-          <button type="button">장르</button>
-        </Filter>
-        <Filter>
-          <button type="button">개봉연도</button>
-        </Filter>
-      </FilterWrapper>
-      <select id="contents-sorting">
-        <option value="polular">인기순</option>
-        <option value="release">개봉순</option>
-        <option value="title">이름순</option>
-      </select>
+      <Main>
+        <SearchBar>
+          <h1>검색하기</h1>
+          <form onSubmit={handleSearchContents}>
+            <label hidden htmlFor="input-content">컨텐츠 검색</label>
+            <input name="search" placeholder="검색" id="input-search" type="text" />
+            <button type="submit">검색</button>
+          </form>
+        </SearchBar>
+        <Tags>
+          <h3>플랫폼</h3>
+          {PLATFORMS.sections.map((section) => (
+            <li key={section.id}>
+              <PlatformFilter type="button" onClick={() => handleFilterPlatforms(section.code)}>
+                <img
+                  src={section.image}
+                  alt="platforms"
+                />
+              </PlatformFilter>
+            </li>
+          ))}
+        </Tags>
+        <Tags>
+          <h3>영화/TV</h3>
+          {TYPES.sections.map((section) => (
+            <li key={section.id}>
+              <TypeFilter type="button" onClick={() => handleFilterTypes(section.code)}>
+                {section.name}
+              </TypeFilter>
+            </li>
+          ))}
+        </Tags>
+        <Tags>
+          <h3>장르</h3>
+          {GENRES.sections.map((section) => (
+            <li key={section.id}>
+              <GenreFilter type="button" onClick={() => handleFilterGenres(section.code)}>
+                {section.name}
+              </GenreFilter>
+            </li>
+          ))}
+        </Tags>
+        <Tags>
+          <h3>개봉연도</h3>
+          {RELEASEDATES.sections.map((section) => (
+            <li key={section.id}>
+              <DateFilter type="button" onClick={() => handleFilterReleaseDate(section.year)}>
+                {section.name}
+              </DateFilter>
+            </li>
+          ))}
+        </Tags>
+        <RefreshButton type="button" onClick={handleRefreshFilter}>
+          초기화
+        </RefreshButton>
+
+        <div>
+          {contents.length ? (
+            <>
+              <List>
+                {contents.map((content) => (
+                  <ContentItem
+                    key={content.id}
+                    content={content}
+                  />
+                ))}
+              </List>
+              <Pagination
+                url={location.pathname}
+                total={contentStore.totalPages}
+                current={searchParams.get('page') ?? 1}
+              />
+            </>
+          ) : (
+            <Error>작품이 존재하지 않습니다.</Error>
+          )}
+        </div>
+      </Main>
     </Container>
   );
 }
