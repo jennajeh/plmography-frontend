@@ -17,7 +17,6 @@ export default function ExplorePage() {
   return (
     <Container>
       <Category />
-      {/* <ContentsList /> */}
     </Container>
   );
 }

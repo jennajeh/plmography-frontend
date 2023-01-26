@@ -10,8 +10,7 @@ import PLATFORMS from '../../constants/platforms';
 import RELEASEDATES from '../../constants/releaseDates';
 import TYPES from '../../constants/types';
 import useContentStore from '../../hooks/useContentStore';
-import ContentItem from '../content/ContentItem';
-import Pagination from '../page/Pagination';
+import ContentsList from '../content/ContentsList';
 
 const Container = styled.div`
   display: flex;
@@ -32,41 +31,12 @@ const SearchBar = styled.div`
   }
 `;
 
-const Categories = styled.ul`
-  width: 15%;
-  li{
-    padding: 1rem;
-    border: 1px solid #e4e4e4;
-    background: #fafafa;
-  }
-  a{
-    display: flex;
-    justify-content: space-between;
-  }
-`;
-
 const Tags = styled.ul`
   display: flex;
   align-items: center;
   li{
     margin-inline-end: 1rem;
   }
-`;
-
-const Skills = styled.div`
-  display: flex;
-  > div {
-    display: flex;
-    margin-inline-end: 1rem;
-  }
-  ul{
-    flex-wrap: wrap;
-  }
-`;
-
-const Filters = styled.div`
-  display: flex;
-  margin-block: .5rem 3rem;
 `;
 
 const PlatformFilter = styled.button`
@@ -106,36 +76,11 @@ const RefreshButton = styled.button`
   border-radius: 50%;
 `;
 
-const List = styled.ul`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  gap: 1em;
-`;
-
-const Error = styled.p`
-  margin: 80px;
-  font-weight: 700;
-  font-size: ${((props) => props.theme.size.h4)};
-  text-align: center;
-`;
-
 export default function Category() {
-  const appleTv = 'https://plmographybucket.s3.ap-northeast-2.amazonaws.com/btn_appletv.png';
-  const disneyPlus = 'https://plmographybucket.s3.ap-northeast-2.amazonaws.com/btn_disneyplus.png';
-  const netflix = 'https://plmographybucket.s3.ap-northeast-2.amazonaws.com/btn_netflix.png';
-  const tving = 'https://plmographybucket.s3.ap-northeast-2.amazonaws.com/btn_tving.png';
-  const watcha = 'https://plmographybucket.s3.ap-northeast-2.amazonaws.com/btn_watcha.png';
-  const wavve = 'https://plmographybucket.s3.ap-northeast-2.amazonaws.com/btn_wavve.png';
-
-  const location = useLocation();
   const [searchParams] = useSearchParams();
   const [filter, setFilter] = useState({});
   const contentStore = useContentStore();
-
   const page = searchParams.get('page') ?? 1;
-
-  const { contents } = contentStore;
 
   const handleSearchContents = (e) => {
     e.preventDefault();
@@ -184,8 +129,8 @@ export default function Category() {
         </SearchBar>
         <Tags>
           <h3>플랫폼</h3>
-          {PLATFORMS.sections.map((section) => (
-            <li key={section.id}>
+          {PLATFORMS.sections.map((section, idx) => (
+            <li key={idx}>
               <PlatformFilter type="button" onClick={() => handleFilterPlatforms(section.code)}>
                 <img
                   src={section.image}
@@ -197,8 +142,8 @@ export default function Category() {
         </Tags>
         <Tags>
           <h3>영화/TV</h3>
-          {TYPES.sections.map((section) => (
-            <li key={section.id}>
+          {TYPES.sections.map((section, idx) => (
+            <li key={idx}>
               <TypeFilter type="button" onClick={() => handleFilterTypes(section.code)}>
                 {section.name}
               </TypeFilter>
@@ -207,8 +152,8 @@ export default function Category() {
         </Tags>
         <Tags>
           <h3>장르</h3>
-          {GENRES.sections.map((section) => (
-            <li key={section.id}>
+          {GENRES.sections.map((section, idx) => (
+            <li key={idx}>
               <GenreFilter type="button" onClick={() => handleFilterGenres(section.code)}>
                 {section.name}
               </GenreFilter>
@@ -217,8 +162,8 @@ export default function Category() {
         </Tags>
         <Tags>
           <h3>개봉연도</h3>
-          {RELEASEDATES.sections.map((section) => (
-            <li key={section.id}>
+          {RELEASEDATES.sections.map((section, idx) => (
+            <li key={idx}>
               <DateFilter type="button" onClick={() => handleFilterReleaseDate(section.year)}>
                 {section.name}
               </DateFilter>
@@ -228,28 +173,7 @@ export default function Category() {
         <RefreshButton type="button" onClick={handleRefreshFilter}>
           초기화
         </RefreshButton>
-
-        <div>
-          {contents.length ? (
-            <>
-              <List>
-                {contents.map((content) => (
-                  <ContentItem
-                    key={content.id}
-                    content={content}
-                  />
-                ))}
-              </List>
-              <Pagination
-                url={location.pathname}
-                total={contentStore.totalPages}
-                current={searchParams.get('page') ?? 1}
-              />
-            </>
-          ) : (
-            <Error>작품이 존재하지 않습니다.</Error>
-          )}
-        </div>
+        <ContentsList />
       </Main>
     </Container>
   );
