@@ -112,8 +112,6 @@ export default function Category() {
     contentStore.fetchContents({ page, size: 8, filter });
   }, [page, filter]);
 
-  console.log(filter);
-
   return (
     <Container>
       <Main>

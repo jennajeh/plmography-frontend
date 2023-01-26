@@ -1,7 +1,8 @@
 import { cleanup, render } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
+import defaultTheme from '../../styles/defaultTheme';
 import Category from './Category';
-
-const context = describe;
 
 describe('Category', () => {
   beforeEach(() => {
@@ -14,7 +15,11 @@ describe('Category', () => {
 
   function renderCategory() {
     render((
-      <Category />
+      <MemoryRouter>
+        <ThemeProvider theme={defaultTheme}>
+          <Category />
+        </ThemeProvider>
+      </MemoryRouter>
     ));
   }
 

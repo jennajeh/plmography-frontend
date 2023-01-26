@@ -12,7 +12,13 @@ describe('UserStore', () => {
   describe('컨텐츠 조회', () => {
     context('컨텐츠 목록 조회시', () => {
       it('컨텐츠 리스트가 보인다', async () => {
-        await contentStore.fetchContents({ page: 1, size: 8 });
+        await contentStore.fetchContents({
+          page: 1,
+          size: 8,
+          filter: {
+            date: 2022, genre: '16', platformData: 'netfilx', type: 'movie',
+          },
+        });
 
         expect(contentStore.contents[0].korTitle).toBe('쩨쩨의 이중생활');
         expect(contentStore.totalPages).toBe(1);
