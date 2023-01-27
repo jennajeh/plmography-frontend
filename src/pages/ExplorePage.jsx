@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Category from '../components/modal/Category';
+import Category from '../components/content/Category';
 
 const Container = styled.div`
   min-height: calc(100vh - env(safe-area-inset-bottom) - 56px);

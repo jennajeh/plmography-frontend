@@ -8,7 +8,7 @@ import PLATFORMS from '../../constants/platforms';
 import RELEASEDATES from '../../constants/releaseDates';
 import TYPES from '../../constants/types';
 import useContentStore from '../../hooks/useContentStore';
-import ContentsList from '../content/ContentsList';
+import ContentsList from './ContentsList';
 
 const Container = styled.div`
   display: flex;
@@ -154,8 +154,6 @@ export default function Category() {
   useEffect(() => {
     contentStore.fetchContents({ page, size: 8, filter });
   }, [page, filter]);
-
-  console.log(filter);
 
   return (
     <Container>

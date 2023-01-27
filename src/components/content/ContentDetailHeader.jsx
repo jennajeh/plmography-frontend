@@ -137,8 +137,6 @@ export default function ContentDetailHeader() {
   const sameContentReviews = reviewStore.isMySameContentReview(Number(content.tmdbId));
   const notDeletedReview = reviewStore.isDeletedMyReviews(sameContentReviews);
 
-  console.log(notDeletedReview);
-
   const {
     korTitle, engTitle, releaseDate, imageUrl,
   } = content;
@@ -158,8 +156,6 @@ export default function ContentDetailHeader() {
 
     navigate('/reviews/create');
   };
-
-  console.log(notDeletedReview);
 
   return (
     <>
