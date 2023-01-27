@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useLocalStorage } from 'usehooks-ts';
 import useContentStore from '../../hooks/useContentStore';
+import useReviewStore from '../../hooks/useReviewStore';
 
 const HeaderWrapper = styled.div`
   height: 250px;
@@ -128,8 +129,15 @@ export default function ContentDetailHeader() {
   const imdbLogo = 'https://plmographybucket.s3.ap-northeast-2.amazonaws.com/imdb-logo.png';
 
   const contentStore = useContentStore();
+  const reviewStore = useReviewStore();
 
   const { content } = contentStore;
+  const { myReviews } = reviewStore;
+
+  const sameContentReviews = reviewStore.isMySameContentReview(Number(content.tmdbId));
+  const notDeletedReview = reviewStore.isDeletedMyReviews(sameContentReviews);
+
+  console.log(notDeletedReview);
 
   const {
     korTitle, engTitle, releaseDate, imageUrl,
@@ -142,8 +150,16 @@ export default function ContentDetailHeader() {
       return;
     }
 
+    if (notDeletedReview.length > 0) {
+      navigate(`/reviews/${notDeletedReview[0].id}/edit`);
+
+      return;
+    }
+
     navigate('/reviews/create');
   };
+
+  console.log(notDeletedReview);
 
   return (
     <>
