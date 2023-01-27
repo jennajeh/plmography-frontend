@@ -43,7 +43,6 @@ export default function App() {
     contentApiService.setAccessToken(accessToken);
     reviewApiService.setAccessToken(accessToken);
     commentApiService.setAccessToken(accessToken);
-    articleApiService.setAccessToken(accessToken);
   }, [accessToken]);
 
   return (

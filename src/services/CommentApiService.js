@@ -45,6 +45,14 @@ export default class CommentApiService {
     return { comments };
   }
 
+  async fetchCommentsWithNotLoggedIn() {
+    const { data } = await this.instance.get('/comments/all');
+
+    const { comments } = data;
+
+    return { comments };
+  }
+
   async deleteComment(id) {
     await this.instance.delete(`/comments/${id}`);
   }

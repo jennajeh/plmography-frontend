@@ -18,7 +18,6 @@ userApiService.setAccessToken(accessToken);
 contentApiService.setAccessToken(accessToken);
 reviewApiService.setAccessToken(accessToken);
 commentApiService.setAccessToken(accessToken);
-articleApiService.setAccessToken(accessToken);
 
 root.render((
   <BrowserRouter>

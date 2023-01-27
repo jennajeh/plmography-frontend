@@ -5,7 +5,6 @@ import useCommentStore from '../../hooks/useCommentStore';
 import Likes from '../common/Likes';
 import dateFormat from '../../utils/dateFormat';
 import useReviewStore from '../../hooks/useReviewStore';
-import useUserStore from '../../hooks/useUserStore';
 import useContentStore from '../../hooks/useContentStore';
 import Comment from '../comment/Comment';
 
@@ -14,18 +13,16 @@ export default function OtherReview() {
   const [accessToken] = useLocalStorage('accessToken', '');
   const [searchParams] = useSearchParams();
 
-  const userStore = useUserStore();
   const commentStore = useCommentStore();
   const reviewStore = useReviewStore();
   const contentStore = useContentStore();
 
   const page = searchParams.get('page') ?? 1;
-  const { user } = userStore;
   const { content } = contentStore;
-  const { id: userId } = user;
+
   const commentNotDeleted = commentStore.isDeleted();
-  const otherReviews = reviewStore.isOtherReview(userId);
   const otherSameContentReview = reviewStore.isOtherSameContentReview(Number(content.tmdbId));
+  const isNotDeleted = reviewStore.isDeletedAllReviews(otherSameContentReview);
 
   const handleClickLike = async (review) => {
     if (!accessToken) {
@@ -52,9 +49,9 @@ export default function OtherReview() {
   return (
     <div>
       <h4 style={{ color: 'blue' }}>모든 리뷰</h4>
-      {otherReviews.length && otherSameContentReview.length ? (
+      {isNotDeleted.length ? (
         <ul>
-          {otherSameContentReview.map((review) => (
+          {isNotDeleted.map((review) => (
             <li key={review.id}>
               <p>
                 createdAt:

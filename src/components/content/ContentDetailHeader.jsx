@@ -1,5 +1,7 @@
 /* eslint-disable react/prop-types */
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useLocalStorage } from 'usehooks-ts';
 import useContentStore from '../../hooks/useContentStore';
 
 const HeaderWrapper = styled.div`
@@ -118,6 +120,9 @@ const MyButtonArea = styled.div`
 `;
 
 export default function ContentDetailHeader() {
+  const [accessToken] = useLocalStorage('accessToken', '');
+  const navigate = useNavigate();
+
   const rottenTomato = 'https://plmographybucket.s3.ap-northeast-2.amazonaws.com/rotten-tomato.png';
 
   const imdbLogo = 'https://plmographybucket.s3.ap-northeast-2.amazonaws.com/imdb-logo.png';
@@ -129,6 +134,16 @@ export default function ContentDetailHeader() {
   const {
     korTitle, engTitle, releaseDate, imageUrl,
   } = content;
+
+  const handleClickWriteReview = () => {
+    if (!accessToken) {
+      navigate('/login');
+
+      return;
+    }
+
+    navigate('/reviews/create');
+  };
 
   return (
     <>
@@ -178,7 +193,7 @@ export default function ContentDetailHeader() {
           {/* 이미지 넣기 */}
           <p>봤어요</p>
         </button>
-        <button type="button">
+        <button type="button" onClick={handleClickWriteReview}>
           {/* 이미지 넣기 */}
           <p>리뷰쓰기</p>
         </button>

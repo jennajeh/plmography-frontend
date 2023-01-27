@@ -50,6 +50,20 @@ export default class ReviewStore extends Store {
     }
   }
 
+  async fetchReviewsWithNotLoggedIn({ page, size }) {
+    this.startReviewsLoad();
+
+    try {
+      const { reviews, pages } = await reviewApiService.fetchReviewsWithNotLoggedIn({ page, size });
+
+      this.totalPages = pages.totalPages;
+
+      this.completeReviewsLoad(reviews);
+    } catch (e) {
+      this.failReviewsLoad();
+    }
+  }
+
   async fetchMyReviews() {
     this.startMyReviewsLoad();
 
@@ -111,16 +125,16 @@ export default class ReviewStore extends Store {
     this.publish();
   }
 
-  isOtherReview(userId) {
-    return this.reviews.filter((review) => review.writer.id !== userId);
-  }
-
   isMySameContentReview(tmdbId) {
     return this.myReviews.filter((review) => review.contentId === tmdbId);
   }
 
-  isDeleted(myReviews) {
+  isDeletedMyReviews(myReviews) {
     return myReviews.filter((review) => !review.deleted);
+  }
+
+  isDeletedAllReviews(reviews) {
+    return reviews.filter((review) => !review.deleted);
   }
 
   isOtherSameContentReview(tmdbId) {
