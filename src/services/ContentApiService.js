@@ -15,7 +15,7 @@ export default class ContentApiService {
 
   async fetchContents({ page, size, filter }) {
     const filterQuery = filter
-      ? `?${['platformData', 'type', 'genre', 'date', 'searchTitle']
+      ? `?${['platform', 'type', 'genre', 'date', 'searchTitle', 'sort']
         .map((key) => (filter[key] ? `${key}=${filter[key]}` : ''))
         .filter((query) => query)
         .join('&')}`

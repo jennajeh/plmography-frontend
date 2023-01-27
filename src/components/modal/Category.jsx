@@ -74,6 +74,13 @@ const RefreshButton = styled.button`
   border-radius: 50%;
 `;
 
+const Buttons = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: 1em;
+  margin: 0 1em 1em;
+`;
+
 export default function Category() {
   const [searchParams] = useSearchParams();
   const [filter, setFilter] = useState({});
@@ -88,19 +95,43 @@ export default function Category() {
     setFilter({ searchTitle });
   };
 
-  const handleFilterPlatforms = (platformData) => {
-    setFilter({ ...filter, platformData });
+  const handleFilterPlatforms = (platform) => {
+    if (platform === filter.platform) {
+      setFilter({ ...filter, platform: '' });
+
+      return;
+    }
+
+    setFilter({ ...filter, platform });
   };
 
   const handleFilterTypes = (type) => {
+    if (type === filter.type) {
+      setFilter({ ...filter, type: '' });
+
+      return;
+    }
+
     setFilter({ ...filter, type });
   };
 
   const handleFilterGenres = (genre) => {
+    if (genre === filter.genre) {
+      setFilter({ ...filter, genre: '' });
+
+      return;
+    }
+
     setFilter({ ...filter, genre });
   };
 
   const handleFilterReleaseDate = (date) => {
+    if (date === filter.date) {
+      setFilter({ ...filter, date: '' });
+
+      return;
+    }
+
     setFilter({ ...filter, date });
   };
 
@@ -108,9 +139,23 @@ export default function Category() {
     setFilter({});
   };
 
+  const handleClickLatest = () => {
+    setFilter({ ...filter, sort: 'releaseDate' });
+  };
+
+  const handleClickPopular = () => {
+    setFilter({ ...filter, sort: 'popularity' });
+  };
+
+  const handleClickName = () => {
+    setFilter({ ...filter, sort: 'korTitle' });
+  };
+
   useEffect(() => {
     contentStore.fetchContents({ page, size: 8, filter });
   }, [page, filter]);
+
+  console.log(filter);
 
   return (
     <Container>
@@ -169,6 +214,17 @@ export default function Category() {
         <RefreshButton type="button" onClick={handleRefreshFilter}>
           초기화
         </RefreshButton>
+        <Buttons>
+          <button type="button" onClick={handleClickLatest}>
+            최신순
+          </button>
+          <button type="button" onClick={handleClickPopular}>
+            인기순
+          </button>
+          <button type="button" onClick={handleClickName}>
+            이름순
+          </button>
+        </Buttons>
         <ContentsList />
       </Main>
     </Container>
