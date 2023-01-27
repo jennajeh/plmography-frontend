@@ -7,7 +7,7 @@ export default class ContentStore extends Store {
 
     this.contents = [];
 
-    this.content = '';
+    this.content = {};
 
     this.totalPages = 0;
   }
@@ -23,6 +23,28 @@ export default class ContentStore extends Store {
 
   async fetchContent(tmdbId) {
     this.content = await contentApiService.fetchContent(tmdbId);
+
+    this.publish();
+  }
+
+  async toggleWish(id) {
+    const wishUserIds = await contentApiService.toggleWishContent(id);
+
+    this.content = {
+      ...this.content,
+      wishUserIds,
+    };
+
+    this.publish();
+  }
+
+  async toggleWatched(id) {
+    const watchedUserIds = await contentApiService.toggleWatchedContent(id);
+
+    this.content = {
+      ...this.content,
+      watchedUserIds,
+    };
 
     this.publish();
   }

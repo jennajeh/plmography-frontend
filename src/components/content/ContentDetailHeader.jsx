@@ -132,13 +132,12 @@ export default function ContentDetailHeader() {
   const reviewStore = useReviewStore();
 
   const { content } = contentStore;
-  const { myReviews } = reviewStore;
 
   const sameContentReviews = reviewStore.isMySameContentReview(Number(content.tmdbId));
   const notDeletedReview = reviewStore.isDeletedMyReviews(sameContentReviews);
 
   const {
-    korTitle, engTitle, releaseDate, imageUrl,
+    id, korTitle, engTitle, releaseDate, imageUrl,
   } = content;
 
   const handleClickWriteReview = () => {
@@ -155,6 +154,26 @@ export default function ContentDetailHeader() {
     }
 
     navigate('/reviews/create');
+  };
+
+  const handleClickWish = async () => {
+    if (!accessToken) {
+      navigate('/login');
+
+      return;
+    }
+
+    await contentStore.toggleWish(id);
+  };
+
+  const handleClickWatched = async () => {
+    if (!accessToken) {
+      navigate('/login');
+
+      return;
+    }
+
+    await contentStore.toggleWatched(id);
   };
 
   return (
@@ -197,11 +216,11 @@ export default function ContentDetailHeader() {
         </ContentHeaderBox>
       </HeaderWrapper>
       <MyButtonArea>
-        <button type="button">
+        <button type="button" onClick={handleClickWish}>
           {/* 이미지 넣기 */}
           <p>찜하기</p>
         </button>
-        <button type="button">
+        <button type="button" onClick={handleClickWatched}>
           {/* 이미지 넣기 */}
           <p>봤어요</p>
         </button>

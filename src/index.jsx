@@ -2,7 +2,6 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 
-import { articleApiService } from './services/ArticleApiService';
 import { commentApiService } from './services/CommentApiService';
 import { contentApiService } from './services/ContentApiService';
 import { reviewApiService } from './services/ReviewApiService';

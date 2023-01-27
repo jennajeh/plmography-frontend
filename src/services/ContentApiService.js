@@ -7,10 +7,21 @@ const baseUrl = config.apiBaseUrl;
 export default class ContentApiService {
   constructor() {
     this.accessToken = '';
+
+    this.instance = axios.create({
+      baseURL: baseUrl,
+    });
   }
 
   setAccessToken(accessToken) {
     this.accessToken = accessToken;
+
+    if (accessToken) {
+      this.instance = axios.create({
+        baseURL: baseUrl,
+        headers: { Authorization: `Bearer ${this.accessToken}` },
+      });
+    }
   }
 
   async fetchContents({ page, size, filter }) {
@@ -29,9 +40,7 @@ export default class ContentApiService {
       .filter((elem) => elem)
       .join('&');
 
-    const url = `${baseUrl}/contents${query}`;
-
-    const { data } = await axios.get(url);
+    const { data } = await this.instance.get(`/contents${query}`);
 
     const { contents, pages } = data;
 
@@ -39,11 +48,21 @@ export default class ContentApiService {
   }
 
   async fetchContent(tmdbId) {
-    const url = `${baseUrl}/contents/${tmdbId}`;
-
-    const { data } = await axios.get(url);
+    const { data } = await this.instance.get(`/contents/${tmdbId}`);
 
     return data;
+  }
+
+  async toggleWishContent(id) {
+    const { data } = await this.instance.patch(`/contents/${id}/wishUserIds`);
+
+    return data.wishUserIds;
+  }
+
+  async toggleWatchedContent(id) {
+    const { data } = await this.instance.patch(`/contents/${id}/watchedUserIds`);
+
+    return data.watchedUserIds;
   }
 }
 
