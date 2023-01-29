@@ -7,7 +7,6 @@ import { userApiService } from './services/UserApiService';
 import { contentApiService } from './services/ContentApiService';
 import { reviewApiService } from './services/ReviewApiService';
 import { commentApiService } from './services/CommentApiService';
-import { articleApiService } from './services/ArticleApiService';
 
 import defaultTheme from './styles/defaultTheme';
 
@@ -43,7 +42,6 @@ export default function App() {
     contentApiService.setAccessToken(accessToken);
     reviewApiService.setAccessToken(accessToken);
     commentApiService.setAccessToken(accessToken);
-    articleApiService.setAccessToken(accessToken);
   }, [accessToken]);
 
   return (

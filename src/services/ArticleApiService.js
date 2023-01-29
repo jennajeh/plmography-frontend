@@ -1,36 +1,12 @@
+/* eslint-disable class-methods-use-this */
 import axios from 'axios';
 import config from '../config';
 
 const baseUrl = config.apiBaseUrl;
 
 export default class ArticleApiService {
-  constructor() {
-    this.accessToken = '';
-
-    this.instance = axios.create({
-      baseURL: baseUrl,
-    });
-  }
-
-  setAccessToken(accessToken) {
-    this.accessToken = accessToken;
-
-    if (accessToken) {
-      this.instance = axios.create({
-        baseURL: baseUrl,
-        headers: { Authorization: `Bearer ${this.accessToken}` },
-      });
-
-      return;
-    }
-
-    this.instance = axios.create({
-      baseURL: baseUrl,
-    });
-  }
-
   async fetchArticles({ page, size }) {
-    const { data } = await this.instance.get(`/articles?page=${page}&size=${size}`);
+    const { data } = await axios.get(`${baseUrl}/articles?page=${page}&size=${size}`);
 
     const { articles, pages } = data;
 
@@ -40,7 +16,7 @@ export default class ArticleApiService {
   }
 
   async fetchArticle(contentId) {
-    const { data } = await this.instance.get(`/articles/${contentId}`);
+    const { data } = await axios.get(`${baseUrl}/articles/${contentId}`);
 
     return { data };
   }

@@ -9,7 +9,11 @@ export default function ContentDetailPlatform() {
 
   const { platform } = content;
 
-  const platformList = platform?.substring(1, platform.length - 2).split(',');
+  const platformList = platform?.split(',');
+
+  const handleClickPlatform = (url) => {
+    window.open(`http://www.${url}.com`, '_blank');
+  };
 
   return (
     <div>
@@ -18,25 +22,25 @@ export default function ContentDetailPlatform() {
       <div>
         <ul>
           <li>
-            <a href="">
+            <button type="button" onClick={() => handleClickPlatform(platformList?.[0])}>
               {platformList?.[0]}
               {' '}
               바로가기
-            </a>
+            </button>
           </li>
           <li>
-            <a href="">
+            <button type="button" onClick={() => handleClickPlatform(platformList?.[1])}>
               {platformList?.[1]}
               {' '}
               바로가기
-            </a>
+            </button>
           </li>
           <li>
-            <a href="">
+            <button type="button" onClick={() => handleClickPlatform(platformList?.[2])}>
               {platformList?.[2]}
               {' '}
               바로가기
-            </a>
+            </button>
           </li>
         </ul>
       </div>

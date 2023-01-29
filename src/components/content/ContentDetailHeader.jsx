@@ -1,6 +1,9 @@
 /* eslint-disable react/prop-types */
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useLocalStorage } from 'usehooks-ts';
 import useContentStore from '../../hooks/useContentStore';
+import useReviewStore from '../../hooks/useReviewStore';
 
 const HeaderWrapper = styled.div`
   height: 250px;
@@ -118,17 +121,60 @@ const MyButtonArea = styled.div`
 `;
 
 export default function ContentDetailHeader() {
+  const [accessToken] = useLocalStorage('accessToken', '');
+  const navigate = useNavigate();
+
   const rottenTomato = 'https://plmographybucket.s3.ap-northeast-2.amazonaws.com/rotten-tomato.png';
 
   const imdbLogo = 'https://plmographybucket.s3.ap-northeast-2.amazonaws.com/imdb-logo.png';
 
   const contentStore = useContentStore();
+  const reviewStore = useReviewStore();
 
   const { content } = contentStore;
 
+  const sameContentReviews = reviewStore.isMySameContentReview(Number(content.tmdbId));
+  const notDeletedReview = reviewStore.isDeletedMyReviews(sameContentReviews);
+
   const {
-    korTitle, engTitle, releaseDate, imageUrl,
+    id, korTitle, engTitle, releaseDate, imageUrl,
   } = content;
+
+  const handleClickWriteReview = () => {
+    if (!accessToken) {
+      navigate('/login');
+
+      return;
+    }
+
+    if (notDeletedReview.length > 0) {
+      navigate(`/reviews/${notDeletedReview[0].id}/edit`);
+
+      return;
+    }
+
+    navigate('/reviews/create');
+  };
+
+  const handleClickWish = async () => {
+    if (!accessToken) {
+      navigate('/login');
+
+      return;
+    }
+
+    await contentStore.toggleWish(id);
+  };
+
+  const handleClickWatched = async () => {
+    if (!accessToken) {
+      navigate('/login');
+
+      return;
+    }
+
+    await contentStore.toggleWatched(id);
+  };
 
   return (
     <>
@@ -144,7 +190,7 @@ export default function ContentDetailHeader() {
               {' '}
               -
               {' '}
-              <span>{releaseDate?.substr(0, 4)}</span>
+              <span>{releaseDate}</span>
             </p>
             <RatingWrapper>
               <LogoBox>
@@ -170,15 +216,15 @@ export default function ContentDetailHeader() {
         </ContentHeaderBox>
       </HeaderWrapper>
       <MyButtonArea>
-        <button type="button">
+        <button type="button" onClick={handleClickWish}>
           {/* 이미지 넣기 */}
           <p>찜하기</p>
         </button>
-        <button type="button">
+        <button type="button" onClick={handleClickWatched}>
           {/* 이미지 넣기 */}
           <p>봤어요</p>
         </button>
-        <button type="button">
+        <button type="button" onClick={handleClickWriteReview}>
           {/* 이미지 넣기 */}
           <p>리뷰쓰기</p>
         </button>

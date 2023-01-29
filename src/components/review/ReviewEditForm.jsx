@@ -15,7 +15,7 @@ export default function ReviewEditForm() {
 
   const mySameContentReview = reviewStore.isMySameContentReview(Number(content.tmdbId));
 
-  const notDeleted = reviewStore.isDeleted(mySameContentReview);
+  const notDeleted = reviewStore.isDeletedMyReviews(mySameContentReview);
 
   const tmdbId = mySameContentReview[0]?.contentId;
 

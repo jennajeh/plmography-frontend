@@ -145,7 +145,7 @@ const server = setupServer(
         {
           id: 1,
           tmdbId: '1',
-          tmdbGenreId: '1',
+          tmdbGenreId: '16',
           imageUrl: 'zzezze',
           korTitle: '쩨쩨의 이중생활',
           engTitle: 'zzezze secret',

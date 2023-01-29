@@ -47,6 +47,16 @@ export default class ReviewApiService {
     };
   }
 
+  async fetchReviewsWithNotLoggedIn({ page = 1, size }) {
+    const { data } = await this.instance.get(`/reviews/all?page=${page}&size=${size}`);
+
+    const { reviews, pages } = data;
+
+    return {
+      reviews, pages,
+    };
+  }
+
   async fetchMyReviews() {
     const { data } = await this.instance.get('/reviews/me');
 

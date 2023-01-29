@@ -7,13 +7,13 @@ export default class ContentStore extends Store {
 
     this.contents = [];
 
-    this.content = '';
+    this.content = {};
 
     this.totalPages = 0;
   }
 
-  async fetchContents({ page, size }) {
-    const { contents, pages } = await contentApiService.fetchContents({ page, size });
+  async fetchContents({ page, size, filter } = {}) {
+    const { contents, pages } = await contentApiService.fetchContents({ page, size, filter });
 
     this.contents = contents;
     this.totalPages = pages.totalPages;
@@ -23,6 +23,28 @@ export default class ContentStore extends Store {
 
   async fetchContent(tmdbId) {
     this.content = await contentApiService.fetchContent(tmdbId);
+
+    this.publish();
+  }
+
+  async toggleWish(id) {
+    const wishUserIds = await contentApiService.toggleWishContent(id);
+
+    this.content = {
+      ...this.content,
+      wishUserIds,
+    };
+
+    this.publish();
+  }
+
+  async toggleWatched(id) {
+    const watchedUserIds = await contentApiService.toggleWatchedContent(id);
+
+    this.content = {
+      ...this.content,
+      watchedUserIds,
+    };
 
     this.publish();
   }

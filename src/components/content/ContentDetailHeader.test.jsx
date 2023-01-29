@@ -1,6 +1,7 @@
 import {
   cleanup, render, screen, waitFor,
 } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import defaultTheme from '../../styles/defaultTheme';
 import ContentDetailHeader from './ContentDetailHeader';
@@ -15,9 +16,11 @@ afterEach(() => {
 
 test('ContentDetailHeader', async () => {
   render((
-    <ThemeProvider theme={defaultTheme}>
-      <ContentDetailHeader />
-    </ThemeProvider>
+    <MemoryRouter>
+      <ThemeProvider theme={defaultTheme}>
+        <ContentDetailHeader />
+      </ThemeProvider>
+    </MemoryRouter>
   ));
 
   await waitFor(() => {

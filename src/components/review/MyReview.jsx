@@ -13,7 +13,7 @@ export default function MyReview() {
   const { myReviews } = reviewStore;
 
   const mySameContentReview = reviewStore.isMySameContentReview(Number(content.tmdbId));
-  const reviewNotDeleted = reviewStore.isDeleted(mySameContentReview);
+  const reviewNotDeleted = reviewStore.isDeletedMyReviews(mySameContentReview);
 
   const handleClickDeleteReview = async () => {
     await reviewStore.delete(reviewNotDeleted[0].id);

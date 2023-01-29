@@ -1,9 +1,5 @@
-import { useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
-import ContentsList from '../components/content/ContentsList';
-import Category from '../components/modal/Category';
-import useContentStore from '../hooks/useContentStore';
+import Category from '../components/content/Category';
 
 const Container = styled.div`
   min-height: calc(100vh - env(safe-area-inset-bottom) - 56px);
@@ -14,20 +10,9 @@ const Container = styled.div`
 `;
 
 export default function ExplorePage() {
-  const contentStore = useContentStore();
-
-  const [searchParams] = useSearchParams();
-
-  const page = searchParams.get('page') ?? 1;
-
-  useEffect(() => {
-    contentStore.fetchContents({ page, size: 8 });
-  }, [page]);
-
   return (
     <Container>
       <Category />
-      <ContentsList />
     </Container>
   );
 }

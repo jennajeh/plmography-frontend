@@ -62,6 +62,22 @@ export default class CommentStore extends Store {
     }
   }
 
+  async fetchCommentsWithNotLoggedIn() {
+    this.startCommentsLoad();
+
+    try {
+      const { comments } = await commentApiService.fetchCommentsWithNotLoggedIn();
+
+      this.completeCommentsLoad(comments);
+
+      this.publish();
+    } catch (e) {
+      this.failCommentsLoad();
+
+      this.publish();
+    }
+  }
+
   async delete(id) {
     this.startDelete();
 
