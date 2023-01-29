@@ -441,6 +441,98 @@ const server = setupServer(
       createdAt: '2022-01-01T17:57:23.929359',
     }),
   )),
+
+  // Subscribe
+  rest.post(`${baseUrl}/subscribe/2`, async (req, res, ctx) => {
+    const authorization = req.headers.get('Authorization');
+
+    if (!authorization) {
+      return res(
+        ctx.status(400),
+      );
+    }
+
+    return res();
+  }),
+
+  rest.get(`${baseUrl}/subscribe/me`, async (req, res, ctx) => res(
+    ctx.json({
+      userId: 1,
+      followingCount: 1,
+      followerCount: 1,
+    }),
+  )),
+
+  rest.get(`${baseUrl}/subscribe/3`, async (req, res, ctx) => res(
+    ctx.json({
+      subscribeStatus: true,
+      userInfo: {
+        id: 3,
+        nickname: 'boni',
+        profileImage: 'https://source.boringavatars.com/beam/120/nickname=boni',
+      },
+      followingCount: 1,
+      followerCount: 1,
+    }),
+  )),
+
+  rest.get(`${baseUrl}/users/following`, async (req, res, ctx) => res(
+    ctx.json({
+      subscribes: [
+        {
+          userId: 2,
+          nickname: 'zzezze',
+          profileImage: 'https://source.boringavatars.com/beam/120/nickname=zzezze',
+          subscribeStatus: true,
+        },
+        {
+          userId: 3,
+          nickname: 'boni',
+          profileImage: 'https://source.boringavatars.com/beam/120/nickname=boni',
+          subscribeStatus: true,
+        },
+      ],
+
+      pages: {
+        totalPages: 1,
+      },
+    }),
+  )),
+
+  rest.get(`${baseUrl}/users/follower`, async (req, res, ctx) => res(
+    ctx.json({
+      subscribes: [
+        {
+          userId: 2,
+          nickname: 'zzezze',
+          profileImage: 'https://source.boringavatars.com/beam/120/nickname=zzezze',
+          subscribeStatus: true,
+        },
+        {
+          userId: 3,
+          nickname: 'boni',
+          profileImage: 'https://source.boringavatars.com/beam/120/nickname=boni',
+          subscribeStatus: true,
+        },
+      ],
+
+      pages: {
+        totalPages: 1,
+      },
+    }),
+  )),
+
+  rest.delete(`${baseUrl}/subscribe/2`, async (req, res, ctx) => {
+    const authorization = req.headers.get('Authorization');
+
+    if (!authorization) {
+      return res(
+        ctx.status(400),
+      );
+    }
+
+    return res();
+  }),
 );
 
 export default server;

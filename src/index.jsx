@@ -5,6 +5,7 @@ import App from './App';
 import { commentApiService } from './services/CommentApiService';
 import { contentApiService } from './services/ContentApiService';
 import { reviewApiService } from './services/ReviewApiService';
+import { subscribeApiService } from './services/SubscribeApiService';
 import { userApiService } from './services/UserApiService';
 
 const container = document.getElementById('app');
@@ -17,6 +18,7 @@ userApiService.setAccessToken(accessToken);
 contentApiService.setAccessToken(accessToken);
 reviewApiService.setAccessToken(accessToken);
 commentApiService.setAccessToken(accessToken);
+subscribeApiService.setAccessToken(accessToken);
 
 root.render((
   <BrowserRouter>

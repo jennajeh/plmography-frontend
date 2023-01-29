@@ -28,6 +28,7 @@ import GreetingPage from './pages/GreetingPage';
 import ReviewCreatePage from './pages/ReviewCreatePage';
 import ArticlesPage from './pages/ArticlesPage';
 import ArticleDetailPage from './pages/ArticleDetailPage';
+import { subscribeApiService } from './services/SubscribeApiService';
 
 const Main = styled.main`
   height: calc(100vh - 64px);
@@ -42,6 +43,7 @@ export default function App() {
     contentApiService.setAccessToken(accessToken);
     reviewApiService.setAccessToken(accessToken);
     commentApiService.setAccessToken(accessToken);
+    subscribeApiService.setAccessToken(accessToken);
   }, [accessToken]);
 
   return (
