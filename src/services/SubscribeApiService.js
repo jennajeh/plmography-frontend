@@ -40,7 +40,7 @@ export default class SubscribeApiService {
   }
 
   async fetchUserSubscribeCount(userId) {
-    const { data } = await this.instance.get(`/subscribe/${userId}`, userId);
+    const { data } = await this.instance.get(`/subscribe/${userId}`);
 
     return { data };
   }

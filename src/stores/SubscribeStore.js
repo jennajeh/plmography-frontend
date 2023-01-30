@@ -6,36 +6,52 @@ export default class SubscribeStore extends Store {
     super();
 
     this.subscribes = [];
-    this.mySubscribes = {};
+    this.mySubscribe = {};
     this.subscribe = {};
+
+    this.followStatus = '';
+    this.unFollowStatus = '';
 
     this.totalPages = 0;
   }
 
   reset() {
     this.subscribes = [];
-    this.mySubscribes = [];
+    this.mySubscribe = [];
     this.subscribe = {};
+
+    this.followStatus = '';
+    this.unFollowStatus = '';
 
     this.totalPages = 0;
   }
 
   async follow(followingId) {
-    await subscribeApiService.follow(followingId);
+    this.startFollow();
 
-    this.publish();
+    try {
+      await subscribeApiService.follow(followingId);
+
+      this.completeFollow();
+
+      this.publish();
+    } catch (e) {
+      this.failFollow();
+
+      this.publish();
+    }
   }
 
   async fetchMySubscribeCount() {
     const { data } = await subscribeApiService.fetchMySubscribeCount();
 
-    this.mySubscribes = data;
+    this.mySubscribe = data;
 
     this.publish();
   }
 
-  async fetchUserSubscribeCount() {
-    const { data } = await subscribeApiService.fetchUserSubscribeCount();
+  async fetchUserSubscribeCount(userId) {
+    const { data } = await subscribeApiService.fetchUserSubscribeCount(userId);
 
     this.subscribe = data;
 
@@ -65,9 +81,59 @@ export default class SubscribeStore extends Store {
   }
 
   async unFollow(followingId) {
-    await subscribeApiService.unFollow(followingId);
+    this.startUnFollow();
 
-    this.publish();
+    try {
+      await subscribeApiService.unFollow(followingId);
+
+      this.completeUnFollow();
+
+      this.publish();
+    } catch (e) {
+      this.failUnFollow();
+
+      this.publish();
+    }
+  }
+
+  startFollow() {
+    this.followStatus = 'processing';
+  }
+
+  completeFollow() {
+    this.followStatus = 'successful';
+  }
+
+  failFollow() {
+    this.followStatus = 'failed';
+  }
+
+  startUnFollow() {
+    this.unFollowStatus = 'processing';
+  }
+
+  completeUnFollow() {
+    this.unFollowStatus = 'successful';
+  }
+
+  failUnFollow() {
+    this.unFollowStatus = 'failed';
+  }
+
+  get isFollowSuccessful() {
+    return this.followStatus === 'successful';
+  }
+
+  get isFollowFailed() {
+    return this.followStatus === 'failed';
+  }
+
+  get isUnFollowSuccessful() {
+    return this.unFollowStatus === 'successful';
+  }
+
+  get isUnFollowFailed() {
+    return this.unFollowStatus === 'failed';
   }
 }
 
