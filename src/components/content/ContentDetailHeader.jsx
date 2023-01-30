@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useLocalStorage } from 'usehooks-ts';
 import useContentStore from '../../hooks/useContentStore';
@@ -176,6 +176,16 @@ export default function ContentDetailHeader() {
     await contentStore.toggleWatched(id);
   };
 
+  const handleClickFavorite = async () => {
+    if (!accessToken) {
+      navigate('/login');
+
+      return;
+    }
+
+    await contentStore.toggleFavorite(id);
+  };
+
   return (
     <>
       <HeaderWrapper>
@@ -219,6 +229,10 @@ export default function ContentDetailHeader() {
         <button type="button" onClick={handleClickWish}>
           {/* 이미지 넣기 */}
           <p>찜하기</p>
+        </button>
+        <button type="button" onClick={handleClickFavorite}>
+          {/* 이미지 넣기 */}
+          <p>인생 작품 등록하기</p>
         </button>
         <button type="button" onClick={handleClickWatched}>
           {/* 이미지 넣기 */}

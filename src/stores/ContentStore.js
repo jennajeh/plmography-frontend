@@ -48,6 +48,17 @@ export default class ContentStore extends Store {
 
     this.publish();
   }
+
+  async toggleFavorite(id) {
+    const favoriteUserIds = await contentApiService.toggleFavoriteContent(id);
+
+    this.content = {
+      ...this.content,
+      favoriteUserIds,
+    };
+
+    this.publish();
+  }
 }
 
 export const contentStore = new ContentStore();

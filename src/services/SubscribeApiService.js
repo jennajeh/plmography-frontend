@@ -48,20 +48,20 @@ export default class SubscribeApiService {
   async fetchFollowingList({ userId, page = 1, size }) {
     const { data } = await this.instance.get(`/users/following?userId=${userId}&page=${page}&size=${size}`);
 
-    const { subscribes, pages } = data;
+    const { userSubscribes, pages } = data;
 
     return {
-      subscribes, pages,
+      userSubscribes, pages,
     };
   }
 
   async fetchFollowerList({ userId, page = 1, size }) {
     const { data } = await this.instance.get(`/users/follower?userId=${userId}&page=${page}&size=${size}`);
 
-    const { subscribes, pages } = data;
+    const { userSubscribes, pages } = data;
 
     return {
-      subscribes, pages,
+      userSubscribes, pages,
     };
   }
 

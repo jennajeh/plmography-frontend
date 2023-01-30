@@ -64,6 +64,12 @@ export default class ContentApiService {
 
     return data.watchedUserIds;
   }
+
+  async toggleFavoriteContent(id) {
+    const { data } = await this.instance.patch(`/contents/${id}/favoriteUserIds`);
+
+    return data.favoriteUserIds;
+  }
 }
 
 export const contentApiService = new ContentApiService();
