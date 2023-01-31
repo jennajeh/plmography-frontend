@@ -60,7 +60,9 @@ export default class UserApiService {
   async changeProfile(nickname, profileImage) {
     const { data } = await this.instance.patch('/users', { nickname, profileImage });
 
-    return data;
+    console.log(data);
+
+    return { data };
   }
 
   async countEmailAndNickname({ email, nickname }) {
@@ -83,7 +85,7 @@ export default class UserApiService {
   async uploadImage(formData) {
     const { data } = await this.instance.post('/users/upload-image', formData);
 
-    return data;
+    return { data };
   }
 }
 

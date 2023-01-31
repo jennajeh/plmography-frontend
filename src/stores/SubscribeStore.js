@@ -5,9 +5,11 @@ export default class SubscribeStore extends Store {
   constructor() {
     super();
 
-    this.userSubscribes = [];
+    this.followings = [];
+    this.following = {};
+    this.followers = [];
+    this.follower = {};
     this.mySubscribe = {};
-    this.userSubscribe = {};
 
     this.followStatus = '';
     this.unFollowStatus = '';
@@ -16,9 +18,11 @@ export default class SubscribeStore extends Store {
   }
 
   reset() {
-    this.userSubscribes = [];
-    this.mySubscribe = [];
-    this.userSubscribe = {};
+    this.followings = [];
+    this.following = {};
+    this.followers = [];
+    this.follower = {};
+    this.mySubscribe = {};
 
     this.followStatus = '';
     this.unFollowStatus = '';
@@ -50,20 +54,20 @@ export default class SubscribeStore extends Store {
     this.publish();
   }
 
-  async fetchUserSubscribeCount(userId) {
-    const { data } = await subscribeApiService.fetchUserSubscribeCount(userId);
+  async fetchSubscribeCount(userId) {
+    const { data } = await subscribeApiService.fetchSubscribeCount(userId);
 
-    this.userSubscribe = data;
+    this.following = data;
 
     this.publish();
   }
 
   async fetchFollowingList({ userId, page, size }) {
     const {
-      userSubscribes, pages,
+      followings, pages,
     } = await subscribeApiService.fetchFollowingList({ userId, page, size });
 
-    this.userSubscribes = userSubscribes;
+    this.followings = followings;
     this.totalPages = pages.totalPages;
 
     this.publish();
@@ -71,10 +75,10 @@ export default class SubscribeStore extends Store {
 
   async fetchFollowerList({ userId, page, size }) {
     const {
-      userSubscribes, pages,
+      followers, pages,
     } = await subscribeApiService.fetchFollowerList({ userId, page, size });
 
-    this.userSubscribes = userSubscribes;
+    this.followers = followers;
     this.totalPages = pages.totalPages;
 
     this.publish();

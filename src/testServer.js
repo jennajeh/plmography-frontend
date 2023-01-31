@@ -135,7 +135,7 @@ const server = setupServer(
   }))),
 
   rest.post(`${baseUrl}/users/upload-image`, async (req, res, ctx) => res(ctx.json({
-    profileImage: 'image url',
+    profileImage: 'imageUrl',
   }))),
 
   // Contents
@@ -478,7 +478,7 @@ const server = setupServer(
 
   rest.get(`${baseUrl}/users/following`, async (req, res, ctx) => res(
     ctx.json({
-      subscribes: [
+      followings: [
         {
           userId: 2,
           nickname: 'zzezze',
@@ -501,7 +501,7 @@ const server = setupServer(
 
   rest.get(`${baseUrl}/users/follower`, async (req, res, ctx) => res(
     ctx.json({
-      subscribes: [
+      followers: [
         {
           userId: 2,
           nickname: 'zzezze',

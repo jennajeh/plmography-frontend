@@ -39,7 +39,7 @@ export default class SubscribeApiService {
     return { data };
   }
 
-  async fetchUserSubscribeCount(userId) {
+  async fetchSubscribeCount(userId) {
     const { data } = await this.instance.get(`/subscribe/${userId}`);
 
     return { data };
@@ -48,20 +48,20 @@ export default class SubscribeApiService {
   async fetchFollowingList({ userId, page = 1, size }) {
     const { data } = await this.instance.get(`/users/following?userId=${userId}&page=${page}&size=${size}`);
 
-    const { userSubscribes, pages } = data;
+    const { followings, pages } = data;
 
     return {
-      userSubscribes, pages,
+      followings, pages,
     };
   }
 
   async fetchFollowerList({ userId, page = 1, size }) {
     const { data } = await this.instance.get(`/users/follower?userId=${userId}&page=${page}&size=${size}`);
 
-    const { userSubscribes, pages } = data;
+    const { followers, pages } = data;
 
     return {
-      userSubscribes, pages,
+      followers, pages,
     };
   }
 

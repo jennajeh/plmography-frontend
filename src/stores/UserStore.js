@@ -80,17 +80,20 @@ export default class UserStore extends Store {
     this.changeEditStatus('processing');
 
     try {
-      const profileImage = await userApiService.uploadImage(formData);
+      const { profileImage } = await userApiService.uploadImage(formData);
 
-      await userApiService.changeProfile(nickname, profileImage);
+      const { data } = await userApiService.changeProfile(nickname, profileImage);
+
+      this.nickname = data.nickname;
+      this.profileImage = data.profileImage;
 
       this.changeEditStatus('successful');
 
-      return { nickname, profileImage };
+      this.publish();
     } catch (e) {
       this.changeEditStatus('failed');
 
-      return '';
+      this.publish();
     }
   }
 

@@ -22,13 +22,19 @@ import LoginPage from './pages/LoginPage';
 import EventsPage from './pages/EventsPage';
 import SupportPage from './pages/SupportPage';
 import GlobalStyle from './styles/GlobalStyle';
-import ProfilePage from './pages/ProfilePage';
 import SignupPage from './pages/SignupPage';
 import GreetingPage from './pages/GreetingPage';
 import ReviewCreatePage from './pages/ReviewCreatePage';
 import ArticlesPage from './pages/ArticlesPage';
 import ArticleDetailPage from './pages/ArticleDetailPage';
 import { subscribeApiService } from './services/SubscribeApiService';
+import MyProfilePage from './pages/MyProfilePage';
+import MyProfileEditPage from './pages/MyProfileEditPage';
+import UserProfilePage from './pages/UserProfilePage';
+import UserFavoritesPage from './pages/UserFavoritesPage';
+import UserWishesPage from './pages/UserWishesPage';
+import UserWatchedPage from './pages/UserWatchedPage';
+import UserReviewsPage from './pages/UserReviewsPage';
 
 const Main = styled.main`
   height: calc(100vh - 64px);
@@ -68,13 +74,15 @@ export default function App() {
           {/* <Route path="/next-contents" element={<NextContentsPage />} /> */}
           <Route path="/articles" element={<ArticlesPage />} />
           <Route path="/articles/:id" element={<ArticleDetailPage />} />
-          <Route path="/users/:id" element={<ProfilePage />} />
-          {/* <Route path="/users/:id/edit" element={<ProfileEditPage />} /> */}
+          <Route path="/myProfile" element={<MyProfilePage />} />
+          <Route path="/myProfile/edit" element={<MyProfileEditPage />} />
+          <Route path="/users/:id" element={<UserProfilePage />} />
+          <Route path="/users/:id/favorites" element={<UserFavoritesPage />} />
+          <Route path="/users/:id/wishes" element={<UserWishesPage />} />
+          <Route path="/users/:id/watched" element={<UserWatchedPage />} />
+          <Route path="/users/:id/reviews" element={<UserReviewsPage />} />
           {/* <Route path="/users/:id/reset-password" element={<ResetPasswordPage />} /> */}
-          {/* <Route path="/users/:id/reviews" element={<ReviewsPage />} /> */}
           {/* <Route path="/users/:id/services/edit" element={<ServiceChoicePage />} /> */}
-          {/* <Route path="/users/:id/favorites" element={<FavoriteContentsPage />} /> */}
-          {/* <Route path="/users/:id/likes" element={<LikeContentsPage />} /> */}
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/greeting" element={<GreetingPage />} />
           <Route path="/login" element={<LoginPage />} />
