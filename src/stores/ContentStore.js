@@ -6,7 +6,6 @@ export default class ContentStore extends Store {
     super();
 
     this.contents = [];
-
     this.content = {};
 
     this.totalPages = 0;
@@ -28,33 +27,33 @@ export default class ContentStore extends Store {
   }
 
   async toggleWish(id) {
-    const wishUserIds = await contentApiService.toggleWishContent(id);
+    const wishContentIds = await contentApiService.toggleWishContent(id);
 
     this.content = {
       ...this.content,
-      wishUserIds,
+      wishContentIds,
     };
 
     this.publish();
   }
 
   async toggleWatched(id) {
-    const watchedUserIds = await contentApiService.toggleWatchedContent(id);
+    const watchedContentIds = await contentApiService.toggleWatchedContent(id);
 
     this.content = {
       ...this.content,
-      watchedUserIds,
+      watchedContentIds,
     };
 
     this.publish();
   }
 
   async toggleFavorite(id) {
-    const favoriteUserIds = await contentApiService.toggleFavoriteContent(id);
+    const favoriteContentIds = await contentApiService.toggleFavoriteContent(id);
 
     this.content = {
       ...this.content,
-      favoriteUserIds,
+      favoriteContentIds,
     };
 
     this.publish();

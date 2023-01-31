@@ -55,6 +55,7 @@ export default function SubscribeModal({
     await subscribeStore.unFollow(followingUserId);
 
     subscribeStore.fetchFollowingList({ userId, page, size: 10 });
+    subscribeStore.fetchFollowerList({ userId, page, size: 10 });
   };
 
   const handleClickFollow = async (followerUserId) => {
@@ -77,9 +78,6 @@ export default function SubscribeModal({
       document.addEventListener('mousedown', handleClickBackground);
     };
   }, [isOpen]);
-
-  console.log(followers);
-  console.log(followings);
 
   return (
     <>

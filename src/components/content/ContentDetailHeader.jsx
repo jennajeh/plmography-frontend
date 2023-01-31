@@ -137,8 +137,10 @@ export default function ContentDetailHeader() {
   const notDeletedReview = reviewStore.isDeletedMyReviews(sameContentReviews);
 
   const {
-    id, korTitle, engTitle, releaseDate, imageUrl,
+    tmdbId, korTitle, engTitle, releaseDate, imageUrl,
   } = content;
+
+  console.log(tmdbId);
 
   const handleClickWriteReview = () => {
     if (!accessToken) {
@@ -163,7 +165,7 @@ export default function ContentDetailHeader() {
       return;
     }
 
-    await contentStore.toggleWish(id);
+    await contentStore.toggleWish(tmdbId);
   };
 
   const handleClickWatched = async () => {
@@ -173,7 +175,7 @@ export default function ContentDetailHeader() {
       return;
     }
 
-    await contentStore.toggleWatched(id);
+    await contentStore.toggleWatched(tmdbId);
   };
 
   const handleClickFavorite = async () => {
@@ -183,7 +185,7 @@ export default function ContentDetailHeader() {
       return;
     }
 
-    await contentStore.toggleFavorite(id);
+    await contentStore.toggleFavorite(tmdbId);
   };
 
   return (

@@ -53,22 +53,22 @@ export default class ContentApiService {
     return data;
   }
 
-  async toggleWishContent(id) {
-    const { data } = await this.instance.patch(`/contents/${id}/wishUserIds`);
+  async toggleWishContent(tmdbId) {
+    const { data } = await this.instance.patch(`/users/wishContent/${tmdbId}`);
 
-    return data.wishUserIds;
+    return data.wishContentIds;
   }
 
-  async toggleWatchedContent(id) {
-    const { data } = await this.instance.patch(`/contents/${id}/watchedUserIds`);
+  async toggleWatchedContent(tmdbId) {
+    const { data } = await this.instance.patch(`/users/watchedContent/${tmdbId}`);
 
-    return data.watchedUserIds;
+    return data.watchedContentIds;
   }
 
-  async toggleFavoriteContent(id) {
-    const { data } = await this.instance.patch(`/contents/${id}/favoriteUserIds`);
+  async toggleFavoriteContent(tmdbId) {
+    const { data } = await this.instance.patch(`/users/favoriteContent/${tmdbId}`);
 
-    return data.favoriteUserIds;
+    return data.favoriteContentIds;
   }
 }
 
