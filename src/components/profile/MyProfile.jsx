@@ -1,11 +1,12 @@
-import { useState } from 'react';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+/* eslint-disable react/no-array-index-key */
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import useContentStore from '../../hooks/useContentStore';
 import useReviewStore from '../../hooks/useReviewStore';
 import useSubscribeStore from '../../hooks/useSubscribeStore';
 import useUserStore from '../../hooks/useUserStore';
-import SubscribeModal from '../common/SubscribeModal';
+import UserProfileInfoModal from '../modal/UserProfileInfoModal';
+import UserProfileSubscribeModal from '../modal/UserProfileSubscribeModal';
 
 const Container = styled.div`
   height: 100%;
@@ -18,20 +19,34 @@ const Wrapper = styled.div`
   margin-block: 1em;
 `;
 
+const FavoriteContent = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin: 1em;
+  justify-content: center;
+  align-items: center;
+  
+  img {
+    width: 8em;
+  }
+`;
+
 export default function Profile() {
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
   const userStore = useUserStore();
   const reviewStore = useReviewStore();
   const contentStore = useContentStore();
   const subscribeStore = useSubscribeStore();
 
-  const { followings, followers } = subscribeStore;
   const { user } = userStore;
-  const { id: userId } = user;
-  const page = searchParams.get('page') ?? 1;
+  const { myReviews } = reviewStore;
+  const { followings, followers } = subscribeStore;
+  const { favoriteContents, watchedContents, wishContents } = contentStore;
 
-  console.log(followers);
+  const {
+    id: userId, nickname, profileImage, favoriteContentIds, watchedContentIds, wishContentIds,
+  } = user;
+
+  const notDeletedMyReviews = reviewStore.isDeletedMyReviews(myReviews);
 
   return (
     <Container>
@@ -43,21 +58,21 @@ export default function Profile() {
           </Link>
           <div>
             이미지:
-            <img src={user.profileImage} alt="profile" />
+            <img src={profileImage} alt="profile" />
             <div>
               닉네임:
               {' '}
-              {user.nickname}
+              {nickname}
             </div>
             <br />
             <div>
-              <SubscribeModal
+              <UserProfileSubscribeModal
                 buttonName={`팔로워: ${followers.length}`}
                 followers={followers}
               />
             </div>
             <div>
-              <SubscribeModal
+              <UserProfileSubscribeModal
                 buttonName={`팔로잉: ${followings.length}`}
                 followings={followings}
               />
@@ -65,25 +80,59 @@ export default function Profile() {
             <br />
           </div>
           <div>
-            <Link to={`/users/${user.id}/wishes`}>
-              <span>찜했어요</span>
-            </Link>
+            <UserProfileInfoModal
+              buttonName={`찜했어요: ${wishContentIds?.length}`}
+              userId={userId}
+              wishContentIds={wishContentIds}
+              wishContents={wishContents}
+            />
             <br />
-            <Link to={`/users/${user.id}/watched`}>
-              <span>봤어요</span>
-            </Link>
+            <UserProfileInfoModal
+              buttonName={`봤어요: ${watchedContentIds?.length}`}
+              userId={userId}
+              watchedContentIds={watchedContentIds}
+              watchedContents={watchedContents}
+            />
             <br />
-            <Link to={`/users/${user.id}/reviews`}>
-              <span>작성한 리뷰</span>
-            </Link>
+            <UserProfileInfoModal
+              buttonName={`작성한 리뷰: ${notDeletedMyReviews?.length}`}
+              notDeletedMyReviews={notDeletedMyReviews}
+            />
           </div>
           <br />
           <div>
             <h3>인생작품</h3>
+            <span>{favoriteContentIds?.length}</span>
+            {favoriteContents.length ? (
+              <>
+                <ul>
+                  {favoriteContents.map((content, idx) => (
+                    <li key={idx}>
+                      <FavoriteContent>
+                        <Link to={`/contents/${content.contentId}`}>
+                          <img src={content.imageUrl} alt="contentImage" />
+                        </Link>
+                      </FavoriteContent>
+                    </li>
+                  ))}
+                </ul>
+                <Link to="/profile/search">
+                  추가하기 버튼
+                </Link>
+              </>
+            ) : (
+              <div>
+                <p>🧐 등록된 작품이 없네요! 감명깊었던 작품을 등록해 보세요!</p>
+                <Link to="/profile/search">
+                  등록하기 버튼
+                </Link>
+              </div>
+            )}
           </div>
           <br />
           <div>
             <h3>찜한 리스트작품</h3>
+            <p>내역이 없습니다</p>
           </div>
         </div>
       </Wrapper>

@@ -38,7 +38,7 @@ export default function ContentDetailReport() {
   const { content } = contentStore;
   const { articles } = articleStore;
 
-  const isArticleExist = articles.filter((article) => article.contentId === Number(content.tmdbId));
+  const isArticleExist = articles.filter((article) => article.contentId === content.tmdbId);
 
   return (
     <div>

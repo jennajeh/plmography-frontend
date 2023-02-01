@@ -60,8 +60,6 @@ export default class UserApiService {
   async changeProfile(nickname, profileImage) {
     const { data } = await this.instance.patch('/users', { nickname, profileImage });
 
-    console.log(data);
-
     return { data };
   }
 

@@ -30,7 +30,7 @@ export default function ReviewEditPage() {
   }, []);
 
   if (!accessToken
-    || (!reviewStore.isReviewLoading && !reviewStore.isMySameContentReview(Number(content.tmdbId)))) {
+    || (!reviewStore.isReviewLoading && !reviewStore.isMySameContentReview(content.tmdbId))) {
     return (
       <Container>
         <p>

@@ -1,26 +1,38 @@
-import { useLocalStorage } from 'usehooks-ts';
-import styled from 'styled-components';
-import { useEffect } from 'react';
+/* eslint-disable jsx-a11y/label-has-associated-control */
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import styled from 'styled-components';
+import { useLocalStorage } from 'usehooks-ts';
+import SearchResultList from '../components/content/SearchResultList';
 import useContentStore from '../hooks/useContentStore';
 import useUserStore from '../hooks/useUserStore';
-import useReviewStore from '../hooks/useReviewStore';
-import useSubscribeStore from '../hooks/useSubscribeStore';
-import MyProfile from '../components/profile/MyProfile';
 
 const Container = styled.div`
   display: flex;
-  position: relative;
+  padding: 2rem;
+  `;
+
+const Main = styled.div`
   width: 100%;
+  padding-inline: 2rem;
 `;
 
-export default function MyProfilePage() {
+const SearchBar = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  >div{
+    display: flex;
+  }
+`;
+
+export default function ProfileSearchPage() {
   const [accessToken] = useLocalStorage('accessToken', '');
   const [searchParams] = useSearchParams();
-  const userStore = useUserStore();
-  const reviewStore = useReviewStore();
+  const [filter, setFilter] = useState({});
   const contentStore = useContentStore();
-  const subscribeStore = useSubscribeStore();
+  const userStore = useUserStore();
+  const page = searchParams.get('page') ?? 1;
 
   const { user } = userStore;
   const {
@@ -29,7 +41,14 @@ export default function MyProfilePage() {
   const favoriteContentId = favoriteContentIds?.join(',');
   const watchedContentId = watchedContentIds?.join(',');
   const wishContentId = wishContentIds?.join(',');
-  const page = searchParams.get('page') ?? 1;
+
+  const handleSearchContents = (e) => {
+    e.preventDefault();
+
+    const searchTitle = e.target.search.value;
+
+    setFilter({ searchTitle });
+  };
 
   if (!accessToken || !userStore.user) {
     return (
@@ -44,16 +63,11 @@ export default function MyProfilePage() {
   useEffect(() => {
     userStore.fetchMe();
     userStore.fetchUsers();
-    reviewStore.fetchMyReviews();
-    subscribeStore.fetchMySubscribeCount();
   }, []);
 
   useEffect(() => {
-    if (userId) {
-      subscribeStore.fetchFollowingList({ userId, page, size: 10 });
-      subscribeStore.fetchFollowerList({ userId, page, size: 10 });
-    }
-  }, [userId, page]);
+    contentStore.fetchContents({ page, size: 8, filter });
+  }, [page, filter]);
 
   useEffect(() => {
     if (userId && favoriteContentId) {
@@ -74,6 +88,18 @@ export default function MyProfilePage() {
   }, [userId, wishContentId]);
 
   return (
-    <MyProfile />
+    <Container>
+      <Main>
+        <SearchBar>
+          <h1>검색하기</h1>
+          <form onSubmit={handleSearchContents}>
+            <label hidden htmlFor="input-search">컨텐츠 검색</label>
+            <input name="search" placeholder="검색" id="input-search" type="text" />
+            <button type="submit">검색</button>
+          </form>
+        </SearchBar>
+        <SearchResultList />
+      </Main>
+    </Container>
   );
 }

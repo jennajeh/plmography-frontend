@@ -13,7 +13,7 @@ export default function ReviewEditForm() {
   const contentStore = useContentStore();
   const { content } = contentStore;
 
-  const mySameContentReview = reviewStore.isMySameContentReview(Number(content.tmdbId));
+  const mySameContentReview = reviewStore.isMySameContentReview(content.tmdbId);
 
   const notDeleted = reviewStore.isDeletedMyReviews(mySameContentReview);
 

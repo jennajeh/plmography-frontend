@@ -8,7 +8,21 @@ export default class ContentStore extends Store {
     this.contents = [];
     this.content = {};
 
+    this.favoriteContents = {};
+    this.watchedContents = {};
+    this.wishContents = {};
+
     this.totalPages = 0;
+  }
+
+  async fetchTopRatedContents() {
+    const { data } = await contentApiService.fetchTopRatedContents();
+
+    const { contents } = data;
+
+    this.contents = contents;
+
+    this.publish();
   }
 
   async fetchContents({ page, size, filter } = {}) {
@@ -22,6 +36,36 @@ export default class ContentStore extends Store {
 
   async fetchContent(tmdbId) {
     this.content = await contentApiService.fetchContent(tmdbId);
+
+    this.publish();
+  }
+
+  async fetchFavoriteContents({ userId, favoriteContentId }) {
+    const {
+      userProfileContents,
+    } = await contentApiService.fetchFavoriteContents({ userId, favoriteContentId });
+
+    this.favoriteContents = userProfileContents;
+
+    this.publish();
+  }
+
+  async fetchWatchedContents({ userId, watchedContentId }) {
+    const {
+      userProfileContents,
+    } = await contentApiService.fetchWatchedContents({ userId, watchedContentId });
+
+    this.watchedContents = userProfileContents;
+
+    this.publish();
+  }
+
+  async fetchWishContents({ userId, wishContentId }) {
+    const {
+      userProfileContents,
+    } = await contentApiService.fetchWishContents({ userId, wishContentId });
+
+    this.wishContents = userProfileContents;
 
     this.publish();
   }

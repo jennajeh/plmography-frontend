@@ -133,14 +133,12 @@ export default function ContentDetailHeader() {
 
   const { content } = contentStore;
 
-  const sameContentReviews = reviewStore.isMySameContentReview(Number(content.tmdbId));
-  const notDeletedReview = reviewStore.isDeletedMyReviews(sameContentReviews);
-
   const {
     tmdbId, korTitle, engTitle, releaseDate, imageUrl,
   } = content;
 
-  console.log(tmdbId);
+  const sameContentReviews = reviewStore.isMySameContentReview(tmdbId);
+  const notDeletedReview = reviewStore.isDeletedMyReviews(sameContentReviews);
 
   const handleClickWriteReview = () => {
     if (!accessToken) {

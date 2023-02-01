@@ -21,7 +21,7 @@ export default function OtherReview() {
   const { content } = contentStore;
 
   const commentNotDeleted = commentStore.isDeleted();
-  const otherSameContentReview = reviewStore.isOtherSameContentReview(Number(content.tmdbId));
+  const otherSameContentReview = reviewStore.isOtherSameContentReview(content.tmdbId);
   const isNotDeleted = reviewStore.isDeletedAllReviews(otherSameContentReview);
 
   const handleClickLike = async (review) => {

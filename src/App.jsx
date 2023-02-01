@@ -31,10 +31,10 @@ import { subscribeApiService } from './services/SubscribeApiService';
 import MyProfilePage from './pages/MyProfilePage';
 import MyProfileEditPage from './pages/MyProfileEditPage';
 import UserProfilePage from './pages/UserProfilePage';
-import UserFavoritesPage from './pages/UserFavoritesPage';
 import UserWishesPage from './pages/UserWishesPage';
 import UserWatchedPage from './pages/UserWatchedPage';
 import UserReviewsPage from './pages/UserReviewsPage';
+import ProfileSearchPage from './pages/ProfileSearchPage';
 
 const Main = styled.main`
   height: calc(100vh - 64px);
@@ -74,10 +74,10 @@ export default function App() {
           {/* <Route path="/next-contents" element={<NextContentsPage />} /> */}
           <Route path="/articles" element={<ArticlesPage />} />
           <Route path="/articles/:id" element={<ArticleDetailPage />} />
-          <Route path="/myProfile" element={<MyProfilePage />} />
-          <Route path="/myProfile/edit" element={<MyProfileEditPage />} />
+          <Route path="/profile" element={<MyProfilePage />} />
+          <Route path="/profile/search" element={<ProfileSearchPage />} />
+          <Route path="/profile/edit" element={<MyProfileEditPage />} />
           <Route path="/users/:id" element={<UserProfilePage />} />
-          <Route path="/users/:id/favorites" element={<UserFavoritesPage />} />
           <Route path="/users/:id/wishes" element={<UserWishesPage />} />
           <Route path="/users/:id/watched" element={<UserWatchedPage />} />
           <Route path="/users/:id/reviews" element={<UserReviewsPage />} />
@@ -91,6 +91,7 @@ export default function App() {
           <Route path="/support" element={<SupportPage />} />
         </Routes>
       </Main>
+      {/* <Footer /> */}
     </ThemeProvider>
   );
 }

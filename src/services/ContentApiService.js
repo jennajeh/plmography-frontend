@@ -24,6 +24,12 @@ export default class ContentApiService {
     }
   }
 
+  async fetchTopRatedContents() {
+    const { data } = await this.instance.get('/contents/topRated');
+
+    return { data };
+  }
+
   async fetchContents({ page, size, filter }) {
     const filterQuery = filter
       ? `?${['platform', 'type', 'genre', 'date', 'searchTitle', 'sort']
@@ -51,6 +57,30 @@ export default class ContentApiService {
     const { data } = await this.instance.get(`/contents/${tmdbId}`);
 
     return data;
+  }
+
+  async fetchFavoriteContents({ userId, favoriteContentId }) {
+    const { data } = await this.instance.get(`/contents/favorite?userId=${userId}&favoriteContentId=${favoriteContentId}`);
+
+    const { userProfileContents } = data;
+
+    return { userProfileContents };
+  }
+
+  async fetchWatchedContents({ userId, watchedContentId }) {
+    const { data } = await this.instance.get(`/contents/watched?userId=${userId}&watchedContentId=${watchedContentId}`);
+
+    const { userProfileContents } = data;
+
+    return { userProfileContents };
+  }
+
+  async fetchWishContents({ userId, wishContentId }) {
+    const { data } = await this.instance.get(`/contents/wish?userId=${userId}&wishContentId=${wishContentId}`);
+
+    const { userProfileContents } = data;
+
+    return { userProfileContents };
   }
 
   async toggleWishContent(tmdbId) {

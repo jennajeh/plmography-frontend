@@ -144,7 +144,7 @@ const server = setupServer(
       contents: [
         {
           id: 1,
-          tmdbId: '1',
+          tmdbId: 1,
           tmdbGenreId: '16',
           imageUrl: 'zzezze',
           korTitle: '쩨쩨의 이중생활',
@@ -158,7 +158,7 @@ const server = setupServer(
         },
         {
           id: 2,
-          tmdbId: '2',
+          tmdbId: 1,
           tmdbGenreId: '2',
           imageUrl: 'winter',
           korTitle: '겨울 라이프',
@@ -181,7 +181,7 @@ const server = setupServer(
   rest.get(`${baseUrl}/contents/2`, async (req, res, ctx) => res(
     ctx.json({
       id: 2,
-      tmdbId: '2',
+      tmdbId: 1,
       tmdbGenreId: '2',
       imageUrl: 'winter',
       korTitle: '겨울 라이프',

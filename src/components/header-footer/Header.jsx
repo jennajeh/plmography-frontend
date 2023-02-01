@@ -121,7 +121,7 @@ export default function Header() {
                 </LogoutButton>
               </li>
               <li>
-                <StyledLink to="/myProfile">마이페이지</StyledLink>
+                <StyledLink to="/profile">마이페이지</StyledLink>
               </li>
               <li>
                 <StyledLink to="/events">이벤트</StyledLink>

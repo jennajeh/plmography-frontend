@@ -43,7 +43,7 @@ export default function ReviewForm() {
   const reviewFormStore = useReviewFormStore();
 
   const { content } = contentStore;
-  const contentId = Number(content.tmdbId);
+  const contentId = content.tmdbId;
 
   const { body, starRate } = reviewFormStore;
 
