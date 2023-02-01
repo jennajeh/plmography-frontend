@@ -25,11 +25,8 @@ const Error = styled.p`
 
 export default function Articles() {
   const articleStore = useArticleStore();
-
   const { articles } = articleStore;
-
   const location = useLocation();
-
   const [searchParams] = useSearchParams();
 
   if (!articles) {
@@ -40,7 +37,7 @@ export default function Articles() {
 
   return (
     <div>
-      <Title>볼까 말까 고민된다면?</Title>
+      <Title>볼까 말까 고민된다면? 🧐</Title>
       <div>
         {articles.length ? (
           <>
