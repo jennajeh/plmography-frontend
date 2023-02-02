@@ -65,9 +65,9 @@ export default class ReviewApiService {
     return myReviews;
   }
 
-  async modifyReview(reviewBody, id) {
+  async modifyReview(reviewBody, starRate, id) {
     const { data } = await this.instance.patch(`/reviews/${id}`, {
-      reviewBody, id,
+      reviewBody, starRate, id,
     });
 
     return {

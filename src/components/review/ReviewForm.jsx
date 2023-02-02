@@ -2,6 +2,7 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
+import StarRatings from 'react-star-ratings';
 import Input from '../common/Input';
 
 import useReviewStore from '../../hooks/useReviewStore';
@@ -61,12 +62,12 @@ export default function ReviewForm() {
     navigate(`/contents/${contentId}`);
   };
 
-  const handleRateChange = (e) => {
-    const selectedRate = e.target.value;
-    reviewFormStore.setStarRate(selectedRate);
+  // const handleRateChange = (e) => {
+  //   const selectedRate = e.target.value;
+  //   reviewFormStore.setStarRate(selectedRate);
 
-    reviewFormStore.validateStarRate();
-  };
+  //   reviewFormStore.validateStarRate();
+  // };
 
   const handleClickCancel = () => {
     reviewFormStore.reset();
@@ -79,7 +80,20 @@ export default function ReviewForm() {
     <Container>
       <h1>리뷰 작성하기</h1>
       <form onSubmit={handleSubmit}>
-        <RateSection>
+        <StarRatings
+          rating={starRate}
+          starRatedColor="#ffc501"
+          starHoverColor="#ffe899"
+          starDimension="40px"
+          starSpacing="15px"
+          changeRating={(value) => reviewFormStore.changeStarRate(value)}
+          isSelectable
+        />
+        <span>
+          {starRate}
+          점
+        </span>
+        {/* <RateSection>
           <label htmlFor="rate-select">평점</label>
           <select id="rate-select" onChange={handleRateChange}>
             <option defaultValue hidden>선택</option>
@@ -92,7 +106,7 @@ export default function ReviewForm() {
           {reviewFormStore.isRateEmpty && (
             <Error>{reviewFormStore.errors.starRate}</Error>
           )}
-        </RateSection>
+        </RateSection> */}
         <Input
           name="body"
           label="리뷰 내용"

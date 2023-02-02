@@ -19,7 +19,7 @@ export default class ReviewFormStore extends Store {
   reset() {
     this.body = '';
     this.errors = {};
-    this.starRate = 0;
+    this.starRate = 5;
 
     this.publish();
   }
@@ -31,31 +31,9 @@ export default class ReviewFormStore extends Store {
     this.publish();
   }
 
-  setStarRate(rate) {
-    switch (rate) {
-    case '⭐️⭐️⭐️⭐️⭐️':
-      this.starRate = 5;
-      break;
-
-    case '⭐️⭐️⭐️⭐️':
-      this.starRate = 4;
-      break;
-
-    case '⭐️⭐️⭐️':
-      this.starRate = 3;
-      break;
-
-    case '⭐️⭐️':
-      this.starRate = 2;
-      break;
-
-    case '⭐️':
-      this.starRate = 1;
-      break;
-
-    default:
-      break;
-    }
+  changeStarRate(starRate) {
+    this.starRate = starRate;
+    this.validateStarRate();
 
     this.publish();
   }

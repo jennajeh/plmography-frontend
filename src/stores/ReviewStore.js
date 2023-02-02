@@ -80,13 +80,14 @@ export default class ReviewStore extends Store {
     }
   }
 
-  async modify(body, id) {
+  async modify(body, starRate, id) {
     this.startModify();
 
     try {
-      await reviewApiService.modifyReview(body, id);
+      await reviewApiService.modifyReview(body, starRate, id);
 
       this.review.reviewBody = body;
+      this.review.starRate = starRate;
 
       this.completeModify();
 
