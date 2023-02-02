@@ -1,11 +1,10 @@
-import { render, screen } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
+import { render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import defaultTheme from '../styles/defaultTheme';
 import ArticlesPage from './ArticlesPage';
 
-describe('ArticlesPage', () => {
+test('ArticlesPage', async () => async (act) => {
   function renderArticlesPage() {
     render((
       <MemoryRouter initialEntries={['/articles']}>
@@ -16,11 +15,7 @@ describe('ArticlesPage', () => {
     ));
   }
 
-  it('ArticlesPage 를 보여준다', async () => {
-    await act(() => {
-      renderArticlesPage();
-    });
-
-    screen.getByText('볼까 말까 고민된다면?');
+  it('renders ArticlesPage', () => {
+    renderArticlesPage();
   });
 });

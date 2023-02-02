@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import {
   render, fireEvent, screen, waitFor,
 } from '@testing-library/react';

@@ -1,4 +1,3 @@
-import { userApiService } from '../services/UserApiService';
 import Store from './Store';
 
 export default class ProfileEditFormStore extends Store {

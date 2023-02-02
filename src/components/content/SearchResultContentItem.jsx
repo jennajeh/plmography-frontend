@@ -24,14 +24,14 @@ const Button = styled.button`
   height: 5em;
 `;
 
-export default function SearchResultContentItem({ item }) {
+export default function SearchResultContentItem({ content }) {
   const [accessToken] = useLocalStorage('accessToken', '');
   const navigate = useNavigate();
   const contentStore = useContentStore();
 
   const {
     tmdbId, imageUrl, korTitle,
-  } = item;
+  } = content;
 
   const handleClickFavorite = async (id) => {
     if (!accessToken) {

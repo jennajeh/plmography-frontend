@@ -1,9 +1,9 @@
+/* eslint-disable no-shadow */
 import {
-  cleanup, render, screen, waitFor,
+  cleanup, render, screen,
 } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import { act } from 'react-dom/test-utils';
 import ExplorePage from './ExplorePage';
 import defaultTheme from '../styles/defaultTheme';
 

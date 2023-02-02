@@ -1,5 +1,5 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable react/prop-types */
-import { useState, useEffect } from 'react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useLocalStorage } from 'usehooks-ts';
@@ -51,8 +51,6 @@ export default function SearchResultList() {
   const { id: userId, favoriteContentIds } = user;
   const favoriteContentId = favoriteContentIds?.join(',');
 
-  // const { favoriteContentIds } = user;
-
   const handleClickMyProfile = async () => {
     if (!accessToken) {
       navigate('/login');
@@ -79,21 +77,19 @@ export default function SearchResultList() {
     <div>
       {contents.length ? (
         <>
-          <>
-            <List>
-              {contents.map((item) => (
-                <SearchResultContentItem
-                  key={item.id}
-                  item={item}
-                />
-              ))}
-            </List>
-            <Pagination
-              url={location.pathname}
-              total={contentStore.totalPages}
-              current={searchParams.get('page') ?? 1}
-            />
-          </>
+          <List>
+            {contents.map((content) => (
+              <SearchResultContentItem
+                key={content.id}
+                item={content}
+              />
+            ))}
+          </List>
+          <Pagination
+            url={location.pathname}
+            total={contentStore.totalPages}
+            current={searchParams.get('page') ?? 1}
+          />
           <Button type="button" onClick={handleClickMyProfile}>
             마이 페이지
           </Button>

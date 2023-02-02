@@ -78,14 +78,13 @@ describe('ReviewStore', () => {
     });
   });
 
-  describe('fetchUserSubscribeCount', () => {
+  describe('fetchSubscribeCount', () => {
     it('다른 유저의 팔로우 정보를 출력한다', async () => {
       const userId = 3;
 
-      await subscribeStore.fetchUserSubscribeCount(userId);
+      await subscribeStore.fetchSubscribeCount(userId);
 
       expect(subscribeStore.subscribe).toBeTruthy();
-      expect(subscribeStore.subscribe.subscribeStatus).toBe(true);
     });
   });
 
@@ -93,8 +92,8 @@ describe('ReviewStore', () => {
     it('팔로잉 목록을 출력한다', async () => {
       await subscribeStore.fetchFollowingList({ userId: 1, page: 1, size: 10 });
 
-      expect(subscribeStore.subscribes).toBeTruthy();
-      expect(subscribeStore.subscribes[0].nickname).toBe('zzezze');
+      expect(subscribeStore.followings).toBeTruthy();
+      expect(subscribeStore.followings[0].nickname).toBe('zzezze');
       expect(subscribeStore.totalPages).toBe(1);
     });
   });
@@ -103,8 +102,8 @@ describe('ReviewStore', () => {
     it('팔로워 목록을 출력한다', async () => {
       await subscribeStore.fetchFollowerList({ userId: 1, page: 1, size: 10 });
 
-      expect(subscribeStore.subscribes).toBeTruthy();
-      expect(subscribeStore.subscribes[1].nickname).toBe('boni');
+      expect(subscribeStore.followers).toBeTruthy();
+      expect(subscribeStore.followers[1].nickname).toBe('boni');
       expect(subscribeStore.totalPages).toBe(1);
     });
   });

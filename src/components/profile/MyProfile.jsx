@@ -31,7 +31,7 @@ const FavoriteContent = styled.div`
   }
 `;
 
-export default function Profile() {
+export default function MyProfile() {
   const userStore = useUserStore();
   const reviewStore = useReviewStore();
   const contentStore = useContentStore();

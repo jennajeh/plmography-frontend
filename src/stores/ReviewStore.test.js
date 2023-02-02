@@ -61,8 +61,9 @@ describe('ReviewStore', () => {
         await reviewStore.fetchMyReviews();
 
         const reviewBody = '오랜만에 힐링함';
+        const starRate = 4;
 
-        await reviewStore.modify(reviewBody, 1);
+        await reviewStore.modify(reviewBody, starRate, 1);
 
         expect(reviewStore.isModifySuccessful).toBeTruthy();
       });
@@ -73,8 +74,9 @@ describe('ReviewStore', () => {
         await reviewStore.fetchMyReviews();
 
         const reviewBody = '';
+        const starRate = 4;
 
-        await reviewStore.modify(reviewBody, 1);
+        await reviewStore.modify(reviewBody, starRate, 1);
 
         expect(reviewStore.isModifyFailed).toBeTruthy();
       });

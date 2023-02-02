@@ -47,8 +47,8 @@ describe('ReviewFormStore', () => {
 
   describe('validateStarRate', () => {
     context('별점을 선택했을 때', () => {
-      it('별점 개수 만큼 숫자가 저장된다', () => {
-        reviewFormStore.setStarRate('⭐️⭐️⭐️⭐️⭐️');
+      it('선택한 별점 개수 만큼 숫자가 저장된다', () => {
+        reviewFormStore.changeStarRate(5);
 
         expect(reviewFormStore.errors.starRate).toBeFalsy();
 
@@ -58,7 +58,7 @@ describe('ReviewFormStore', () => {
 
     context('별점을 선택하지 않았을 때', () => {
       it('에러 메시지를 반환한다', () => {
-        reviewFormStore.setStarRate('');
+        reviewFormStore.changeStarRate('');
 
         reviewFormStore.validateStarRate();
 

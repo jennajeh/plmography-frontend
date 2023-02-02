@@ -1,4 +1,4 @@
-import { cleanup, render } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import defaultTheme from '../../styles/defaultTheme';
@@ -23,7 +23,12 @@ describe('Category', () => {
     ));
   }
 
-  it('Category', () => {
+  it('renders Category', () => {
     renderCategory();
+
+    screen.getByText(/검색하기/);
+    screen.getByText(/플랫폼/);
+    screen.getByText(/장르/);
+    screen.getByText(/개봉연도/);
   });
 });
