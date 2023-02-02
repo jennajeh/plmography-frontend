@@ -3,7 +3,7 @@ import { useLocalStorage } from 'usehooks-ts';
 import useContentStore from '../../hooks/useContentStore';
 import useReviewStore from '../../hooks/useReviewStore';
 import dateFormat from '../../utils/dateFormat';
-import ReviewModal from '../common/ReviewModal';
+import ReviewModal from '../modal/ReviewModal';
 
 export default function MyReview() {
   const [accessToken] = useLocalStorage('accessToken', '');
@@ -12,7 +12,7 @@ export default function MyReview() {
   const reviewStore = useReviewStore();
   const { myReviews } = reviewStore;
 
-  const mySameContentReview = reviewStore.isMySameContentReview(Number(content.tmdbId));
+  const mySameContentReview = reviewStore.isMySameContentReview(content.tmdbId);
   const reviewNotDeleted = reviewStore.isDeletedMyReviews(mySameContentReview);
 
   const handleClickDeleteReview = async () => {

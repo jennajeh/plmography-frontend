@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useLocalStorage } from 'usehooks-ts';
 import useContentStore from '../../hooks/useContentStore';
@@ -133,12 +133,12 @@ export default function ContentDetailHeader() {
 
   const { content } = contentStore;
 
-  const sameContentReviews = reviewStore.isMySameContentReview(Number(content.tmdbId));
-  const notDeletedReview = reviewStore.isDeletedMyReviews(sameContentReviews);
-
   const {
-    id, korTitle, engTitle, releaseDate, imageUrl,
+    tmdbId, korTitle, engTitle, releaseDate, imageUrl,
   } = content;
+
+  const sameContentReviews = reviewStore.isMySameContentReview(tmdbId);
+  const notDeletedReview = reviewStore.isDeletedMyReviews(sameContentReviews);
 
   const handleClickWriteReview = () => {
     if (!accessToken) {
@@ -163,7 +163,7 @@ export default function ContentDetailHeader() {
       return;
     }
 
-    await contentStore.toggleWish(id);
+    await contentStore.toggleWish(tmdbId);
   };
 
   const handleClickWatched = async () => {
@@ -173,7 +173,17 @@ export default function ContentDetailHeader() {
       return;
     }
 
-    await contentStore.toggleWatched(id);
+    await contentStore.toggleWatched(tmdbId);
+  };
+
+  const handleClickFavorite = async () => {
+    if (!accessToken) {
+      navigate('/login');
+
+      return;
+    }
+
+    await contentStore.toggleFavorite(tmdbId);
   };
 
   return (
@@ -219,6 +229,10 @@ export default function ContentDetailHeader() {
         <button type="button" onClick={handleClickWish}>
           {/* 이미지 넣기 */}
           <p>찜하기</p>
+        </button>
+        <button type="button" onClick={handleClickFavorite}>
+          {/* 이미지 넣기 */}
+          <p>인생 작품 등록하기</p>
         </button>
         <button type="button" onClick={handleClickWatched}>
           {/* 이미지 넣기 */}

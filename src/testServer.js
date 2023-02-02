@@ -135,7 +135,7 @@ const server = setupServer(
   }))),
 
   rest.post(`${baseUrl}/users/upload-image`, async (req, res, ctx) => res(ctx.json({
-    profileImage: 'image url',
+    profileImage: 'imageUrl',
   }))),
 
   // Contents
@@ -144,7 +144,7 @@ const server = setupServer(
       contents: [
         {
           id: 1,
-          tmdbId: '1',
+          tmdbId: 1,
           tmdbGenreId: '16',
           imageUrl: 'zzezze',
           korTitle: '쩨쩨의 이중생활',
@@ -158,7 +158,46 @@ const server = setupServer(
         },
         {
           id: 2,
-          tmdbId: '2',
+          tmdbId: 1,
+          tmdbGenreId: '2',
+          imageUrl: 'winter',
+          korTitle: '겨울 라이프',
+          engTitle: 'winter life',
+          releaseDate: '2022',
+          popularity: '2000',
+          type: 'drama',
+          platform: 'wavve',
+          description: '추운 겨울 나기 프로젝트',
+          createdAt: '2022-01-02T17:57:23.929359',
+        },
+      ],
+
+      pages: {
+        totalPages: 1,
+      },
+    }),
+  )),
+
+  rest.get(`${baseUrl}/contents/topRated`, async (req, res, ctx) => res(
+    ctx.json({
+      contents: [
+        {
+          id: 1,
+          tmdbId: 1,
+          tmdbGenreId: '16',
+          imageUrl: 'zzezze',
+          korTitle: '장화신은 고양이: 끝내주는 모험',
+          engTitle: 'Puss in Boots: The Last Wish',
+          releaseDate: '2022',
+          popularity: '3000',
+          type: 'movie',
+          platform: 'netflix',
+          description: '장화신은 고양이: 끝내주는 모험',
+          createdAt: '2022-01-01T17:57:23.929359',
+        },
+        {
+          id: 2,
+          tmdbId: 1,
           tmdbGenreId: '2',
           imageUrl: 'winter',
           korTitle: '겨울 라이프',
@@ -181,7 +220,7 @@ const server = setupServer(
   rest.get(`${baseUrl}/contents/2`, async (req, res, ctx) => res(
     ctx.json({
       id: 2,
-      tmdbId: '2',
+      tmdbId: 1,
       tmdbGenreId: '2',
       imageUrl: 'winter',
       korTitle: '겨울 라이프',
@@ -284,10 +323,10 @@ const server = setupServer(
 
   rest.patch(`${baseUrl}/reviews/1`, async (req, res, ctx) => {
     const {
-      reviewBody,
+      starRate, reviewBody,
     } = await req.json();
 
-    if (reviewBody) {
+    if (starRate && reviewBody) {
       return res(ctx.json({
         id: 1,
       }));
@@ -441,6 +480,98 @@ const server = setupServer(
       createdAt: '2022-01-01T17:57:23.929359',
     }),
   )),
+
+  // Subscribe
+  rest.post(`${baseUrl}/subscribe/2`, async (req, res, ctx) => {
+    const authorization = req.headers.get('Authorization');
+
+    if (!authorization) {
+      return res(
+        ctx.status(400),
+      );
+    }
+
+    return res();
+  }),
+
+  rest.get(`${baseUrl}/subscribe/me`, async (req, res, ctx) => res(
+    ctx.json({
+      userId: 1,
+      followingCount: 1,
+      followerCount: 1,
+    }),
+  )),
+
+  rest.get(`${baseUrl}/subscribe/3`, async (req, res, ctx) => res(
+    ctx.json({
+      subscribeStatus: true,
+      userInfo: {
+        id: 3,
+        nickname: 'boni',
+        profileImage: 'https://source.boringavatars.com/beam/120/nickname=boni',
+      },
+      followingCount: 1,
+      followerCount: 1,
+    }),
+  )),
+
+  rest.get(`${baseUrl}/users/following`, async (req, res, ctx) => res(
+    ctx.json({
+      followings: [
+        {
+          userId: 2,
+          nickname: 'zzezze',
+          profileImage: 'https://source.boringavatars.com/beam/120/nickname=zzezze',
+          subscribeStatus: true,
+        },
+        {
+          userId: 3,
+          nickname: 'boni',
+          profileImage: 'https://source.boringavatars.com/beam/120/nickname=boni',
+          subscribeStatus: true,
+        },
+      ],
+
+      pages: {
+        totalPages: 1,
+      },
+    }),
+  )),
+
+  rest.get(`${baseUrl}/users/follower`, async (req, res, ctx) => res(
+    ctx.json({
+      followers: [
+        {
+          userId: 2,
+          nickname: 'zzezze',
+          profileImage: 'https://source.boringavatars.com/beam/120/nickname=zzezze',
+          subscribeStatus: true,
+        },
+        {
+          userId: 3,
+          nickname: 'boni',
+          profileImage: 'https://source.boringavatars.com/beam/120/nickname=boni',
+          subscribeStatus: true,
+        },
+      ],
+
+      pages: {
+        totalPages: 1,
+      },
+    }),
+  )),
+
+  rest.delete(`${baseUrl}/subscribe/2`, async (req, res, ctx) => {
+    const authorization = req.headers.get('Authorization');
+
+    if (!authorization) {
+      return res(
+        ctx.status(400),
+      );
+    }
+
+    return res();
+  }),
 );
 
 export default server;

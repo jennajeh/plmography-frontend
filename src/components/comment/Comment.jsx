@@ -4,7 +4,7 @@ import useCommentFormStore from '../../hooks/useCommentFormStore';
 import useCommentStore from '../../hooks/useCommentStore';
 import useUserStore from '../../hooks/useUserStore';
 import dateFormat from '../../utils/dateFormat';
-import Modal from '../common/ReviewModal';
+import Modal from '../modal/ReviewModal';
 import CommentForm from './CommentForm';
 
 export default function Comment({ review }) {

@@ -1,4 +1,4 @@
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useLocalStorage } from 'usehooks-ts';
 import useCommentStore from '../../hooks/useCommentStore';
 
@@ -21,7 +21,7 @@ export default function OtherReview() {
   const { content } = contentStore;
 
   const commentNotDeleted = commentStore.isDeleted();
-  const otherSameContentReview = reviewStore.isOtherSameContentReview(Number(content.tmdbId));
+  const otherSameContentReview = reviewStore.isOtherSameContentReview(content.tmdbId);
   const isNotDeleted = reviewStore.isDeletedAllReviews(otherSameContentReview);
 
   const handleClickLike = async (review) => {
@@ -58,11 +58,13 @@ export default function OtherReview() {
                 {' '}
                 {dateFormat(review.updatedAt)}
               </p>
-              <p>
-                nickname:
-                {' '}
-                {review.writer.nickname}
-              </p>
+              <Link to={`/users/${review.writer.id}`}>
+                <p>
+                  nickname:
+                  {' '}
+                  {review.writer.nickname}
+                </p>
+              </Link>
               <p>
                 profile:
                 {' '}

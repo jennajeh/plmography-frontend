@@ -32,13 +32,13 @@ const TitleBox = styled.div`
   margin-left: 1em;
 `;
 
-export default function ContentDetailReport() {
+export default function ContentDetailArticle() {
   const contentStore = useContentStore();
   const articleStore = useArticleStore();
   const { content } = contentStore;
   const { articles } = articleStore;
 
-  const isArticleExist = articles.filter((article) => article.contentId === Number(content.tmdbId));
+  const isArticleExist = articles.filter((article) => article.contentId === content.tmdbId);
 
   return (
     <div>

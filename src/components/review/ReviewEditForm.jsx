@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import StarRatings from 'react-star-ratings';
 import useContentStore from '../../hooks/useContentStore';
 import useReviewEditFormStore from '../../hooks/useReviewEditFormStore';
 import useReviewStore from '../../hooks/useReviewStore';
@@ -13,7 +14,7 @@ export default function ReviewEditForm() {
   const contentStore = useContentStore();
   const { content } = contentStore;
 
-  const mySameContentReview = reviewStore.isMySameContentReview(Number(content.tmdbId));
+  const mySameContentReview = reviewStore.isMySameContentReview(content.tmdbId);
 
   const notDeleted = reviewStore.isDeletedMyReviews(mySameContentReview);
 
@@ -22,15 +23,15 @@ export default function ReviewEditForm() {
   const location = useLocation();
   const reviewId = location.pathname?.split('/')[2];
 
-  const handleClickSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     await reviewEditFormStore.validate();
 
     if (reviewEditFormStore.isValidateSuccessful) {
-      const { body } = reviewEditFormStore;
+      const { body, starRate } = reviewEditFormStore;
 
-      await reviewStore.modify(body, reviewId);
+      await reviewStore.modify(body, starRate, reviewId);
 
       navigate(`/contents/${tmdbId}`);
     }
@@ -41,7 +42,20 @@ export default function ReviewEditForm() {
   }, []);
 
   return (
-    <form onSubmit={handleClickSubmit}>
+    <form onSubmit={handleSubmit}>
+      <StarRatings
+        rating={reviewEditFormStore.starRate}
+        starRatedColor="#ffc501"
+        starHoverColor="#ffe899"
+        starDimension="40px"
+        starSpacing="15px"
+        changeRating={(value) => reviewEditFormStore.changeStarRate(value)}
+        isSelectable
+      />
+      <span>
+        {reviewEditFormStore.starRate}
+        점
+      </span>
       <Input
         name="body"
         label="내가 쓴 리뷰 수정"

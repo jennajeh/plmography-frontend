@@ -6,10 +6,23 @@ export default class ContentStore extends Store {
     super();
 
     this.contents = [];
-
     this.content = {};
 
+    this.favoriteContents = {};
+    this.watchedContents = {};
+    this.wishContents = {};
+
     this.totalPages = 0;
+  }
+
+  async fetchTopRatedContents() {
+    const { data } = await contentApiService.fetchTopRatedContents();
+
+    const { contents } = data;
+
+    this.contents = contents;
+
+    this.publish();
   }
 
   async fetchContents({ page, size, filter } = {}) {
@@ -27,23 +40,64 @@ export default class ContentStore extends Store {
     this.publish();
   }
 
+  async fetchFavoriteContents({ userId, favoriteContentId }) {
+    const {
+      userProfileContents,
+    } = await contentApiService.fetchFavoriteContents({ userId, favoriteContentId });
+
+    this.favoriteContents = userProfileContents;
+
+    this.publish();
+  }
+
+  async fetchWatchedContents({ userId, watchedContentId }) {
+    const {
+      userProfileContents,
+    } = await contentApiService.fetchWatchedContents({ userId, watchedContentId });
+
+    this.watchedContents = userProfileContents;
+
+    this.publish();
+  }
+
+  async fetchWishContents({ userId, wishContentId }) {
+    const {
+      userProfileContents,
+    } = await contentApiService.fetchWishContents({ userId, wishContentId });
+
+    this.wishContents = userProfileContents;
+
+    this.publish();
+  }
+
   async toggleWish(id) {
-    const wishUserIds = await contentApiService.toggleWishContent(id);
+    const wishContentIds = await contentApiService.toggleWishContent(id);
 
     this.content = {
       ...this.content,
-      wishUserIds,
+      wishContentIds,
     };
 
     this.publish();
   }
 
   async toggleWatched(id) {
-    const watchedUserIds = await contentApiService.toggleWatchedContent(id);
+    const watchedContentIds = await contentApiService.toggleWatchedContent(id);
 
     this.content = {
       ...this.content,
-      watchedUserIds,
+      watchedContentIds,
+    };
+
+    this.publish();
+  }
+
+  async toggleFavorite(id) {
+    const favoriteContentIds = await contentApiService.toggleFavoriteContent(id);
+
+    this.content = {
+      ...this.content,
+      favoriteContentIds,
     };
 
     this.publish();

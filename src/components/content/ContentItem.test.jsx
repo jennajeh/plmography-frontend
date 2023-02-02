@@ -20,7 +20,10 @@ test('ContentItem', async () => {
     page: 1,
     size: 8,
     filter: {
-      date: 2022, genre: '16', platformData: 'netfilx', type: 'movie',
+      date: 2022,
+      genre: '16',
+      platformData: 'netfilx',
+      type: 'movie',
     },
   });
 
