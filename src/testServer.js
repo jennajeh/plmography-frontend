@@ -217,6 +217,47 @@ const server = setupServer(
     }),
   )),
 
+  rest.get(`${baseUrl}/contents/themes/1`, async (req, res, ctx) => res(
+    ctx.json({
+      contents: [
+        {
+          id: 1,
+          tmdbId: 1,
+          tmdbGenreId: '16',
+          imageUrl: 'zzezze',
+          korTitle: '장화신은 고양이: 끝내주는 모험',
+          engTitle: 'Puss in Boots: The Last Wish',
+          releaseDate: '2022',
+          popularity: '3000',
+          type: 'movie',
+          platform: 'netflix',
+          themeId: 1,
+          description: '장화신은 고양이: 끝내주는 모험',
+          createdAt: '2022-01-01T17:57:23.929359',
+        },
+        {
+          id: 2,
+          tmdbId: 1,
+          tmdbGenreId: '2',
+          imageUrl: 'winter',
+          korTitle: '겨울 라이프',
+          engTitle: 'winter life',
+          releaseDate: '2022',
+          popularity: '2000',
+          type: 'drama',
+          platform: 'wavve',
+          themeId: 1,
+          description: '추운 겨울 나기 프로젝트',
+          createdAt: '2022-01-02T17:57:23.929359',
+        },
+      ],
+
+      pages: {
+        totalPages: 1,
+      },
+    }),
+  )),
+
   rest.get(`${baseUrl}/contents/2`, async (req, res, ctx) => res(
     ctx.json({
       id: 2,
@@ -231,6 +272,63 @@ const server = setupServer(
       platform: 'wavve',
       description: '추운 겨울 나기 프로젝트',
       createdAt: '2022-01-02T17:57:23.929359',
+    }),
+  )),
+
+  rest.get(`${baseUrl}/contents/favorite`, async (req, res, ctx) => res(
+    ctx.json({
+      userProfileContents: [
+        {
+          userId: 1,
+          contentId: 1,
+          imageUrl: 'image',
+          korTitle: '아바타: 물의 길',
+        },
+        {
+          userId: 1,
+          contentId: 2,
+          imageUrl: 'image',
+          korTitle: '장화신은 고양이',
+        },
+      ],
+    }),
+  )),
+
+  rest.get(`${baseUrl}/contents/watched`, async (req, res, ctx) => res(
+    ctx.json({
+      userProfileContents: [
+        {
+          userId: 1,
+          contentId: 1,
+          imageUrl: 'image',
+          korTitle: '아바타: 물의 길',
+        },
+        {
+          userId: 1,
+          contentId: 2,
+          imageUrl: 'image',
+          korTitle: '장화신은 고양이',
+        },
+      ],
+    }),
+  )),
+
+  rest.get(`${baseUrl}/contents/wish`, async (req, res, ctx) => res(
+    ctx.json({
+      userProfileContents: [
+        {
+          userId: 1,
+          contentId: 1,
+          imageUrl: 'image',
+          korTitle: '아바타: 물의 길',
+        },
+        {
+          userId: 1,
+          contentId: 2,
+          imageUrl: 'image',
+          korTitle: '장화신은 고양이',
+        },
+      ],
     }),
   )),
 
@@ -572,6 +670,56 @@ const server = setupServer(
 
     return res();
   }),
+
+  // Theme
+  rest.get(`${baseUrl}/themes`, async (req, res, ctx) => res(
+    ctx.json({
+      themes: [
+        {
+          id: 1,
+          hit: 1,
+          title: '겨울이면 생각나는 영화',
+        },
+        {
+          id: 2,
+          hit: 1,
+          title: '애니매이션 TV/영화 모음 10선',
+        },
+      ],
+
+      pages: {
+        totalPages: 1,
+      },
+    }),
+  )),
+
+  rest.patch(`${baseUrl}/themes/1`, async (req, res, ctx) => res(
+    ctx.json({
+      id: 1,
+    }),
+  )),
+
+  rest.get(`${baseUrl}/themes/topHit`, async (req, res, ctx) => res(
+    ctx.json({
+      themes: [
+        {
+          id: 1,
+          hit: 20,
+          title: '꼭 봐야할 미드 TOP 5',
+        },
+        {
+          id: 2,
+          hit: 16,
+          title: '골든 글로브 수상작',
+        },
+        {
+          id: 3,
+          hit: 15,
+          title: '제 58회 백상예술대상 후보작',
+        },
+      ],
+    }),
+  )),
 );
 
 export default server;

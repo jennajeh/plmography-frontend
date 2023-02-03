@@ -8,9 +8,9 @@ export default class ContentStore extends Store {
     this.contents = [];
     this.content = {};
 
-    this.favoriteContents = {};
-    this.watchedContents = {};
-    this.wishContents = {};
+    this.favoriteContents = [];
+    this.watchedContents = [];
+    this.wishContents = [];
 
     this.totalPages = 0;
   }
@@ -35,7 +35,17 @@ export default class ContentStore extends Store {
   }
 
   async fetchContent(tmdbId) {
-    this.content = await contentApiService.fetchContent(tmdbId);
+    const content = await contentApiService.fetchContent(tmdbId);
+
+    this.content = content;
+
+    this.publish();
+  }
+
+  async fetchThemeContents(themeId) {
+    const { contents } = await contentApiService.fetchThemeContents(themeId);
+
+    this.contents = contents;
 
     this.publish();
   }

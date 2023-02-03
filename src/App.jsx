@@ -35,6 +35,7 @@ import UserWishesPage from './pages/UserWishesPage';
 import UserWatchedPage from './pages/UserWatchedPage';
 import UserReviewsPage from './pages/UserReviewsPage';
 import ProfileSearchPage from './pages/ProfileSearchPage';
+import { themeApiService } from './services/ThemeApiService';
 
 const Main = styled.main`
   height: calc(100vh - 64px);
@@ -50,6 +51,7 @@ export default function App() {
     reviewApiService.setAccessToken(accessToken);
     commentApiService.setAccessToken(accessToken);
     subscribeApiService.setAccessToken(accessToken);
+    themeApiService.setAccessToken(accessToken);
   }, [accessToken]);
 
   return (

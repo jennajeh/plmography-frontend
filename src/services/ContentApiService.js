@@ -56,7 +56,17 @@ export default class ContentApiService {
   async fetchContent(tmdbId) {
     const { data } = await this.instance.get(`/contents/${tmdbId}`);
 
-    return data;
+    const content = data;
+
+    return content;
+  }
+
+  async fetchThemeContents(themeId) {
+    const { data } = await this.instance.get(`/contents/themes/${themeId}`);
+
+    const { contents } = data;
+
+    return { contents };
   }
 
   async fetchFavoriteContents({ userId, favoriteContentId }) {
