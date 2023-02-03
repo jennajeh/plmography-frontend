@@ -46,7 +46,7 @@ export default class ContentApiService {
       .filter((elem) => elem)
       .join('&');
 
-    const { data } = await this.instance.get(`/contents${query}`);
+    const { data } = await this.instance.get(`/contents/filter${query}`);
 
     const { contents, pages } = data;
 
