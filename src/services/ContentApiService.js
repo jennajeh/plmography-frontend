@@ -62,7 +62,7 @@ export default class ContentApiService {
   }
 
   async fetchThemeContents(themeId) {
-    const { data } = await this.instance.get(`/contents/themes/${themeId}`);
+    const { data } = await this.instance.get(`/themes/${themeId}/contents`);
 
     const { contents } = data;
 

@@ -12,7 +12,6 @@ import defaultTheme from './styles/defaultTheme';
 
 import Header from './components/header-footer/Header';
 import HomePage from './pages/HomePage';
-import RecommendationsPage from './pages/RecommendationsPage';
 import CommunityPage from './pages/CommunityPage';
 import ContentDetailPage from './pages/ContentDetailPage';
 import ExplorePage from './pages/ExplorePage';
@@ -36,6 +35,7 @@ import UserWatchedPage from './pages/UserWatchedPage';
 import UserReviewsPage from './pages/UserReviewsPage';
 import ProfileSearchPage from './pages/ProfileSearchPage';
 import { themeApiService } from './services/ThemeApiService';
+import ThemesPage from './pages/ThemesPage';
 
 const Main = styled.main`
   height: calc(100vh - 64px);
@@ -61,7 +61,7 @@ export default function App() {
       <Main>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/recommendations" element={<RecommendationsPage />} />
+          <Route path="/themes" element={<ThemesPage />} />
           {/* <Route path="/recommendations/:id" element={<RecommendationsListPage />} /> */}
           {/* <Route path="/recommendation/:id" element={<RecommendationDetailPage />} /> */}
           <Route path="/community" element={<CommunityPage />} />

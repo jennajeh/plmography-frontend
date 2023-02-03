@@ -217,7 +217,7 @@ const server = setupServer(
     }),
   )),
 
-  rest.get(`${baseUrl}/contents/themes/1`, async (req, res, ctx) => res(
+  rest.get(`${baseUrl}/themes/1/contents`, async (req, res, ctx) => res(
     ctx.json({
       contents: [
         {
