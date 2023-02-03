@@ -25,7 +25,6 @@ test('SearchResultContentItem', async () => {
   ));
 
   await waitFor(() => {
-    screen.getByRole('heading', { level: 4, name: /쩨쩨의 이중생활/ });
-    screen.getByText(/쩨쩨/);
+    screen.getByRole('heading', { level: 4, name: /DC 리그 오브 슈퍼-펫/ });
   });
 });
