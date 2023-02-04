@@ -36,6 +36,7 @@ import UserReviewsPage from './pages/UserReviewsPage';
 import ProfileSearchPage from './pages/ProfileSearchPage';
 import { themeApiService } from './services/ThemeApiService';
 import ThemesPage from './pages/ThemesPage';
+import ThemesDetailPage from './pages/ThemesDetailPage';
 
 const Main = styled.main`
   height: calc(100vh - 64px);
@@ -62,8 +63,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/themes" element={<ThemesPage />} />
-          {/* <Route path="/recommendations/:id" element={<RecommendationsListPage />} /> */}
-          {/* <Route path="/recommendation/:id" element={<RecommendationDetailPage />} /> */}
+          <Route path="/themes/:id" element={<ThemesDetailPage />} />
           <Route path="/community" element={<CommunityPage />} />
           {/* <Route path="/community/post/:id" element={<CommunityPostDetailPage />} /> */}
           {/* <Route path="/community/history" element={<CommunityHistoryPage />} /> */}

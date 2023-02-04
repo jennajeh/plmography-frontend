@@ -61,12 +61,29 @@ export default class ContentApiService {
     return content;
   }
 
-  async fetchThemeContents(themeId) {
-    const { data } = await this.instance.get(`/themes/${themeId}/contents`);
+  async fetchThemeContents({
+    themeId, page, size, filter,
+  }) {
+    const filterQuery = filter
+      ? `?${['platform']
+        .map((key) => (filter[key] ? `${key}=${filter[key]}` : ''))
+        .filter((query) => query)
+        .join('&')}`
+      : '';
 
-    const { contents } = data;
+    const pageQuery = page ? `page=${page}` : '';
 
-    return { contents };
+    const sizeQuery = size ? `size=${size}` : '';
+
+    const query = [filterQuery, pageQuery, sizeQuery]
+      .filter((elem) => elem)
+      .join('&');
+
+    const { data } = await this.instance.get(`/themes/${themeId}/contents${query}`);
+
+    const { contents, pages } = data;
+
+    return { contents, pages };
   }
 
   async fetchFavoriteContents({ userId, favoriteContentId }) {

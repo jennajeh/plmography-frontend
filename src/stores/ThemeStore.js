@@ -6,18 +6,22 @@ export default class ThemeStore extends Store {
     super();
 
     this.themes = [];
+    this.hitThemes = [];
     this.hit = 0;
     this.totalPages = 0;
     this.updateHitStatus = '';
     this.isThemesLoading = false;
+    this.isHitThemesLoading = false;
   }
 
   reset() {
     this.themes = [];
+    this.hitThemes = [];
     this.hit = 0;
     this.totalPages = 0;
     this.updateHitStatus = '';
     this.isThemesLoading = false;
+    this.isHitThemesLoading = false;
   }
 
   async fetchThemes({ page, size }) {
@@ -35,14 +39,14 @@ export default class ThemeStore extends Store {
   }
 
   async fetchHitThemes() {
-    this.startThemesLoad();
+    this.startHitThemesLoad();
 
     try {
       const { themes } = await themeApiService.fetchHitThemes();
 
-      this.completeThemesLoad(themes);
+      this.completeHitThemesLoad(themes);
     } catch (e) {
-      this.failThemesLoad();
+      this.failHitThemesLoad();
     }
   }
 
@@ -71,6 +75,13 @@ export default class ThemeStore extends Store {
     this.publish();
   }
 
+  startHitThemesLoad() {
+    this.isHitThemesLoading = true;
+    this.hitThemes = [];
+
+    this.publish();
+  }
+
   completeThemesLoad(themes) {
     this.isThemesLoading = false;
     this.themes = themes;
@@ -78,9 +89,23 @@ export default class ThemeStore extends Store {
     this.publish();
   }
 
+  completeHitThemesLoad(themes) {
+    this.isHitThemesLoading = false;
+    this.hitThemes = themes;
+
+    this.publish();
+  }
+
   failThemesLoad() {
     this.isThemesLoading = false;
     this.themes = [];
+
+    this.publish();
+  }
+
+  failHitThemesLoad() {
+    this.isHitThemesLoading = false;
+    this.hitThemes = [];
 
     this.publish();
   }
@@ -95,6 +120,10 @@ export default class ThemeStore extends Store {
 
   failUpdateHit() {
     this.updateHitStatus = 'failed';
+  }
+
+  getThemesTitle(themeId) {
+    return this.hitThemes.filter((theme) => theme.id === themeId);
   }
 
   get isUpdateHitSuccessful() {

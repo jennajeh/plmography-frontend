@@ -42,10 +42,15 @@ export default class ContentStore extends Store {
     this.publish();
   }
 
-  async fetchThemeContents(themeId) {
-    const { contents } = await contentApiService.fetchThemeContents(themeId);
+  async fetchThemeContents({
+    themeId, page, size, filter,
+  } = {}) {
+    const { contents, pages } = await contentApiService.fetchThemeContents({
+      themeId, page, size, filter,
+    });
 
     this.contents = contents;
+    this.totalPages = pages.totalPages;
 
     this.publish();
   }

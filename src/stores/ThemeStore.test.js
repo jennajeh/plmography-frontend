@@ -22,10 +22,10 @@ describe('ThemeStore', () => {
     it('조회수가 가장 높은 상위 3개의 테마를 출력한다', async () => {
       await themeStore.fetchHitThemes();
 
-      expect(themeStore.themes).toBeTruthy();
-      expect(themeStore.themes[0].title).toBe('꼭 봐야할 미드 TOP 5');
-      expect(themeStore.themes[1].title).toBe('골든 글로브 수상작');
-      expect(themeStore.themes[2].title).toBe('제 58회 백상예술대상 후보작');
+      expect(themeStore.hitThemes).toBeTruthy();
+      expect(themeStore.hitThemes[0].title).toBe('꼭 봐야할 미드 TOP 5');
+      expect(themeStore.hitThemes[1].title).toBe('골든 글로브 수상작');
+      expect(themeStore.hitThemes[2].title).toBe('제 58회 백상예술대상 후보작');
     });
   });
 

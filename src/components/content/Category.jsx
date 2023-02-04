@@ -44,7 +44,7 @@ const PlatformFilter = styled.button`
   img {
     width: 5em;
   }
-  `;
+`;
 
 const TypeFilter = styled.button`
 border: none;
