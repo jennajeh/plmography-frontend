@@ -1,5 +1,7 @@
+import { useLocation, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import useThemeStore from '../../hooks/useThemeStore';
+import Pagination from '../page/Pagination';
 import Theme from './Theme';
 
 const SubTitle = styled.h3`
@@ -24,8 +26,11 @@ const Error = styled.p`
 
 export default function ThemeList() {
   const themeStore = useThemeStore();
+  const location = useLocation();
+  const [searchParams] = useSearchParams();
 
   const { themes } = themeStore;
+  const page = searchParams.get('page') ?? 1;
 
   if (!themes) {
     return (
@@ -37,14 +42,21 @@ export default function ThemeList() {
     <div>
       <SubTitle>테마 리스트</SubTitle>
       {themes.length ? (
-        <List>
-          {themes.map((theme) => (
-            <Theme
-              key={theme.id}
-              theme={theme}
-            />
-          ))}
-        </List>
+        <>
+          <List>
+            {themes.map((theme) => (
+              <Theme
+                key={theme.id}
+                theme={theme}
+              />
+            ))}
+          </List>
+          <Pagination
+            url={location.pathname}
+            total={themeStore.totalPages}
+            current={searchParams.get('page') ?? 1}
+          />
+        </>
       ) : (
         <Error>작품이 존재하지 않습니다.</Error>
       )}

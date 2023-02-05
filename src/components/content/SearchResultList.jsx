@@ -46,6 +46,7 @@ export default function SearchResultList() {
   const [searchParams] = useSearchParams();
   const userStore = useUserStore();
   const contentStore = useContentStore();
+
   const { user } = userStore;
   const { contents, favoriteContents } = contentStore;
   const { id: userId, favoriteContentIds } = user;
