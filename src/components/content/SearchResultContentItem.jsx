@@ -44,7 +44,7 @@ export default function SearchResultContentItem({ content }) {
   };
 
   return (
-    <>
+    <div>
       <ImgWrapper>
         <img src={imageUrl} alt="img" />
         <h4>{korTitle}</h4>
@@ -52,6 +52,6 @@ export default function SearchResultContentItem({ content }) {
       <Button type="button" onClick={() => handleClickFavorite(tmdbId)}>
         등록하기
       </Button>
-    </>
+    </div>
   );
 }

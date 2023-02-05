@@ -1,28 +1,41 @@
 import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import {
-  render, screen, waitFor,
+  cleanup, render, screen, waitFor,
 } from '@testing-library/react';
 import defaultTheme from '../../styles/defaultTheme';
 import { contentStore } from '../../stores/ContentStore';
-import SearchResultContentItem from './SearchResultContentItem';
+import ThemeContentItem from './ThemeContentItem';
 
-test('SearchResultContentItem', async () => {
+beforeEach(() => {
+  jest.clearAllMocks();
+});
+
+afterEach(() => {
+  cleanup();
+});
+
+test('ThemeContentItem', async () => {
   await contentStore.fetchContents({
     page: 1,
     size: 8,
-    filter: {},
+    filter: {
+      date: 2022,
+      genre: '16',
+      platformData: 'netfilx',
+      type: 'movie',
+    },
   });
 
   render((
     <MemoryRouter>
       <ThemeProvider theme={defaultTheme}>
-        <SearchResultContentItem content={contentStore.contents[0]} />
+        <ThemeContentItem content={contentStore.contents[0]} />
       </ThemeProvider>
     </MemoryRouter>
   ));
 
   await waitFor(() => {
-    screen.getByText('아리스 인 보더랜드');
+    screen.getByRole('heading', { level: 4, name: /DC 리그 오브 슈퍼-펫/ });
   });
 });

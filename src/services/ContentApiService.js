@@ -46,7 +46,7 @@ export default class ContentApiService {
       .filter((elem) => elem)
       .join('&');
 
-    const { data } = await this.instance.get(`/contents${query}`);
+    const { data } = await this.instance.get(`/contents/filter${query}`);
 
     const { contents, pages } = data;
 
@@ -56,7 +56,34 @@ export default class ContentApiService {
   async fetchContent(tmdbId) {
     const { data } = await this.instance.get(`/contents/${tmdbId}`);
 
-    return data;
+    const content = data;
+
+    return content;
+  }
+
+  async fetchThemeContents({
+    themeId, page, size, filter,
+  }) {
+    const filterQuery = filter
+      ? `?${['platform']
+        .map((key) => (filter[key] ? `${key}=${filter[key]}` : ''))
+        .filter((query) => query)
+        .join('&')}`
+      : '';
+
+    const pageQuery = page ? `page=${page}` : '';
+
+    const sizeQuery = size ? `size=${size}` : '';
+
+    const query = [filterQuery, pageQuery, sizeQuery]
+      .filter((elem) => elem)
+      .join('&');
+
+    const { data } = await this.instance.get(`/themes/${themeId}/contents${query}`);
+
+    const { contents, pages } = data;
+
+    return { contents, pages };
   }
 
   async fetchFavoriteContents({ userId, favoriteContentId }) {

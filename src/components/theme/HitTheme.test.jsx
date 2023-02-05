@@ -4,8 +4,8 @@ import {
   cleanup, render, screen, waitFor,
 } from '@testing-library/react';
 import defaultTheme from '../../styles/defaultTheme';
-import { contentStore } from '../../stores/ContentStore';
-import ContentItem from './ContentItem';
+import { themeStore } from '../../stores/ThemeStore';
+import HitTheme from './HitTheme';
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -15,27 +15,18 @@ afterEach(() => {
   cleanup();
 });
 
-test('ContentItem', async () => {
-  await contentStore.fetchContents({
-    page: 1,
-    size: 8,
-    filter: {
-      date: 2022,
-      genre: '16',
-      platformData: 'netfilx',
-      type: 'movie',
-    },
-  });
+test('HitTheme', async () => {
+  await themeStore.fetchHitThemes();
 
   render((
     <MemoryRouter>
       <ThemeProvider theme={defaultTheme}>
-        <ContentItem content={contentStore.contents[0]} />
+        <HitTheme hitTheme={themeStore.hitThemes[0]} />
       </ThemeProvider>
     </MemoryRouter>
   ));
 
   await waitFor(() => {
-    screen.getByRole('heading', { level: 4, name: /DC 리그 오브 슈퍼-펫/ });
+    screen.getByText('꼭 봐야할 미드 TOP 5');
   });
 });

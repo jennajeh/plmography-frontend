@@ -96,7 +96,7 @@ export default function Header() {
               </StyledLink>
             </li>
             <li>
-              <StyledLink to="/recommendations">테마 추천</StyledLink>
+              <StyledLink to="/themes">테마 추천</StyledLink>
             </li>
             <li>
               <StyledLink to="/community">커뮤니티</StyledLink>
