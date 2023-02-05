@@ -81,7 +81,7 @@ export default function SearchResultList() {
             {contents.map((content) => (
               <SearchResultContentItem
                 key={content.id}
-                item={content}
+                content={content}
               />
             ))}
           </List>

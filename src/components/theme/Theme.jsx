@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import useThemeStore from '../../hooks/useThemeStore';
 
 const ImgWrapper = styled.article`
   margin: 1em 0 1em 0;
@@ -19,16 +20,31 @@ h4 {
 `;
 
 export default function Theme({ theme }) {
+  const navigate = useNavigate();
+  const themeStore = useThemeStore();
+
   const { id: themeId, title, image } = theme;
+
+  const handleClickUpdateHit = () => {
+    themeStore.updateHit(themeId);
+
+    navigate(`/themes/${themeId}`);
+  };
 
   return (
     <div>
-      <Link to={`/themes/${themeId}`}>
+      <button type="button" onClick={handleClickUpdateHit}>
         <ImgWrapper>
           <img src={image} alt="img" />
           <h4>{title}</h4>
         </ImgWrapper>
-      </Link>
+      </button>
+      {/* <Link to={`/themes/${themeId}`}>
+        <ImgWrapper>
+          <img src={image} alt="img" />
+          <h4>{title}</h4>
+        </ImgWrapper>
+      </Link> */}
     </div>
   );
 }
