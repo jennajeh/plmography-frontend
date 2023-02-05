@@ -23,7 +23,7 @@ const Error = styled.p`
   text-align: center;
 `;
 
-export default function Articles() {
+export default function ArticleList() {
   const articleStore = useArticleStore();
   const { articles } = articleStore;
   const location = useLocation();

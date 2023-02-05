@@ -7,6 +7,10 @@ import defaultTheme from '../styles/defaultTheme';
 import HomePage from './HomePage';
 
 describe('HomePage', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   afterEach(() => {
     cleanup();
   });
@@ -23,7 +27,7 @@ describe('HomePage', () => {
     );
   }
 
-  it('renders HomePage', async () => {
+  it('renders HomePage', async () => async (act) => {
     await waitFor(() => renderHomePage());
   });
 });

@@ -683,7 +683,7 @@ const server = setupServer(
         {
           id: 2,
           hit: 1,
-          title: '애니매이션 TV/영화 모음 10선',
+          title: '애니메이션 TV/영화 모음 10선',
         },
       ],
 

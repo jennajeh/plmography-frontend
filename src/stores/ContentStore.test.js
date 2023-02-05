@@ -15,13 +15,11 @@ describe('UserStore', () => {
         await contentStore.fetchContents({
           page: 1,
           size: 8,
-          filter: {
-            date: 2022, genre: '16', platformData: 'netfilx', type: 'movie', sort: 'createdAt',
-          },
+          filter: {},
         });
 
-        expect(contentStore.contents[0].korTitle).toBe('DC 리그 오브 슈퍼-펫');
-        expect(contentStore.totalPages).toBe(4);
+        expect(contentStore.contents[0].korTitle).toBe('아리스 인 보더랜드');
+        expect(contentStore.totalPages).toBe(50);
       });
     });
 
@@ -47,9 +45,14 @@ describe('UserStore', () => {
 
   describe('fetchThemeContents', () => {
     it('특정 테마의 컨텐츠 목록을 출력한다', async () => {
-      const themeId = 1;
-
-      await contentStore.fetchThemeContents(themeId);
+      await contentStore.fetchThemeContents({
+        themeId: 1,
+        page: 1,
+        size: 8,
+        filter: {
+          platformData: 'netfilx',
+        },
+      });
 
       expect(contentStore.contents).toBeTruthy();
       expect(contentStore.contents[0].korTitle).toBe('장화신은 고양이: 끝내주는 모험');

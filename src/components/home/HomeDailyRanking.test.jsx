@@ -10,6 +10,10 @@ import { contentStore } from '../../stores/ContentStore';
 import HomeDailyRanking from './HomeDailyRanking';
 
 test('HomeDailyRanking', async () => async (act) => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   afterEach(() => {
     cleanup();
   });

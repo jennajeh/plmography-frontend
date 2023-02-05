@@ -76,8 +76,6 @@ export default function ThemeContentList() {
   const themeId = location.pathname?.split('/')[2];
   const themes = themeStore.getThemesTitle(Number(themeId));
 
-  console.log(contents);
-
   const handleFilterPlatforms = (platform) => {
     if (platform === filter.platform) {
       setFilter({ ...filter, platform: '' });

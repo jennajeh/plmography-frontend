@@ -2,9 +2,9 @@ import { cleanup, render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import defaultTheme from '../styles/defaultTheme';
-import ThemesPage from './ThemesPage';
+import ThemesDetailPage from './ThemesDetailPage';
 
-describe('ThemesPage', () => {
+describe('ThemesDetailPage', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -13,17 +13,17 @@ describe('ThemesPage', () => {
     cleanup();
   });
 
-  function renderThemesPage() {
+  function renderThemesDetailPage() {
     render((
       <MemoryRouter>
         <ThemeProvider theme={defaultTheme}>
-          <ThemesPage />
+          <ThemesDetailPage />
         </ThemeProvider>
       </MemoryRouter>
     ));
   }
 
   it('renders ThemesPage', () => {
-    renderThemesPage();
+    renderThemesDetailPage();
   });
 });

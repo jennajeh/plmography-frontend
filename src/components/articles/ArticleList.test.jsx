@@ -1,4 +1,5 @@
 import {
+  cleanup,
   render, screen, waitFor,
 } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
@@ -11,6 +12,14 @@ let articles;
 const context = describe;
 
 describe('ArticleList', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  afterEach(() => {
+    cleanup();
+  });
+
   function renderArticleList() {
     render(
       <MemoryRouter>
@@ -26,7 +35,7 @@ describe('ArticleList', () => {
       articles = [];
     });
 
-    it('포스팅이 존재하지 않습니다 메세지 반환', async () => {
+    it('포스팅이 존재하지 않습니다 메세지 반환', async () => async (act) => {
       renderArticleList();
 
       await waitFor(() => {
@@ -69,7 +78,7 @@ describe('ArticleList', () => {
       ];
     });
 
-    it('포스팅 목록 반환', async () => {
+    it('포스팅 목록 반환', async () => async (act) => {
       renderArticleList();
 
       await waitFor(() => {
