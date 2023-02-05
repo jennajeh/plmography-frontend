@@ -39,12 +39,6 @@ export default function Theme({ theme }) {
           <h4>{title}</h4>
         </ImgWrapper>
       </button>
-      {/* <Link to={`/themes/${themeId}`}>
-        <ImgWrapper>
-          <img src={image} alt="img" />
-          <h4>{title}</h4>
-        </ImgWrapper>
-      </Link> */}
     </div>
   );
 }
