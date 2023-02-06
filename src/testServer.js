@@ -720,6 +720,41 @@ const server = setupServer(
       ],
     }),
   )),
+
+  // Like
+  rest.get(`${baseUrl}/likes`, async (req, res, ctx) => res(ctx.json({
+    likes: [
+      {
+        id: 1,
+        postId: 10,
+        userId: 1,
+      },
+    ],
+  }))),
+
+  rest.post(`${baseUrl}/likes`, async (req, res, ctx) => {
+    const { postId, userId } = await req.json();
+
+    if (!postId || !userId) {
+      return res(
+        ctx.status(400),
+      );
+    }
+
+    return res();
+  }),
+
+  rest.delete(`${baseUrl}/likes`, async (req, res, ctx) => {
+    const { likeId } = await req.json();
+
+    if (!likeId.length) {
+      return res(
+        ctx.status(400),
+      );
+    }
+
+    return res();
+  }),
 );
 
 export default server;
