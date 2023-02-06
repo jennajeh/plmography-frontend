@@ -37,6 +37,7 @@ import ProfileSearchPage from './pages/ProfileSearchPage';
 import { themeApiService } from './services/ThemeApiService';
 import ThemesPage from './pages/ThemesPage';
 import ThemesDetailPage from './pages/ThemesDetailPage';
+import { postApiService } from './services/PostApiService';
 
 const Main = styled.main`
   height: calc(100vh - 64px);
@@ -53,6 +54,7 @@ export default function App() {
     commentApiService.setAccessToken(accessToken);
     subscribeApiService.setAccessToken(accessToken);
     themeApiService.setAccessToken(accessToken);
+    postApiService.setAccessToken(accessToken);
   }, [accessToken]);
 
   return (

@@ -34,7 +34,6 @@ export default class ContentApiService {
     const filterQuery = filter
       ? `?${['platform', 'type', 'genre', 'date', 'searchTitle', 'sort']
         .map((key) => (filter[key] ? `${key}=${filter[key]}` : ''))
-        .filter((query) => query)
         .join('&')}`
       : '';
 
@@ -67,7 +66,6 @@ export default class ContentApiService {
     const filterQuery = filter
       ? `?${['platform']
         .map((key) => (filter[key] ? `${key}=${filter[key]}` : ''))
-        .filter((query) => query)
         .join('&')}`
       : '';
 

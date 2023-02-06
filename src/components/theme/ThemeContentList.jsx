@@ -86,10 +86,6 @@ export default function ThemeContentList() {
     setFilter({ ...filter, platform });
   };
 
-  const handleRefreshFilter = () => {
-    setFilter({});
-  };
-
   useEffect(() => {
     contentStore.fetchThemeContents({
       themeId, page, size: 8, filter,
@@ -119,9 +115,6 @@ export default function ThemeContentList() {
             </li>
           ))}
         </Tags>
-        <RefreshButton type="button" onClick={handleRefreshFilter}>
-          초기화
-        </RefreshButton>
         {contents.length ? (
           <>
             <List>

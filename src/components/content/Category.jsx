@@ -150,6 +150,7 @@ export default function Category() {
   const handleClickName = () => {
     setFilter({ ...filter, sort: 'korTitle' });
   };
+  console.log(filter);
 
   useEffect(() => {
     contentStore.fetchContents({ page, size: 8, filter });

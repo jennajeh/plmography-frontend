@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import axios from 'axios';
 import config from '../config';
 
@@ -81,7 +82,9 @@ export default class UserApiService {
   }
 
   async uploadImage(formData) {
-    const { data } = await this.instance.post('/users/upload-image', formData);
+    const url = `${baseUrl}/users/upload-image`;
+
+    const { data } = await axios.post(url, formData);
 
     return { data };
   }
