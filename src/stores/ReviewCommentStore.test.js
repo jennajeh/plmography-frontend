@@ -1,21 +1,21 @@
-import { commentApiService } from '../services/CommentApiService';
-import CommentStore from './CommentStore';
+import { reviewCommentApiService } from '../services/ReviewCommentApiService';
+import ReviewCommentStore from './ReviewCommentStore';
 
 const context = describe;
 
-describe('QuestionFormStore', () => {
-  let commentStore;
+describe('ReviewCommentFormStore', () => {
+  let reviewCommentStore;
 
   beforeEach(() => {
-    commentStore = new CommentStore();
+    reviewCommentStore = new ReviewCommentStore();
   });
 
   describe('reset', () => {
     it('모든 변수들을 리셋한다', () => {
-      commentStore.createStatus = 'successful';
-      commentStore.reset();
+      reviewCommentStore.createStatus = 'successful';
+      reviewCommentStore.reset();
 
-      expect(commentStore.createStatus).toBeFalsy();
+      expect(reviewCommentStore.createStatus).toBeFalsy();
     });
   });
 
@@ -26,9 +26,9 @@ describe('QuestionFormStore', () => {
         const postId = 1;
         const body = '동의합니다';
 
-        await commentStore.create(userId, postId, body);
+        await reviewCommentStore.create(userId, postId, body);
 
-        expect(commentStore.isCreateSuccessful).toBeTruthy();
+        expect(reviewCommentStore.isCreateSuccessful).toBeTruthy();
       });
     });
 
@@ -38,43 +38,43 @@ describe('QuestionFormStore', () => {
         const postId = 1;
         const body = '';
 
-        await commentStore.create(userId, postId, body);
+        await reviewCommentStore.create(userId, postId, body);
 
-        expect(commentStore.isCreateFailed).toBeTruthy();
+        expect(reviewCommentStore.isCreateFailed).toBeTruthy();
       });
     });
   });
 
   describe('fetchComments', () => {
     it('리뷰 목록을 출력한다', async () => {
-      await commentStore.fetchComments();
+      await reviewCommentStore.fetchComments();
 
-      expect(commentStore.comments).toHaveLength(2);
+      expect(reviewCommentStore.comments).toHaveLength(2);
     });
   });
 
   describe('delete', () => {
     context('댓글이 성공적으로 삭제됐을 때', () => {
       it('deleteStatus 가 successful 로 바뀐다', async () => {
-        commentApiService.setAccessToken('ACCESS.TOKEN');
+        reviewCommentApiService.setAccessToken('ACCESS.TOKEN');
 
         const commentId = 1;
 
-        await commentStore.delete(commentId);
+        await reviewCommentStore.delete(commentId);
 
-        expect(commentStore.isDeleteSuccessful).toBeTruthy();
+        expect(reviewCommentStore.isDeleteSuccessful).toBeTruthy();
       });
     });
 
     context('when failed to delete', () => {
       it('deleteStatus 가 failed 로 바뀐다', async () => {
-        commentApiService.setAccessToken('');
+        reviewCommentApiService.setAccessToken('');
 
         const commentId = 1;
 
-        await commentStore.delete(commentId);
+        await reviewCommentStore.delete(commentId);
 
-        expect(commentStore.isDeleteFailed).toBeTruthy();
+        expect(reviewCommentStore.isDeleteFailed).toBeTruthy();
       });
     });
   });

@@ -19,7 +19,10 @@ export default class PostApiService {
     if (accessToken) {
       this.instance = axios.create({
         baseURL: baseUrl,
-        headers: { Authorization: `Bearer ${this.accessToken}` },
+        headers: {
+          Authorization: `Bearer ${this.accessToken}`,
+          contentType: 'application/x-www-form-urlencoded',
+        },
       });
 
       return;
@@ -69,7 +72,7 @@ export default class PostApiService {
   }
 
   async fetchHitPosts() {
-    const { data } = await this.instance.get('/posts/topHit');
+    const { data } = await this.instance.get('/posts/top-rank');
 
     const { posts } = data;
 
@@ -85,13 +88,13 @@ export default class PostApiService {
   }
 
   async updateHit(postId) {
-    const { data } = await this.instance.patch(`/posts/${postId}/updateHit`);
+    const { data } = await this.instance.patch(`/posts/hit/${postId}`);
 
     return { id: data.id };
   }
 
   async modifyPost(postId, title, postBody, image) {
-    const { data } = await this.instance.patch(`/posts/${postId}/modify`, {
+    const { data } = await this.instance.patch(`/posts/${postId}`, {
       postId, title, postBody, image,
     });
 
@@ -102,14 +105,6 @@ export default class PostApiService {
 
   async deletePost(postId) {
     await this.instance.delete(`/posts/${postId}`);
-  }
-
-  async deletePosts(checkedPosts) {
-    await this.instance.delete('/posts', {
-      data: {
-        postIds: checkedPosts,
-      },
-    });
   }
 
   async upload(formData) {

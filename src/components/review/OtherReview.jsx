@@ -1,26 +1,26 @@
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useLocalStorage } from 'usehooks-ts';
-import useCommentStore from '../../hooks/useCommentStore';
+import useReviewCommentStore from '../../hooks/useReviewCommentStore';
 
 import Likes from '../common/Likes';
 import dateFormat from '../../utils/dateFormat';
 import useReviewStore from '../../hooks/useReviewStore';
 import useContentStore from '../../hooks/useContentStore';
-import Comment from '../comment/Comment';
+import ReviewComment from '../reviewComment/ReviewComment';
 
 export default function OtherReview() {
   const navigate = useNavigate();
   const [accessToken] = useLocalStorage('accessToken', '');
   const [searchParams] = useSearchParams();
 
-  const commentStore = useCommentStore();
+  const reviewCommentStore = useReviewCommentStore();
   const reviewStore = useReviewStore();
   const contentStore = useContentStore();
 
   const page = searchParams.get('page') ?? 1;
   const { content } = contentStore;
 
-  const commentNotDeleted = commentStore.isDeleted();
+  const commentNotDeleted = reviewCommentStore.isDeleted();
   const otherSameContentReview = reviewStore.isOtherSameContentReview(content.tmdbId);
   const isNotDeleted = reviewStore.isDeletedAllReviews(otherSameContentReview);
 
@@ -43,7 +43,7 @@ export default function OtherReview() {
       return;
     }
 
-    commentStore.changeCreateCommentButtonStatus();
+    reviewCommentStore.changeCreateCommentButtonStatus();
   };
 
   return (
@@ -94,7 +94,7 @@ export default function OtherReview() {
               >
                 댓글달기
               </button>
-              <Comment review={review} />
+              <ReviewComment review={review} />
             </li>
           ))}
         </ul>

@@ -161,28 +161,6 @@ describe('PostStore', () => {
     });
   });
 
-  describe('deleteCheckedPost', () => {
-    context('체크한 게시물 삭제에 성공한 경우', () => {
-      it('deleteStatus 가 successful 로 바뀐다', async () => {
-        const postId = [1, 2];
-
-        await postStore.deleteCheckedPost(postId);
-
-        expect(postStore.isDeleteSuccessful).toBeTruthy();
-      });
-    });
-
-    context('체크한 게시물 삭제에 실패한 경우', () => {
-      it('deleteStatus 가 failed 로 바뀐다', async () => {
-        const postId = '';
-
-        await postStore.deleteCheckedPost(postId);
-
-        expect(postStore.isDeleteFailed).toBeTruthy();
-      });
-    });
-  });
-
   describe('reset', () => {
     it('모든 필드를 리셋시킨다', () => {
       postStore.createStatus = 'successful';

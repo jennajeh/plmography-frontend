@@ -6,7 +6,10 @@ import { useEffect } from 'react';
 import { userApiService } from './services/UserApiService';
 import { contentApiService } from './services/ContentApiService';
 import { reviewApiService } from './services/ReviewApiService';
-import { commentApiService } from './services/CommentApiService';
+import { postApiService } from './services/PostApiService';
+import { reviewCommentApiService } from './services/ReviewCommentApiService';
+import { subscribeApiService } from './services/SubscribeApiService';
+import { themeApiService } from './services/ThemeApiService';
 
 import defaultTheme from './styles/defaultTheme';
 
@@ -26,7 +29,6 @@ import GreetingPage from './pages/GreetingPage';
 import ReviewCreatePage from './pages/ReviewCreatePage';
 import ArticlesPage from './pages/ArticlesPage';
 import ArticleDetailPage from './pages/ArticleDetailPage';
-import { subscribeApiService } from './services/SubscribeApiService';
 import MyProfilePage from './pages/MyProfilePage';
 import MyProfileEditPage from './pages/MyProfileEditPage';
 import UserProfilePage from './pages/UserProfilePage';
@@ -34,10 +36,8 @@ import UserWishesPage from './pages/UserWishesPage';
 import UserWatchedPage from './pages/UserWatchedPage';
 import UserReviewsPage from './pages/UserReviewsPage';
 import ProfileSearchPage from './pages/ProfileSearchPage';
-import { themeApiService } from './services/ThemeApiService';
 import ThemesPage from './pages/ThemesPage';
 import ThemesDetailPage from './pages/ThemesDetailPage';
-import { postApiService } from './services/PostApiService';
 
 const Main = styled.main`
   height: calc(100vh - 64px);
@@ -51,7 +51,7 @@ export default function App() {
     userApiService.setAccessToken(accessToken);
     contentApiService.setAccessToken(accessToken);
     reviewApiService.setAccessToken(accessToken);
-    commentApiService.setAccessToken(accessToken);
+    reviewCommentApiService.setAccessToken(accessToken);
     subscribeApiService.setAccessToken(accessToken);
     themeApiService.setAccessToken(accessToken);
     postApiService.setAccessToken(accessToken);

@@ -151,22 +151,6 @@ export default class PostStore extends Store {
     }
   }
 
-  async deleteCheckedPost(checkedPosts) {
-    this.startDelete();
-
-    try {
-      await postApiService.deletePosts(checkedPosts);
-
-      this.completeDelete();
-
-      this.publish();
-    } catch (e) {
-      this.failDelete();
-
-      this.publish();
-    }
-  }
-
   async upload(formData) {
     const { data } = await postApiService.upload(formData);
 

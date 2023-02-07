@@ -1,41 +1,41 @@
 /* eslint-disable react/prop-types */
 import { useLocalStorage } from 'usehooks-ts';
-import useCommentFormStore from '../../hooks/useCommentFormStore';
-import useCommentStore from '../../hooks/useCommentStore';
+import useReviewCommentFormStore from '../../hooks/useReviewCommentFormStore';
+import useReviewCommentStore from '../../hooks/useReviewCommentStore';
 import useUserStore from '../../hooks/useUserStore';
 import dateFormat from '../../utils/dateFormat';
 import Modal from '../modal/ReviewModal';
-import CommentForm from './CommentForm';
+import ReviewCommentForm from './ReviewCommentForm';
 
-export default function Comment({ review }) {
+export default function ReviewComment({ review }) {
   const [accessToken] = useLocalStorage('accessToken', '');
-  const commentStore = useCommentStore();
-  const commentFormStore = useCommentFormStore();
+  const reviewCommentStore = useReviewCommentStore();
+  const reviewCommentFormStore = useReviewCommentFormStore();
   const userStore = useUserStore();
 
   const { user } = userStore;
   const { id: userId } = user;
 
-  const { createCommentButtonOpened } = commentStore;
-  const commentNotDeleted = commentStore.isDeleted();
+  const { createCommentButtonOpened } = reviewCommentStore;
+  const commentNotDeleted = reviewCommentStore.isDeleted();
 
   const handleClickDeleteComment = async (comment) => {
-    await commentStore.delete(comment.id);
+    await reviewCommentStore.delete(comment.id);
 
-    commentStore.fetchComments();
+    reviewCommentStore.fetchComments();
   };
 
   const handleSubmitCreateComment = async (e) => {
     e.preventDefault();
 
-    commentFormStore.validate();
+    reviewCommentFormStore.validate();
 
-    if (commentFormStore.isValidateSuccessful) {
-      await commentStore.create(userId, review.id, commentFormStore.body);
-      commentFormStore.reset();
-      commentStore.changeCreateCommentButtonStatus();
+    if (reviewCommentFormStore.isValidateSuccessful) {
+      await reviewCommentStore.create(userId, review.id, reviewCommentFormStore.body);
+      reviewCommentFormStore.reset();
+      reviewCommentStore.changeCreateCommentButtonStatus();
 
-      commentStore.fetchComments();
+      reviewCommentStore.fetchComments();
     }
   };
 
@@ -81,7 +81,7 @@ export default function Comment({ review }) {
         </ul>
       ) : null}
       {createCommentButtonOpened && (
-        <CommentForm
+        <ReviewCommentForm
           onSubmit={handleSubmitCreateComment}
         />
       )}

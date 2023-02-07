@@ -9,21 +9,17 @@ const baseUrl = config.apiBaseUrl;
 const server = setupServer(
   rest.post(`${baseUrl}/users`, async (req, res, ctx) => {
     const {
-      email, nickname, password, gender, birthYear,
+      email, nickname, password,
     } = await req.json();
 
     if (email === 'jenna@gmail.com'
     && nickname === '전제나'
-    && password === 'Test123!'
-    && gender === '여성'
-    && birthYear === '1990') {
+    && password === 'Test123!') {
       return res(
         ctx.json({
           id: 1,
           email: 'jenna@gmail.com',
           nickname: '전제나',
-          gender: '여성',
-          birthYear: '1990',
         }),
       );
     }
@@ -64,8 +60,6 @@ const server = setupServer(
       accessToken: 'ACCESS.TOKEN',
       email: 'jenna@gmail.com',
       nickname: '전제나',
-      gender: '여성',
-      birthYear: '1990',
       profileImage: 'https://source.boringavatars.com/beam/120/?nickname=jenna',
     }),
   )),
@@ -111,24 +105,18 @@ const server = setupServer(
         id: 1,
         email: 'jenna@gmail.com',
         nickname: 'jenna',
-        gender: '여성',
-        birthYear: 1994,
         profileImage: 'https://source.boringavatars.com/beam/120/nickname=jenna',
       },
       {
         id: 2,
         email: 'boni@gmail.com',
         nickname: 'boni',
-        gender: '여성',
-        birthYear: 1995,
         profileImage: 'https://source.boringavatars.com/beam/120/nickname=boni',
       },
       {
         id: 3,
         email: 'zzezze@gmail.com',
         nickname: 'zzezze',
-        gender: '남성',
-        birthYear: 1998,
         profileImage: 'https://source.boringavatars.com/beam/120/nickname=zzezze',
       },
     ],
@@ -463,13 +451,13 @@ const server = setupServer(
     );
   }),
 
-  // Comments
-  rest.post(`${baseUrl}/comments`, async (req, res, ctx) => {
+  // ReviewComments
+  rest.post(`${baseUrl}/reviewComments`, async (req, res, ctx) => {
     const {
-      userId, postId, commentBody,
+      userId, postId, reviewCommentBody,
     } = await req.json();
 
-    if (userId && postId && commentBody) {
+    if (userId && postId && reviewCommentBody) {
       return res(ctx.json({
         id: 1,
       }));
@@ -480,9 +468,9 @@ const server = setupServer(
     );
   }),
 
-  rest.get(`${baseUrl}/comments`, async (req, res, ctx) => res(
+  rest.get(`${baseUrl}/reviewComments`, async (req, res, ctx) => res(
     ctx.json({
-      comments: [
+      reviewComments: [
         {
           id: 1,
           writer: {
@@ -491,7 +479,7 @@ const server = setupServer(
             profileImage: 'https://source.boringavatars.com/beam/120/nickname=jenna',
           },
           postId: 1,
-          commentBody: '오랜만에 힐링함',
+          reviewCommentBody: '오랜만에 힐링함',
           deleted: false,
           createdAt: '2022-01-01T17:57:23.929359',
           updatedAt: '2022-01-02T17:57:23.929359',
@@ -504,7 +492,7 @@ const server = setupServer(
             profileImage: 'https://source.boringavatars.com/beam/120/nickname=boni',
           },
           postId: 1,
-          commentBody: '동의합니다',
+          reviewCommentBody: '동의합니다',
           deleted: false,
           createdAt: '2022-01-01T17:57:23.929359',
           updatedAt: '2022-01-02T17:57:23.929359',
@@ -513,7 +501,7 @@ const server = setupServer(
     }),
   )),
 
-  rest.delete(`${baseUrl}/comments/1`, async (req, res, ctx) => {
+  rest.delete(`${baseUrl}/reviewComments/1`, async (req, res, ctx) => {
     const authorization = req.headers.get('Authorization');
 
     if (!authorization) {
@@ -699,7 +687,7 @@ const server = setupServer(
     }),
   )),
 
-  rest.get(`${baseUrl}/themes/topHit`, async (req, res, ctx) => res(
+  rest.get(`${baseUrl}/themes/top-rank`, async (req, res, ctx) => res(
     ctx.json({
       themes: [
         {
@@ -784,7 +772,7 @@ const server = setupServer(
             nickname: 'jenna',
             profileImage: 'https://source.boringavatars.com/beam/120/nickname=jenna',
           },
-          comments: [
+          postComments: [
             {
               id: 1,
               writer: {
@@ -793,7 +781,7 @@ const server = setupServer(
                 profileImage: 'https://source.boringavatars.com/beam/120/nickname=boni',
               },
               postId: 1,
-              commentBody: '댓글1',
+              postCommentBody: '댓글1',
               isDeleted: false,
               createdAt: '2022-01-01T17:57:23.929359',
               updatedAt: '2022-01-01T17:57:23.929359',
@@ -806,7 +794,7 @@ const server = setupServer(
                 profileImage: 'https://source.boringavatars.com/beam/120/nickname=zzezze',
               },
               postId: 1,
-              commentBody: '댓글2',
+              postCommentBody: '댓글2',
               isDeleted: false,
               createdAt: '2022-01-01T17:58:23.929359',
               updatedAt: '2022-01-01T17:58:23.929359',
@@ -827,7 +815,7 @@ const server = setupServer(
             nickname: 'boni',
             profileImage: 'https://source.boringavatars.com/beam/120/nickname=boni',
           },
-          comments: [
+          postComments: [
             {
               id: 1,
               writer: {
@@ -836,7 +824,7 @@ const server = setupServer(
                 profileImage: 'https://source.boringavatars.com/beam/120/nickname=jenna',
               },
               postId: 2,
-              commentBody: '댓글1',
+              postCommentBody: '댓글1',
               isDeleted: false,
               createdAt: '2022-01-01T17:57:23.929359',
               updatedAt: '2022-01-01T17:57:23.929359',
@@ -849,7 +837,7 @@ const server = setupServer(
                 profileImage: 'https://source.boringavatars.com/beam/120/nickname=zzezze',
               },
               postId: 2,
-              commentBody: '댓글2',
+              postCommentBody: '댓글2',
               isDeleted: false,
               createdAt: '2022-01-01T17:58:23.929359',
               updatedAt: '2022-01-01T17:58:23.929359',
@@ -879,7 +867,7 @@ const server = setupServer(
         nickname: 'jenna',
         profileImage: 'https://source.boringavatars.com/beam/120/nickname=jenna',
       },
-      comments: [
+      postComments: [
         {
           id: 1,
           writer: {
@@ -888,7 +876,7 @@ const server = setupServer(
             profileImage: 'https://source.boringavatars.com/beam/120/nickname=boni',
           },
           postId: 1,
-          commentBody: '댓글1',
+          postCommentBody: '댓글1',
           isDeleted: false,
           createdAt: '2022-01-01T17:57:23.929359',
           updatedAt: '2022-01-01T17:57:23.929359',
@@ -901,7 +889,7 @@ const server = setupServer(
             profileImage: 'https://source.boringavatars.com/beam/120/nickname=zzezze',
           },
           postId: 1,
-          commentBody: '댓글2',
+          postCommentBody: '댓글2',
           isDeleted: false,
           createdAt: '2022-01-01T17:58:23.929359',
           updatedAt: '2022-01-01T17:58:23.929359',
@@ -926,7 +914,7 @@ const server = setupServer(
           nickname: 'jenna',
           profileImage: 'https://source.boringavatars.com/beam/120/nickname=jenna',
         },
-        comments: [
+        postComments: [
           {
             id: 1,
             writer: {
@@ -935,7 +923,7 @@ const server = setupServer(
               profileImage: 'https://source.boringavatars.com/beam/120/nickname=boni',
             },
             postId: 1,
-            commentBody: '댓글1',
+            postCommentBody: '댓글1',
             isDeleted: false,
             createdAt: '2022-01-01T17:57:23.929359',
             updatedAt: '2022-01-01T17:57:23.929359',
@@ -948,7 +936,7 @@ const server = setupServer(
               profileImage: 'https://source.boringavatars.com/beam/120/nickname=zzezze',
             },
             postId: 1,
-            commentBody: '댓글2',
+            postCommentBody: '댓글2',
             isDeleted: false,
             createdAt: '2022-01-01T17:58:23.929359',
             updatedAt: '2022-01-01T17:58:23.929359',
@@ -969,7 +957,7 @@ const server = setupServer(
           nickname: 'jenna',
           profileImage: 'https://source.boringavatars.com/beam/120/nickname=jenna',
         },
-        comments: [],
+        postComments: [],
         title: '영화 추천좀',
         postBody: '요즘 뭐 볼게 없네요',
         hit: 1,
@@ -981,7 +969,7 @@ const server = setupServer(
     ],
   }))),
 
-  rest.get(`${baseUrl}/posts/topHit`, async (req, res, ctx) => res(
+  rest.get(`${baseUrl}/posts/top-rank`, async (req, res, ctx) => res(
     ctx.json({
       posts: [
         {
@@ -991,7 +979,7 @@ const server = setupServer(
             nickname: 'jenna',
             profileImage: 'https://source.boringavatars.com/beam/120/nickname=jenna',
           },
-          comments: [
+          postComments: [
             {
               id: 1,
               writer: {
@@ -1000,7 +988,7 @@ const server = setupServer(
                 profileImage: 'https://source.boringavatars.com/beam/120/nickname=boni',
               },
               postId: 1,
-              commentBody: '댓글1',
+              postCommentBody: '댓글1',
               isDeleted: false,
               createdAt: '2022-01-01T17:57:23.929359',
               updatedAt: '2022-01-01T17:57:23.929359',
@@ -1013,7 +1001,7 @@ const server = setupServer(
                 profileImage: 'https://source.boringavatars.com/beam/120/nickname=zzezze',
               },
               postId: 1,
-              commentBody: '댓글2',
+              postCommentBody: '댓글2',
               isDeleted: false,
               createdAt: '2022-01-01T17:58:23.929359',
               updatedAt: '2022-01-01T17:58:23.929359',
@@ -1034,7 +1022,7 @@ const server = setupServer(
             nickname: 'boni',
             profileImage: 'https://source.boringavatars.com/beam/120/nickname=boni',
           },
-          comments: [
+          postComments: [
             {
               id: 1,
               writer: {
@@ -1043,7 +1031,7 @@ const server = setupServer(
                 profileImage: 'https://source.boringavatars.com/beam/120/nickname=jenna',
               },
               postId: 2,
-              commentBody: '댓글1',
+              postCommentBody: '댓글1',
               isDeleted: false,
               createdAt: '2022-01-01T17:57:23.929359',
               updatedAt: '2022-01-01T17:57:23.929359',
@@ -1056,7 +1044,7 @@ const server = setupServer(
                 profileImage: 'https://source.boringavatars.com/beam/120/nickname=zzezze',
               },
               postId: 2,
-              commentBody: '댓글2',
+              postCommentBody: '댓글2',
               isDeleted: false,
               createdAt: '2022-01-01T17:58:23.929359',
               updatedAt: '2022-01-01T17:58:23.929359',
@@ -1077,7 +1065,7 @@ const server = setupServer(
             nickname: 'boni',
             profileImage: 'https://source.boringavatars.com/beam/120/nickname=boni',
           },
-          comments: [
+          postComments: [
             {
               id: 1,
               writer: {
@@ -1086,7 +1074,7 @@ const server = setupServer(
                 profileImage: 'https://source.boringavatars.com/beam/120/nickname=jenna',
               },
               postId: 2,
-              commentBody: '댓글1',
+              postCommentBody: '댓글1',
               isDeleted: false,
               createdAt: '2022-01-01T17:57:23.929359',
               updatedAt: '2022-01-01T17:57:23.929359',
@@ -1099,7 +1087,7 @@ const server = setupServer(
                 profileImage: 'https://source.boringavatars.com/beam/120/nickname=zzezze',
               },
               postId: 2,
-              commentBody: '댓글2',
+              postCommentBody: '댓글2',
               isDeleted: false,
               createdAt: '2022-01-01T17:58:23.929359',
               updatedAt: '2022-01-01T17:58:23.929359',
@@ -1117,13 +1105,7 @@ const server = setupServer(
     }),
   )),
 
-  rest.patch(`${baseUrl}/posts/1/updateHit`, async (req, res, ctx) => res(
-    ctx.json({
-      id: 1,
-    }),
-  )),
-
-  rest.patch(`${baseUrl}/posts/1/modify`, async (req, res, ctx) => {
+  rest.patch(`${baseUrl}/posts/1`, async (req, res, ctx) => {
     const {
       postId, title, postBody, image,
     } = await req.json();
@@ -1139,6 +1121,12 @@ const server = setupServer(
     );
   }),
 
+  rest.patch(`${baseUrl}/posts/hit/1`, async (req, res, ctx) => res(
+    ctx.json({
+      id: 1,
+    }),
+  )),
+
   rest.delete(`${baseUrl}/posts/1`, async (req, res, ctx) => {
     const authorization = req.headers.get('Authorization');
 
@@ -1149,26 +1137,6 @@ const server = setupServer(
     }
 
     return res();
-  }),
-
-  rest.delete(`${baseUrl}/posts`, async (req, res, ctx) => {
-    const { postIds } = await req.json();
-
-    if (!postIds.length) {
-      return res(
-        ctx.status(400),
-      );
-    }
-
-    return res();
-  }),
-
-  rest.post(`${baseUrl}/posts/upload`, async (req, res, ctx) => {
-    const { imageUrl } = await req.json();
-
-    return res(ctx.json({
-      imageUrl: 'imageUrl',
-    }));
   }),
 );
 

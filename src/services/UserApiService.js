@@ -25,10 +25,10 @@ export default class UserApiService {
   }
 
   async createUser({
-    email, nickname, password, gender, birthYear,
+    email, nickname, password,
   }) {
     const { data } = await this.instance.post('/users', {
-      email, nickname, password, gender, birthYear,
+      email, nickname, password,
     });
 
     return data;

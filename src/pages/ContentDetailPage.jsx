@@ -3,7 +3,7 @@ import { useLocation, useSearchParams } from 'react-router-dom';
 import { useLocalStorage } from 'usehooks-ts';
 import ContentDetail from '../components/content/ContentDetail';
 import useArticleStore from '../hooks/useArticleStore';
-import useCommentStore from '../hooks/useCommentStore';
+import useReviewCommentStore from '../hooks/useReviewCommentStore';
 import useContentStore from '../hooks/useContentStore';
 import useReviewStore from '../hooks/useReviewStore';
 import useUserStore from '../hooks/useUserStore';
@@ -13,7 +13,7 @@ export default function ContentsDetailPage() {
   const contentStore = useContentStore();
   const reviewStore = useReviewStore();
   const userStore = useUserStore();
-  const commentStore = useCommentStore();
+  const reviewCommentStore = useReviewCommentStore();
   const articleStore = useArticleStore();
 
   const [searchParams] = useSearchParams();
@@ -40,16 +40,10 @@ export default function ContentsDetailPage() {
   }, [page]);
 
   useEffect(() => {
-    if (accessToken === '') {
-      commentStore.fetchCommentsWithNotLoggedIn();
-
-      return;
-    }
-
     userStore.fetchUsers();
     userStore.fetchMe();
     reviewStore.fetchMyReviews();
-    commentStore.fetchComments();
+    reviewCommentStore.fetchComments();
   }, []);
 
   return (
