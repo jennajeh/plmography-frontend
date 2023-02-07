@@ -1,7 +1,10 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
+import { useSearchParams } from 'react-router-dom';
 import usePostStore from '../hooks/usePostStore';
+import usePostCommentStore from '../hooks/usePostCommentStore';
 import useUserStore from '../hooks/useUserStore';
+import TopRankPosts from '../components/community/TopRankPosts';
 
 const Container = styled.div`
   min-height: calc(100vh - env(safe-area-inset-bottom) - 56px);
@@ -11,28 +14,27 @@ const Container = styled.div`
   overflow: hidden;
 `;
 
-const Title = styled.h1`
-  display: flex;
-  font-size: ${((props) => props.theme.size.h4)};
-  font-weight: bold;
-  margin-top: 1em;
-`;
-
 export default function CommunityPage() {
   const postStore = usePostStore();
+  const postCommentStore = usePostCommentStore();
   const userStore = useUserStore();
+  const [searchParams] = useSearchParams();
+
+  const page = searchParams.get('page') ?? 1;
 
   useEffect(() => {
+    userStore.fetchMe();
+    userStore.fetchUsers();
     postStore.fetchHitPosts();
     postStore.fetchMyPosts();
-    userStore.fetchUsers();
-    userStore.fetchMe();
-    // 코멘트 스토어
+    postCommentStore.fetchMyComments();
   }, []);
 
   return (
     <Container>
-      <Title>인기글 🔥</Title>
+      <TopRankPosts />
+      {/* <Posts /> */}
+      {/* <MyPostInformation /> */}
     </Container>
   );
 }
