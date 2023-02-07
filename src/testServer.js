@@ -451,7 +451,7 @@ const server = setupServer(
     );
   }),
 
-  // ReviewComments
+  // ReviewComment
   rest.post(`${baseUrl}/reviewComments`, async (req, res, ctx) => {
     const {
       userId, postId, reviewCommentBody,
@@ -678,12 +678,6 @@ const server = setupServer(
       pages: {
         totalPages: 1,
       },
-    }),
-  )),
-
-  rest.patch(`${baseUrl}/themes/1`, async (req, res, ctx) => res(
-    ctx.json({
-      id: 1,
     }),
   )),
 
@@ -1121,13 +1115,122 @@ const server = setupServer(
     );
   }),
 
-  rest.patch(`${baseUrl}/posts/hit/1`, async (req, res, ctx) => res(
+  rest.delete(`${baseUrl}/posts/1`, async (req, res, ctx) => {
+    const authorization = req.headers.get('Authorization');
+
+    if (!authorization) {
+      return res(
+        ctx.status(400),
+      );
+    }
+
+    return res();
+  }),
+
+  // PostComment
+  rest.post(`${baseUrl}/postComments`, async (req, res, ctx) => {
+    const {
+      postId, postCommentBody,
+    } = await req.json();
+
+    if (postId && postCommentBody) {
+      return res(ctx.json({
+        id: 1,
+      }));
+    }
+
+    return res(
+      ctx.status(400),
+    );
+  }),
+
+  rest.get(`${baseUrl}/posts/1/postComments`, async (req, res, ctx) => res(
     ctx.json({
-      id: 1,
+      postComments: [
+        {
+          id: 1,
+          writer: {
+            id: 1,
+            nickname: 'jenna',
+            profileImage: 'https://source.boringavatars.com/beam/120/nickname=jenna',
+          },
+          postId: 1,
+          postCommentBody: '잘 보고 오셨네요',
+          isDeleted: false,
+          createdAt: '2022-01-01T17:57:23.929359',
+          updatedAt: '2022-01-01T17:57:23.929359',
+        },
+        {
+          id: 2,
+          writer: {
+            id: 1,
+            nickname: 'jenna',
+            profileImage: 'https://source.boringavatars.com/beam/120/nickname=jenna',
+          },
+          postId: 2,
+          postCommentBody: '두 번째 댓글',
+          isDeleted: false,
+          createdAt: '2022-01-01T17:57:23.929359',
+          updatedAt: '2022-01-01T17:57:23.929359',
+        },
+      ],
+
+      pages: {
+        totalPages: 1,
+      },
     }),
   )),
 
-  rest.delete(`${baseUrl}/posts/1`, async (req, res, ctx) => {
+  rest.get(`${baseUrl}/postComments/me`, async (req, res, ctx) => res(
+    ctx.json({
+      myPostComments: [
+        {
+          id: 1,
+          writer: {
+            id: 1,
+            nickname: 'jenna',
+            profileImage: 'https://source.boringavatars.com/beam/120/nickname=jenna',
+          },
+          postId: 1,
+          postCommentBody: '잘 보고 오셨네요',
+          isDeleted: false,
+          createdAt: '2022-01-01T17:57:23.929359',
+          updatedAt: '2022-01-01T17:57:23.929359',
+        },
+        {
+          id: 2,
+          writer: {
+            id: 1,
+            nickname: 'jenna',
+            profileImage: 'https://source.boringavatars.com/beam/120/nickname=jenna',
+          },
+          postId: 2,
+          postCommentBody: '두 번째 댓글',
+          isDeleted: false,
+          createdAt: '2022-01-01T17:57:23.929359',
+          updatedAt: '2022-01-01T17:57:23.929359',
+        },
+      ],
+    }),
+  )),
+
+  rest.patch(`${baseUrl}/postComments/1`, async (req, res, ctx) => {
+    const {
+      commentId, postCommentBody,
+    } = await req.json();
+
+    if (commentId && postCommentBody.length) {
+      return res(ctx.json({
+        id: 1,
+      }));
+    }
+
+    return res(
+      ctx.status(400),
+    );
+  }),
+
+  rest.delete(`${baseUrl}/postComments/1`, async (req, res, ctx) => {
     const authorization = req.headers.get('Authorization');
 
     if (!authorization) {

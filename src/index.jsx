@@ -4,6 +4,7 @@ import App from './App';
 
 import { contentApiService } from './services/ContentApiService';
 import { postApiService } from './services/PostApiService';
+import { postCommentApiService } from './services/PostCommentApiService';
 import { reviewApiService } from './services/ReviewApiService';
 import { reviewCommentApiService } from './services/ReviewCommentApiService';
 import { subscribeApiService } from './services/SubscribeApiService';
@@ -23,6 +24,7 @@ reviewCommentApiService.setAccessToken(accessToken);
 subscribeApiService.setAccessToken(accessToken);
 themeApiService.setAccessToken(accessToken);
 postApiService.setAccessToken(accessToken);
+postCommentApiService.setAccessToken(accessToken);
 
 root.render((
   <BrowserRouter>

@@ -2,7 +2,7 @@ import ReviewCommentFormStore from './ReviewCommentFormStore';
 
 const context = describe;
 
-describe('ReviewEditFormStore', () => {
+describe('ReviewCommentFormStore', () => {
   let reviewCommentFormStore;
 
   beforeEach(() => {

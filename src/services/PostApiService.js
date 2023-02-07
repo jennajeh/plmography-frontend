@@ -87,12 +87,6 @@ export default class PostApiService {
     return { myPosts };
   }
 
-  async updateHit(postId) {
-    const { data } = await this.instance.patch(`/posts/hit/${postId}`);
-
-    return { id: data.id };
-  }
-
   async modifyPost(postId, title, postBody, image) {
     const { data } = await this.instance.patch(`/posts/${postId}`, {
       postId, title, postBody, image,

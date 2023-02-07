@@ -44,28 +44,6 @@ describe('PostStore', () => {
     });
   });
 
-  describe('updateHit', () => {
-    context('조회수 증가에 성공한 경우', () => {
-      it('updateHitStatus 가 successful 로 바뀐다', async () => {
-        const postId = 1;
-
-        await postStore.updateHit(postId);
-
-        expect(postStore.isUpdateHitSuccessful).toBeTruthy();
-      });
-    });
-
-    context('조회수 증가에 실패한 경우', () => {
-      it('updateHitStatus 가 failed 로 바뀐다', async () => {
-        const postId = '';
-
-        await postStore.updateHit(postId);
-
-        expect(postStore.isUpdateHitFailed).toBeTruthy();
-      });
-    });
-  });
-
   describe('fetchMyPosts', () => {
     it('내가 쓴 게시물 목록을 출력한다', async () => {
       await postStore.fetchMyPosts();

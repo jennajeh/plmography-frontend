@@ -3,7 +3,7 @@ import ReviewCommentStore from './ReviewCommentStore';
 
 const context = describe;
 
-describe('ReviewCommentFormStore', () => {
+describe('ReviewCommentStore', () => {
   let reviewCommentStore;
 
   beforeEach(() => {
@@ -46,7 +46,7 @@ describe('ReviewCommentFormStore', () => {
   });
 
   describe('fetchComments', () => {
-    it('리뷰 목록을 출력한다', async () => {
+    it('댓글 목록을 출력한다', async () => {
       await reviewCommentStore.fetchComments();
 
       expect(reviewCommentStore.comments).toHaveLength(2);

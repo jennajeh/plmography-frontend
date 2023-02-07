@@ -10,9 +10,7 @@ export default class PostStore extends Store {
     this.myPosts = [];
     this.hitPosts = [];
     this.post = {};
-
     this.image = '';
-    this.hit = 0;
 
     this.isPostsLoading = false;
     this.isMyPostsLoading = false;
@@ -22,7 +20,6 @@ export default class PostStore extends Store {
     this.createStatus = '';
     this.modifyStatus = '';
     this.deleteStatus = '';
-    this.updateHitStatus = '';
 
     this.totalPages = 0;
   }
@@ -32,8 +29,7 @@ export default class PostStore extends Store {
     this.myPosts = [];
     this.hitPosts = [];
     this.post = {};
-
-    this.hit = 0;
+    this.image = '';
 
     this.isPostsLoading = false;
     this.isMyPostsLoading = false;
@@ -43,7 +39,6 @@ export default class PostStore extends Store {
     this.createStatus = '';
     this.modifyStatus = '';
     this.deleteStatus = '';
-    this.updateHitStatus = '';
 
     this.totalPages = 0;
   }
@@ -157,24 +152,6 @@ export default class PostStore extends Store {
     this.image = data.image;
 
     this.publish();
-  }
-
-  async updateHit(postId) {
-    this.startUpdateHit();
-
-    try {
-      await postApiService.updateHit(postId);
-
-      this.hit += 1;
-
-      this.completeUpdateHit();
-
-      this.publish();
-    } catch (e) {
-      this.failUpdateHit();
-
-      this.publish();
-    }
   }
 
   isMyPosts(userId) {
@@ -299,18 +276,6 @@ export default class PostStore extends Store {
     this.deleteStatus = 'failed';
   }
 
-  startUpdateHit() {
-    this.updateHitStatus = 'processing';
-  }
-
-  completeUpdateHit() {
-    this.updateHitStatus = 'successful';
-  }
-
-  failUpdateHit() {
-    this.updateHitStatus = 'failed';
-  }
-
   get isCreateSuccessful() {
     return this.createStatus === 'successful';
   }
@@ -333,14 +298,6 @@ export default class PostStore extends Store {
 
   get isDeleteFailed() {
     return this.deleteStatus === 'failed';
-  }
-
-  get isUpdateHitSuccessful() {
-    return this.updateHitStatus === 'successful';
-  }
-
-  get isUpdateHitFailed() {
-    return this.updateHitStatus === 'failed';
   }
 }
 

@@ -39,12 +39,6 @@ export default class ThemeApiService {
 
     return { themes };
   }
-
-  async updateHit(themeId) {
-    const { data } = await this.instance.patch(`/themes/${themeId}`);
-
-    return { id: data.id };
-  }
 }
 
 export const themeApiService = new ThemeApiService();

@@ -10,6 +10,7 @@ import { postApiService } from './services/PostApiService';
 import { reviewCommentApiService } from './services/ReviewCommentApiService';
 import { subscribeApiService } from './services/SubscribeApiService';
 import { themeApiService } from './services/ThemeApiService';
+import { postCommentApiService } from './services/PostCommentApiService';
 
 import defaultTheme from './styles/defaultTheme';
 
@@ -55,6 +56,7 @@ export default function App() {
     subscribeApiService.setAccessToken(accessToken);
     themeApiService.setAccessToken(accessToken);
     postApiService.setAccessToken(accessToken);
+    postCommentApiService.setAccessToken(accessToken);
   }, [accessToken]);
 
   return (
