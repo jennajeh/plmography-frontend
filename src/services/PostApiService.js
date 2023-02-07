@@ -105,9 +105,11 @@ export default class PostApiService {
   }
 
   async deletePosts(checkedPosts) {
-    const postIds = [...checkedPosts];
-
-    await this.instance.delete('/posts', { data: postIds });
+    await this.instance.delete('/posts', {
+      data: {
+        postIds: checkedPosts,
+      },
+    });
   }
 
   async upload(formData) {
