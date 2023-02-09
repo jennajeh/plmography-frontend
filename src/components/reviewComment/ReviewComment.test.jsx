@@ -3,21 +3,21 @@ import {
 } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import { commentStore } from '../../stores/CommentStore';
+import { reviewCommentStore } from '../../stores/ReviewCommentStore';
 import defaultTheme from '../../styles/defaultTheme';
-import Comment from './Comment';
+import ReviewComment from './ReviewComment';
 
 let review;
 const context = describe;
 
 describe('ContentsList', () => {
-  commentStore.fetchComments();
+  reviewCommentStore.fetchComments();
 
-  function renderComment() {
+  function renderReviewComment() {
     render((
       <ThemeProvider theme={defaultTheme}>
         <MemoryRouter>
-          <Comment review={review} />
+          <ReviewComment review={review} />
         </MemoryRouter>
       </ThemeProvider>
     ));
@@ -25,7 +25,7 @@ describe('ContentsList', () => {
 
   context('댓글이 존재할 때', () => {
     it('댓글 목록 출력', async () => {
-      renderComment();
+      renderReviewComment();
 
       await waitFor(() => {
         screen.findByText(/동의합니다/);

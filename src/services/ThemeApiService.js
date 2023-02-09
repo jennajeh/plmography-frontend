@@ -33,17 +33,11 @@ export default class ThemeApiService {
   }
 
   async fetchHitThemes() {
-    const { data } = await this.instance.get('/themes/topHit');
+    const { data } = await this.instance.get('/themes/top-rank');
 
     const { themes } = data;
 
     return { themes };
-  }
-
-  async updateHit(themeId) {
-    const { data } = await this.instance.patch(`/themes/${themeId}`);
-
-    return { id: data.id };
   }
 }
 

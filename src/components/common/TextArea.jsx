@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 const StyledTextArea = styled.textarea`
   width: 100%;
+  height: 30em;
   padding: 1.5em;
   border: ${(props) => (`1px solid${props.error ? '#FF424D' : '#D8D8D8'}`)};
   color: ${((props) => props.theme.text.gray)};
@@ -36,7 +37,7 @@ const Error = styled.p`
 `;
 
 export default function TextArea({
-  name, label, type, value, maxLength = '', onChange, message, errorMessage, required = false,
+  name, label, type, placeholder, value, maxLength = '', onChange, message, errorMessage, required = false,
 }) {
   return (
     <>
@@ -58,6 +59,7 @@ export default function TextArea({
         error={errorMessage}
         maxLength={maxLength}
         onChange={onChange}
+        placeholder={placeholder}
       />
       {errorMessage
         ? <Error>{errorMessage}</Error>

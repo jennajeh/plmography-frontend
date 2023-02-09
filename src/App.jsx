@@ -6,7 +6,11 @@ import { useEffect } from 'react';
 import { userApiService } from './services/UserApiService';
 import { contentApiService } from './services/ContentApiService';
 import { reviewApiService } from './services/ReviewApiService';
-import { commentApiService } from './services/CommentApiService';
+import { postApiService } from './services/PostApiService';
+import { reviewCommentApiService } from './services/ReviewCommentApiService';
+import { subscribeApiService } from './services/SubscribeApiService';
+import { themeApiService } from './services/ThemeApiService';
+import { postCommentApiService } from './services/PostCommentApiService';
 
 import defaultTheme from './styles/defaultTheme';
 
@@ -26,7 +30,6 @@ import GreetingPage from './pages/GreetingPage';
 import ReviewCreatePage from './pages/ReviewCreatePage';
 import ArticlesPage from './pages/ArticlesPage';
 import ArticleDetailPage from './pages/ArticleDetailPage';
-import { subscribeApiService } from './services/SubscribeApiService';
 import MyProfilePage from './pages/MyProfilePage';
 import MyProfileEditPage from './pages/MyProfileEditPage';
 import UserProfilePage from './pages/UserProfilePage';
@@ -34,9 +37,11 @@ import UserWishesPage from './pages/UserWishesPage';
 import UserWatchedPage from './pages/UserWatchedPage';
 import UserReviewsPage from './pages/UserReviewsPage';
 import ProfileSearchPage from './pages/ProfileSearchPage';
-import { themeApiService } from './services/ThemeApiService';
 import ThemesPage from './pages/ThemesPage';
 import ThemesDetailPage from './pages/ThemesDetailPage';
+import CommunityPostDetailPage from './pages/CommunityPostDetailPage';
+import PostCreatePage from './pages/PostCreatePage';
+import PostEditPage from './pages/PostEditPage';
 
 const Main = styled.main`
   height: calc(100vh - 64px);
@@ -50,9 +55,11 @@ export default function App() {
     userApiService.setAccessToken(accessToken);
     contentApiService.setAccessToken(accessToken);
     reviewApiService.setAccessToken(accessToken);
-    commentApiService.setAccessToken(accessToken);
+    reviewCommentApiService.setAccessToken(accessToken);
     subscribeApiService.setAccessToken(accessToken);
     themeApiService.setAccessToken(accessToken);
+    postApiService.setAccessToken(accessToken);
+    postCommentApiService.setAccessToken(accessToken);
   }, [accessToken]);
 
   return (
@@ -65,10 +72,11 @@ export default function App() {
           <Route path="/themes" element={<ThemesPage />} />
           <Route path="/themes/:id" element={<ThemesDetailPage />} />
           <Route path="/community" element={<CommunityPage />} />
-          {/* <Route path="/community/post/:id" element={<CommunityPostDetailPage />} /> */}
-          {/* <Route path="/community/history" element={<CommunityHistoryPage />} /> */}
+          <Route path="/community/posts/:id" element={<CommunityPostDetailPage />} />
+          <Route path="/community/posts/write" element={<PostCreatePage />} />
+          <Route path="/community/posts/:id/edit" element={<PostEditPage />} />
           <Route path="/contents/:id" element={<ContentDetailPage />} />
-          <Route path="/reviews/create" element={<ReviewCreatePage />} />
+          <Route path="/reviews/write" element={<ReviewCreatePage />} />
           <Route path="/reviews/:id/edit" element={<ReviewEditPage />} />
           <Route path="/explore" element={<ExplorePage />} />
           <Route path="/new-contents" element={<NewContentsPage />} />

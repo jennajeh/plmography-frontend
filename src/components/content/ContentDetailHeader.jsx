@@ -153,7 +153,7 @@ export default function ContentDetailHeader() {
       return;
     }
 
-    navigate('/reviews/create');
+    navigate('/reviews/write');
   };
 
   const handleClickWish = async () => {

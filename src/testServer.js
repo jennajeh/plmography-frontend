@@ -9,21 +9,17 @@ const baseUrl = config.apiBaseUrl;
 const server = setupServer(
   rest.post(`${baseUrl}/users`, async (req, res, ctx) => {
     const {
-      email, nickname, password, gender, birthYear,
+      email, nickname, password,
     } = await req.json();
 
     if (email === 'jenna@gmail.com'
     && nickname === '전제나'
-    && password === 'Test123!'
-    && gender === '여성'
-    && birthYear === '1990') {
+    && password === 'Test123!') {
       return res(
         ctx.json({
           id: 1,
           email: 'jenna@gmail.com',
           nickname: '전제나',
-          gender: '여성',
-          birthYear: '1990',
         }),
       );
     }
@@ -64,8 +60,6 @@ const server = setupServer(
       accessToken: 'ACCESS.TOKEN',
       email: 'jenna@gmail.com',
       nickname: '전제나',
-      gender: '여성',
-      birthYear: '1990',
       profileImage: 'https://source.boringavatars.com/beam/120/?nickname=jenna',
     }),
   )),
@@ -111,24 +105,18 @@ const server = setupServer(
         id: 1,
         email: 'jenna@gmail.com',
         nickname: 'jenna',
-        gender: '여성',
-        birthYear: 1994,
         profileImage: 'https://source.boringavatars.com/beam/120/nickname=jenna',
       },
       {
         id: 2,
         email: 'boni@gmail.com',
         nickname: 'boni',
-        gender: '여성',
-        birthYear: 1995,
         profileImage: 'https://source.boringavatars.com/beam/120/nickname=boni',
       },
       {
         id: 3,
         email: 'zzezze@gmail.com',
         nickname: 'zzezze',
-        gender: '남성',
-        birthYear: 1998,
         profileImage: 'https://source.boringavatars.com/beam/120/nickname=zzezze',
       },
     ],
@@ -463,13 +451,13 @@ const server = setupServer(
     );
   }),
 
-  // Comments
-  rest.post(`${baseUrl}/comments`, async (req, res, ctx) => {
+  // ReviewComment
+  rest.post(`${baseUrl}/reviewComments`, async (req, res, ctx) => {
     const {
-      userId, postId, commentBody,
+      userId, postId, reviewCommentBody,
     } = await req.json();
 
-    if (userId && postId && commentBody) {
+    if (userId && postId && reviewCommentBody) {
       return res(ctx.json({
         id: 1,
       }));
@@ -480,9 +468,9 @@ const server = setupServer(
     );
   }),
 
-  rest.get(`${baseUrl}/comments`, async (req, res, ctx) => res(
+  rest.get(`${baseUrl}/reviewComments`, async (req, res, ctx) => res(
     ctx.json({
-      comments: [
+      reviewComments: [
         {
           id: 1,
           writer: {
@@ -491,7 +479,7 @@ const server = setupServer(
             profileImage: 'https://source.boringavatars.com/beam/120/nickname=jenna',
           },
           postId: 1,
-          commentBody: '오랜만에 힐링함',
+          reviewCommentBody: '오랜만에 힐링함',
           deleted: false,
           createdAt: '2022-01-01T17:57:23.929359',
           updatedAt: '2022-01-02T17:57:23.929359',
@@ -504,7 +492,7 @@ const server = setupServer(
             profileImage: 'https://source.boringavatars.com/beam/120/nickname=boni',
           },
           postId: 1,
-          commentBody: '동의합니다',
+          reviewCommentBody: '동의합니다',
           deleted: false,
           createdAt: '2022-01-01T17:57:23.929359',
           updatedAt: '2022-01-02T17:57:23.929359',
@@ -513,7 +501,7 @@ const server = setupServer(
     }),
   )),
 
-  rest.delete(`${baseUrl}/comments/1`, async (req, res, ctx) => {
+  rest.delete(`${baseUrl}/reviewComments/1`, async (req, res, ctx) => {
     const authorization = req.headers.get('Authorization');
 
     if (!authorization) {
@@ -693,13 +681,7 @@ const server = setupServer(
     }),
   )),
 
-  rest.patch(`${baseUrl}/themes/1`, async (req, res, ctx) => res(
-    ctx.json({
-      id: 1,
-    }),
-  )),
-
-  rest.get(`${baseUrl}/themes/topHit`, async (req, res, ctx) => res(
+  rest.get(`${baseUrl}/themes/top-rank`, async (req, res, ctx) => res(
     ctx.json({
       themes: [
         {
@@ -720,6 +702,529 @@ const server = setupServer(
       ],
     }),
   )),
+
+  // Like
+  rest.get(`${baseUrl}/likes`, async (req, res, ctx) => res(ctx.json({
+    likes: [
+      {
+        id: 1,
+        postId: 10,
+        userId: 1,
+      },
+    ],
+  }))),
+
+  rest.post(`${baseUrl}/likes`, async (req, res, ctx) => {
+    const { postId, userId } = await req.json();
+
+    if (!postId || !userId) {
+      return res(
+        ctx.status(400),
+      );
+    }
+
+    return res();
+  }),
+
+  rest.delete(`${baseUrl}/likes`, async (req, res, ctx) => {
+    const { likeId } = await req.json();
+
+    if (!likeId.length) {
+      return res(
+        ctx.status(400),
+      );
+    }
+
+    return res();
+  }),
+
+  // Post
+  rest.post(`${baseUrl}/posts`, async (req, res, ctx) => {
+    const {
+      title, postBody, image,
+    } = await req.json();
+
+    if (title.length && postBody.length) {
+      return res(ctx.json({
+        id: 1,
+        isDeleted: false,
+      }));
+    }
+
+    return res(
+      ctx.status(400),
+    );
+  }),
+
+  rest.get(`${baseUrl}/posts/filter`, async (req, res, ctx) => res(
+    ctx.json({
+      posts: [
+        {
+          id: 1,
+          writer: {
+            id: 1,
+            nickname: 'jenna',
+            profileImage: 'https://source.boringavatars.com/beam/120/nickname=jenna',
+          },
+          postComments: [
+            {
+              id: 1,
+              writer: {
+                id: 2,
+                nickname: 'boni',
+                profileImage: 'https://source.boringavatars.com/beam/120/nickname=boni',
+              },
+              postId: 1,
+              postCommentBody: '댓글1',
+              isDeleted: false,
+              createdAt: '2022-01-01T17:57:23.929359',
+              updatedAt: '2022-01-01T17:57:23.929359',
+            },
+            {
+              id: 2,
+              writer: {
+                id: 3,
+                nickname: 'zzezze',
+                profileImage: 'https://source.boringavatars.com/beam/120/nickname=zzezze',
+              },
+              postId: 1,
+              postCommentBody: '댓글2',
+              isDeleted: false,
+              createdAt: '2022-01-01T17:58:23.929359',
+              updatedAt: '2022-01-01T17:58:23.929359',
+            },
+          ],
+          title: '아바타 보고 왔습니다.',
+          postBody: '영상미 대박이예요',
+          hit: 1,
+          image: 'image.jpg',
+          isDeleted: false,
+          createdAt: '2022-01-01T17:57:23.929359',
+          updatedAt: '2022-01-01T17:57:23.929359',
+        },
+        {
+          id: 2,
+          writer: {
+            id: 3,
+            nickname: 'boni',
+            profileImage: 'https://source.boringavatars.com/beam/120/nickname=boni',
+          },
+          postComments: [
+            {
+              id: 1,
+              writer: {
+                id: 1,
+                nickname: 'jenna',
+                profileImage: 'https://source.boringavatars.com/beam/120/nickname=jenna',
+              },
+              postId: 2,
+              postCommentBody: '댓글1',
+              isDeleted: false,
+              createdAt: '2022-01-01T17:57:23.929359',
+              updatedAt: '2022-01-01T17:57:23.929359',
+            },
+            {
+              id: 2,
+              writer: {
+                id: 3,
+                nickname: 'zzezze',
+                profileImage: 'https://source.boringavatars.com/beam/120/nickname=zzezze',
+              },
+              postId: 2,
+              postCommentBody: '댓글2',
+              isDeleted: false,
+              createdAt: '2022-01-01T17:58:23.929359',
+              updatedAt: '2022-01-01T17:58:23.929359',
+            },
+          ],
+          title: '더글로리 꼭 보세요',
+          postBody: '요즘 어딜가나 더 글로리 얘기만 하는 듯',
+          hit: 1,
+          image: 'image.jpg',
+          isDeleted: false,
+          createdAt: '2022-01-01T17:57:23.929359',
+          updatedAt: '2022-01-01T17:57:23.929359',
+        },
+      ],
+
+      pages: {
+        totalPages: 1,
+      },
+    }),
+  )),
+
+  rest.get(`${baseUrl}/posts/1`, async (req, res, ctx) => res(
+    ctx.json({
+      id: 1,
+      writer: {
+        id: 1,
+        nickname: 'jenna',
+        profileImage: 'https://source.boringavatars.com/beam/120/nickname=jenna',
+      },
+      postComments: [
+        {
+          id: 1,
+          writer: {
+            id: 2,
+            nickname: 'boni',
+            profileImage: 'https://source.boringavatars.com/beam/120/nickname=boni',
+          },
+          postId: 1,
+          postCommentBody: '댓글1',
+          isDeleted: false,
+          createdAt: '2022-01-01T17:57:23.929359',
+          updatedAt: '2022-01-01T17:57:23.929359',
+        },
+        {
+          id: 2,
+          writer: {
+            id: 3,
+            nickname: 'zzezze',
+            profileImage: 'https://source.boringavatars.com/beam/120/nickname=zzezze',
+          },
+          postId: 1,
+          postCommentBody: '댓글2',
+          isDeleted: false,
+          createdAt: '2022-01-01T17:58:23.929359',
+          updatedAt: '2022-01-01T17:58:23.929359',
+        },
+      ],
+      title: '아바타 보고 왔습니다.',
+      postBody: '영상미 대박이예요',
+      hit: 1,
+      image: 'image.jpg',
+      isDeleted: false,
+      createdAt: '2022-01-01T17:57:23.929359',
+      updatedAt: '2022-01-01T17:57:23.929359',
+    }),
+  )),
+
+  rest.get(`${baseUrl}/posts/me`, async (req, res, ctx) => res(ctx.json({
+    myPosts: [
+      {
+        id: 1,
+        writer: {
+          id: 1,
+          nickname: 'jenna',
+          profileImage: 'https://source.boringavatars.com/beam/120/nickname=jenna',
+        },
+        postComments: [
+          {
+            id: 1,
+            writer: {
+              id: 2,
+              nickname: 'boni',
+              profileImage: 'https://source.boringavatars.com/beam/120/nickname=boni',
+            },
+            postId: 1,
+            postCommentBody: '댓글1',
+            isDeleted: false,
+            createdAt: '2022-01-01T17:57:23.929359',
+            updatedAt: '2022-01-01T17:57:23.929359',
+          },
+          {
+            id: 2,
+            writer: {
+              id: 3,
+              nickname: 'zzezze',
+              profileImage: 'https://source.boringavatars.com/beam/120/nickname=zzezze',
+            },
+            postId: 1,
+            postCommentBody: '댓글2',
+            isDeleted: false,
+            createdAt: '2022-01-01T17:58:23.929359',
+            updatedAt: '2022-01-01T17:58:23.929359',
+          },
+        ],
+        title: '아바타 보고 왔습니다.',
+        postBody: '영상미 대박이예요',
+        hit: 1,
+        image: 'image.jpg',
+        isDeleted: false,
+        createdAt: '2022-01-01T17:57:23.929359',
+        updatedAt: '2022-01-01T17:57:23.929359',
+      },
+      {
+        id: 3,
+        writer: {
+          id: 1,
+          nickname: 'jenna',
+          profileImage: 'https://source.boringavatars.com/beam/120/nickname=jenna',
+        },
+        postComments: [],
+        title: '영화 추천좀',
+        postBody: '요즘 뭐 볼게 없네요',
+        hit: 1,
+        image: 'image.jpg',
+        isDeleted: false,
+        createdAt: '2022-01-01T17:57:23.929359',
+        updatedAt: '2022-01-01T17:57:23.929359',
+      },
+    ],
+  }))),
+
+  rest.get(`${baseUrl}/posts/top-rank`, async (req, res, ctx) => res(
+    ctx.json({
+      posts: [
+        {
+          id: 1,
+          writer: {
+            id: 1,
+            nickname: 'jenna',
+            profileImage: 'https://source.boringavatars.com/beam/120/nickname=jenna',
+          },
+          postComments: [
+            {
+              id: 1,
+              writer: {
+                id: 2,
+                nickname: 'boni',
+                profileImage: 'https://source.boringavatars.com/beam/120/nickname=boni',
+              },
+              postId: 1,
+              postCommentBody: '댓글1',
+              isDeleted: false,
+              createdAt: '2022-01-01T17:57:23.929359',
+              updatedAt: '2022-01-01T17:57:23.929359',
+            },
+            {
+              id: 2,
+              writer: {
+                id: 3,
+                nickname: 'zzezze',
+                profileImage: 'https://source.boringavatars.com/beam/120/nickname=zzezze',
+              },
+              postId: 1,
+              postCommentBody: '댓글2',
+              isDeleted: false,
+              createdAt: '2022-01-01T17:58:23.929359',
+              updatedAt: '2022-01-01T17:58:23.929359',
+            },
+          ],
+          title: '아바타 보고 왔습니다.',
+          postBody: '영상미 대박이예요',
+          hit: 10,
+          image: 'image.jpg',
+          isDeleted: false,
+          createdAt: '2022-01-01T17:57:23.929359',
+          updatedAt: '2022-01-01T17:57:23.929359',
+        },
+        {
+          id: 2,
+          writer: {
+            id: 3,
+            nickname: 'boni',
+            profileImage: 'https://source.boringavatars.com/beam/120/nickname=boni',
+          },
+          postComments: [
+            {
+              id: 1,
+              writer: {
+                id: 1,
+                nickname: 'jenna',
+                profileImage: 'https://source.boringavatars.com/beam/120/nickname=jenna',
+              },
+              postId: 2,
+              postCommentBody: '댓글1',
+              isDeleted: false,
+              createdAt: '2022-01-01T17:57:23.929359',
+              updatedAt: '2022-01-01T17:57:23.929359',
+            },
+            {
+              id: 2,
+              writer: {
+                id: 3,
+                nickname: 'zzezze',
+                profileImage: 'https://source.boringavatars.com/beam/120/nickname=zzezze',
+              },
+              postId: 2,
+              postCommentBody: '댓글2',
+              isDeleted: false,
+              createdAt: '2022-01-01T17:58:23.929359',
+              updatedAt: '2022-01-01T17:58:23.929359',
+            },
+          ],
+          title: '더글로리 꼭 보세요',
+          postBody: '요즘 어딜가나 더 글로리 얘기만 하는 듯',
+          hit: 15,
+          image: 'image.jpg',
+          isDeleted: false,
+          createdAt: '2022-01-01T17:57:23.929359',
+          updatedAt: '2022-01-01T17:57:23.929359',
+        },
+        {
+          id: 3,
+          writer: {
+            id: 3,
+            nickname: 'boni',
+            profileImage: 'https://source.boringavatars.com/beam/120/nickname=boni',
+          },
+          postComments: [
+            {
+              id: 1,
+              writer: {
+                id: 1,
+                nickname: 'jenna',
+                profileImage: 'https://source.boringavatars.com/beam/120/nickname=jenna',
+              },
+              postId: 2,
+              postCommentBody: '댓글1',
+              isDeleted: false,
+              createdAt: '2022-01-01T17:57:23.929359',
+              updatedAt: '2022-01-01T17:57:23.929359',
+            },
+            {
+              id: 2,
+              writer: {
+                id: 3,
+                nickname: 'zzezze',
+                profileImage: 'https://source.boringavatars.com/beam/120/nickname=zzezze',
+              },
+              postId: 2,
+              postCommentBody: '댓글2',
+              isDeleted: false,
+              createdAt: '2022-01-01T17:58:23.929359',
+              updatedAt: '2022-01-01T17:58:23.929359',
+            },
+          ],
+          title: '더글로리 꼭 보세요',
+          postBody: '요즘 어딜가나 더 글로리 얘기만 하는 듯',
+          hit: 21,
+          image: 'image.jpg',
+          isDeleted: false,
+          createdAt: '2022-01-01T17:57:23.929359',
+          updatedAt: '2022-01-01T17:57:23.929359',
+        },
+      ],
+    }),
+  )),
+
+  rest.patch(`${baseUrl}/posts/1`, async (req, res, ctx) => {
+    const {
+      postId, title, postBody, image,
+    } = await req.json();
+
+    if (postId && title && postBody && image) {
+      return res(ctx.json({
+        id: 1,
+      }));
+    }
+
+    return res(
+      ctx.status(400),
+    );
+  }),
+
+  rest.delete(`${baseUrl}/posts/1`, async (req, res, ctx) => {
+    const authorization = req.headers.get('Authorization');
+
+    if (!authorization) {
+      return res(
+        ctx.status(400),
+      );
+    }
+
+    return res();
+  }),
+
+  // PostComment
+  rest.post(`${baseUrl}/postComments`, async (req, res, ctx) => {
+    const {
+      postId, postCommentBody,
+    } = await req.json();
+
+    if (postId && postCommentBody) {
+      return res(ctx.json({
+        id: 1,
+      }));
+    }
+
+    return res(
+      ctx.status(400),
+    );
+  }),
+
+  rest.get(`${baseUrl}/posts/1/postComments`, async (req, res, ctx) => res(
+    ctx.json({
+      postComments: [
+        {
+          id: 1,
+          writer: {
+            id: 1,
+            nickname: 'jenna',
+            profileImage: 'https://source.boringavatars.com/beam/120/nickname=jenna',
+          },
+          postId: 1,
+          postCommentBody: '잘 보고 오셨네요',
+          isDeleted: false,
+          createdAt: '2022-01-01T17:57:23.929359',
+          updatedAt: '2022-01-01T17:57:23.929359',
+        },
+        {
+          id: 2,
+          writer: {
+            id: 1,
+            nickname: 'jenna',
+            profileImage: 'https://source.boringavatars.com/beam/120/nickname=jenna',
+          },
+          postId: 2,
+          postCommentBody: '두 번째 댓글',
+          isDeleted: false,
+          createdAt: '2022-01-01T17:57:23.929359',
+          updatedAt: '2022-01-01T17:57:23.929359',
+        },
+      ],
+
+      pages: {
+        totalPages: 1,
+      },
+    }),
+  )),
+
+  rest.get(`${baseUrl}/postComments/me`, async (req, res, ctx) => res(
+    ctx.json({
+      myPostComments: [
+        {
+          id: 1,
+          writer: {
+            id: 1,
+            nickname: 'jenna',
+            profileImage: 'https://source.boringavatars.com/beam/120/nickname=jenna',
+          },
+          postId: 1,
+          postCommentBody: '잘 보고 오셨네요',
+          isDeleted: false,
+          createdAt: '2022-01-01T17:57:23.929359',
+          updatedAt: '2022-01-01T17:57:23.929359',
+        },
+        {
+          id: 2,
+          writer: {
+            id: 1,
+            nickname: 'jenna',
+            profileImage: 'https://source.boringavatars.com/beam/120/nickname=jenna',
+          },
+          postId: 2,
+          postCommentBody: '두 번째 댓글',
+          isDeleted: false,
+          createdAt: '2022-01-01T17:57:23.929359',
+          updatedAt: '2022-01-01T17:57:23.929359',
+        },
+      ],
+    }),
+  )),
+
+  rest.delete(`${baseUrl}/postComments/1`, async (req, res, ctx) => {
+    const authorization = req.headers.get('Authorization');
+
+    if (!authorization) {
+      return res(
+        ctx.status(400),
+      );
+    }
+
+    return res();
+  }),
 );
 
 export default server;

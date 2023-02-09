@@ -3,7 +3,7 @@ import config from '../config';
 
 const baseUrl = config.apiBaseUrl;
 
-export default class CommentApiService {
+export default class ReviewCommentApiService {
   constructor() {
     this.accessToken = '';
 
@@ -29,33 +29,25 @@ export default class CommentApiService {
     });
   }
 
-  async createComment(userId, postId, commentBody) {
-    const { data } = await this.instance.post('/comments', {
-      userId, postId, commentBody,
+  async createComment(userId, postId, reviewCommentBody) {
+    const { data } = await this.instance.post('/reviewComments', {
+      userId, postId, reviewCommentBody,
     });
 
     return { data };
   }
 
   async fetchComments() {
-    const { data } = await this.instance.get('/comments');
+    const { data } = await this.instance.get('/reviewComments');
 
-    const { comments } = data;
+    const { reviewComments } = data;
 
-    return { comments };
-  }
-
-  async fetchCommentsWithNotLoggedIn() {
-    const { data } = await this.instance.get('/comments/all');
-
-    const { comments } = data;
-
-    return { comments };
+    return { reviewComments };
   }
 
   async deleteComment(id) {
-    await this.instance.delete(`/comments/${id}`);
+    await this.instance.delete(`/reviewComments/${id}`);
   }
 }
 
-export const commentApiService = new CommentApiService();
+export const reviewCommentApiService = new ReviewCommentApiService();

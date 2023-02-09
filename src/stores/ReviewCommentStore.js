@@ -1,12 +1,12 @@
-import { commentApiService } from '../services/CommentApiService';
+import { reviewCommentApiService } from '../services/ReviewCommentApiService';
 import Store from './Store';
 
-export default class CommentStore extends Store {
+export default class ReviewCommentStore extends Store {
   constructor() {
     super();
 
-    this.comments = [];
-    this.comment = {};
+    this.reviewComments = [];
+    this.reviewComment = {};
 
     this.isCommentsLoading = false;
     this.isCommentLoading = false;
@@ -18,8 +18,8 @@ export default class CommentStore extends Store {
   }
 
   reset() {
-    this.comments = [];
-    this.comment = {};
+    this.reviewComments = [];
+    this.reviewComment = {};
 
     this.isCommentsLoading = false;
     this.isCommentLoading = false;
@@ -30,11 +30,11 @@ export default class CommentStore extends Store {
     this.deleteStatus = '';
   }
 
-  async create(userId, postId, commentBody) {
+  async create(userId, postId, reviewCommentBody) {
     this.startWrite();
 
     try {
-      await commentApiService.createComment(userId, postId, commentBody);
+      await reviewCommentApiService.createComment(userId, postId, reviewCommentBody);
 
       this.completeWrite();
 
@@ -50,25 +50,9 @@ export default class CommentStore extends Store {
     this.startCommentsLoad();
 
     try {
-      const { comments } = await commentApiService.fetchComments();
+      const { reviewComments } = await reviewCommentApiService.fetchComments();
 
-      this.completeCommentsLoad(comments);
-
-      this.publish();
-    } catch (e) {
-      this.failCommentsLoad();
-
-      this.publish();
-    }
-  }
-
-  async fetchCommentsWithNotLoggedIn() {
-    this.startCommentsLoad();
-
-    try {
-      const { comments } = await commentApiService.fetchCommentsWithNotLoggedIn();
-
-      this.completeCommentsLoad(comments);
+      this.completeCommentsLoad(reviewComments);
 
       this.publish();
     } catch (e) {
@@ -82,7 +66,7 @@ export default class CommentStore extends Store {
     this.startDelete();
 
     try {
-      await commentApiService.deleteComment(id);
+      await reviewCommentApiService.deleteComment(id);
 
       this.completeDelete();
 
@@ -96,21 +80,21 @@ export default class CommentStore extends Store {
 
   startCommentsLoad() {
     this.isCommentsLoading = true;
-    this.comments = [];
+    this.reviewComments = [];
 
     this.publish();
   }
 
-  completeCommentsLoad(comments) {
+  completeCommentsLoad(reviewComments) {
     this.isCommentsLoading = false;
-    this.comments = comments;
+    this.reviewComments = reviewComments;
 
     this.publish();
   }
 
   failCommentsLoad() {
     this.isCommentsLoading = false;
-    this.comments = [];
+    this.reviewComments = [];
 
     this.publish();
   }
@@ -122,7 +106,7 @@ export default class CommentStore extends Store {
   }
 
   isDeleted() {
-    return this.comments.filter((comment) => !comment.deleted);
+    return this.reviewComments.filter((comment) => !comment.deleted);
   }
 
   startWrite() {
@@ -166,4 +150,4 @@ export default class CommentStore extends Store {
   }
 }
 
-export const commentStore = new CommentStore();
+export const reviewCommentStore = new ReviewCommentStore();

@@ -1,15 +1,15 @@
 import { render, screen } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 import defaultTheme from '../../styles/defaultTheme';
-import CommentForm from './CommentForm';
+import ReviewCommentForm from './ReviewCommentForm';
 
-describe('CommentForm', () => {
-  it('renders CommentForm', () => {
+describe('ReviewCommentForm', () => {
+  it('renders ReviewCommentForm', () => {
     const onSubmit = jest.fn();
 
     render((
       <ThemeProvider theme={defaultTheme}>
-        <CommentForm onSubmit={onSubmit} />
+        <ReviewCommentForm onSubmit={onSubmit} />
       </ThemeProvider>
     ));
 

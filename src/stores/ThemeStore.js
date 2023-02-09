@@ -7,21 +7,21 @@ export default class ThemeStore extends Store {
 
     this.themes = [];
     this.hitThemes = [];
-    this.hit = 0;
     this.totalPages = 0;
-    this.updateHitStatus = '';
+
     this.isThemesLoading = false;
     this.isHitThemesLoading = false;
+    this.updateHitStatus = '';
   }
 
   reset() {
     this.themes = [];
     this.hitThemes = [];
-    this.hit = 0;
     this.totalPages = 0;
-    this.updateHitStatus = '';
+
     this.isThemesLoading = false;
     this.isHitThemesLoading = false;
+    this.updateHitStatus = '';
   }
 
   async fetchThemes({ page, size }) {
@@ -47,24 +47,6 @@ export default class ThemeStore extends Store {
       this.completeHitThemesLoad(themes);
     } catch (e) {
       this.failHitThemesLoad();
-    }
-  }
-
-  async updateHit(themeId) {
-    this.startUpdateHit();
-
-    try {
-      await themeApiService.updateHit(themeId);
-
-      this.hit += 1;
-
-      this.completeUpdateHit();
-
-      this.publish();
-    } catch (e) {
-      this.failUpdateHit();
-
-      this.publish();
     }
   }
 

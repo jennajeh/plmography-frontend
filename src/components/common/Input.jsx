@@ -17,11 +17,6 @@ const StyledInput = styled.input`
   }
 `;
 
-const Radio = styled.input`
-  display: flex;
-  gap: 1em;
-`;
-
 const Label = styled.label`
   font-weight: 700;
   display: block;
@@ -41,7 +36,7 @@ const Error = styled.p`
 `;
 
 export default function Input({
-  name, label, type, value, maxLength = '', onChange, message, errorMessage, required = false,
+  name, label, type, placeholder, value, maxLength = '', onChange, message, errorMessage, required = false,
 }) {
   return (
     <>
@@ -58,6 +53,7 @@ export default function Input({
       <StyledInput
         type={type}
         name={name}
+        placeholder={placeholder}
         id={`input-${name}`}
         value={value}
         error={errorMessage}

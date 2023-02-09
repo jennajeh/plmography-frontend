@@ -30,7 +30,6 @@ export default function ThemeList() {
   const [searchParams] = useSearchParams();
 
   const { themes } = themeStore;
-  const page = searchParams.get('page') ?? 1;
 
   if (!themes) {
     return (
