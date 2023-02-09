@@ -3,7 +3,7 @@ import { useLocalStorage } from 'usehooks-ts';
 import useContentStore from '../../hooks/useContentStore';
 import useReviewStore from '../../hooks/useReviewStore';
 import dateFormat from '../../utils/dateFormat';
-import ReviewModal from '../modal/ReviewModal';
+import Modal from '../common/Modal';
 
 export default function MyReview() {
   const [accessToken] = useLocalStorage('accessToken', '');
@@ -59,7 +59,7 @@ export default function MyReview() {
                     <Link to={`/reviews/${review.id}/edit`}>
                       수정하기
                     </Link>
-                    <ReviewModal
+                    <Modal
                       buttonName="삭제하기"
                       content="정말 삭제하시겠습니까?"
                       onClose={handleClickDeleteReview}
@@ -70,7 +70,7 @@ export default function MyReview() {
             ) : (
               <div>
                 <p>⭐️ 짧게라도 좋으니 작품에 대한 감상을 기록해보세요.</p>
-                <Link to="/reviews/create">리뷰 작성하기</Link>
+                <Link to="/reviews/write">리뷰 작성하기</Link>
               </div>
             )}
           </div>

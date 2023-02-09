@@ -19,18 +19,9 @@ export default class PostApiService {
     if (accessToken) {
       this.instance = axios.create({
         baseURL: baseUrl,
-        headers: {
-          Authorization: `Bearer ${this.accessToken}`,
-          contentType: 'application/x-www-form-urlencoded',
-        },
+        headers: { Authorization: `Bearer ${this.accessToken}` },
       });
-
-      return;
     }
-
-    this.instance = axios.create({
-      baseURL: baseUrl,
-    });
   }
 
   async createPost(title, postBody, image) {
@@ -56,7 +47,7 @@ export default class PostApiService {
       .filter((elem) => elem)
       .join('&');
 
-    const { data } = await this.instance.get(`/posts${query}`);
+    const { data } = await this.instance.get(`/posts/filter${query}`);
 
     const { posts, pages } = data;
 
@@ -106,7 +97,9 @@ export default class PostApiService {
 
     const { data } = await axios.post(url, formData);
 
-    return { data };
+    const image = data;
+
+    return image;
   }
 }
 

@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import axios from 'axios';
 import config from '../config';
 
@@ -18,7 +19,10 @@ export default class PostCommentApiService {
     if (accessToken) {
       this.instance = axios.create({
         baseURL: baseUrl,
-        headers: { Authorization: `Bearer ${this.accessToken}` },
+        headers: {
+          Authorization: `Bearer ${this.accessToken}`,
+          // contentType: 'application/json',
+        },
       });
 
       return;
@@ -54,7 +58,7 @@ export default class PostCommentApiService {
   }
 
   async modifyComment(commentId, postCommentBody) {
-    const { data } = await this.instance.patch(`/postComments/${commentId}`, { commentId, postCommentBody });
+    const { data } = await this.instance.patch(`/postComments?commentId=${commentId}&postCommentBody=${postCommentBody}`);
 
     return {
       id: data.id,

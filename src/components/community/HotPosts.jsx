@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import usePostStore from '../../hooks/usePostStore';
-import HitPost from './HitPost';
+import HotPost from './HotPost';
 
 const Title = styled.h1`
   display: flex;
@@ -11,8 +11,8 @@ const Title = styled.h1`
 
 const List = styled.ul`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
   gap: 1em;
 `;
 
@@ -23,11 +23,10 @@ const Error = styled.p`
   text-align: center;
 `;
 
-export default function TopRankPosts() {
+export default function HotPosts() {
   const postStore = usePostStore();
 
   const { hitPosts } = postStore;
-  console.log(hitPosts);
 
   if (!hitPosts) {
     return (
@@ -41,7 +40,7 @@ export default function TopRankPosts() {
       {hitPosts.length ? (
         <List>
           {hitPosts.map((hitPost) => (
-            <HitPost
+            <HotPost
               key={hitPost.id}
               hitPost={hitPost}
             />

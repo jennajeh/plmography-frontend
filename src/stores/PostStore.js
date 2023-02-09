@@ -47,6 +47,18 @@ export default class PostStore extends Store {
     this.startWrite();
 
     try {
+      if (typeof image !== 'string') {
+        const formData = new FormData();
+
+        formData.append('multipartFile', image);
+
+        const img = await postApiService.upload(formData);
+
+        await postApiService.createPost(title, postBody, img);
+
+        return;
+      }
+
       await postApiService.createPost(title, postBody, image);
 
       this.completeWrite();
@@ -114,11 +126,19 @@ export default class PostStore extends Store {
     this.startModify();
 
     try {
-      await postApiService.modifyPost(postId, title, postBody, image);
+      if (typeof image !== 'string') {
+        const formData = new FormData();
 
-      this.post.title = title;
-      this.post.postBody = postBody;
-      this.post.image = image;
+        formData.append('multipartFile', image);
+
+        const img = await postApiService.upload(formData);
+
+        await postApiService.modifyPost(postId, title, postBody, img);
+
+        return;
+      }
+
+      await postApiService.modifyPost(postId, title, postBody, image);
 
       this.completeModify();
 
@@ -144,18 +164,6 @@ export default class PostStore extends Store {
 
       this.publish();
     }
-  }
-
-  async upload(formData) {
-    const { data } = await postApiService.upload(formData);
-
-    this.image = data.image;
-
-    this.publish();
-  }
-
-  isMyPosts(userId) {
-    return this.posts.filter((post) => post.writer.id === userId);
   }
 
   startPostsLoad() {
@@ -274,6 +282,10 @@ export default class PostStore extends Store {
 
   failDelete() {
     this.deleteStatus = 'failed';
+  }
+
+  isMyPost(userId) {
+    return this.post?.writer?.id === userId;
   }
 
   get isCreateSuccessful() {

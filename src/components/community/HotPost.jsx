@@ -13,22 +13,29 @@ h4 {
 
   img {
     border-radius: 0.6em;
-    width: 100%;
+    width: 3em;
   }
 `;
 
-export default function HitPost({ hitPost }) {
-  const { id: postId, title, image } = hitPost;
-  const alternativeImage = 'https://source.boringavatars.com/beam/120/plmography';
+export default function HotPost({ hitPost }) {
+  const {
+    id: postId, title, image, writer,
+  } = hitPost;
+
+  function textLengthOverCut(text, length, lastText) {
+    const result = text.substr(0, length) + lastText;
+
+    return result;
+  }
 
   return (
     <div>
-      <Link to={`/posts/${postId}`}>
+      <Link to={`/community/posts/${postId}`}>
         <ImgWrapper>
           {image ? (
             <img src={image} alt="img" />
-          ) : <img src={alternativeImage} alt="img" />}
-          <h4>{title}</h4>
+          ) : <img src={writer.profileImage} alt="img" />}
+          <h4>{textLengthOverCut(title, '25', '...')}</h4>
         </ImgWrapper>
       </Link>
     </div>

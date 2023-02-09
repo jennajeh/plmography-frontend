@@ -20,12 +20,10 @@ const Error = styled.p`
 
 export default function ContentsList() {
   const contentStore = useContentStore();
-
-  const { contents } = contentStore;
-
+  const [searchParams] = useSearchParams();
   const location = useLocation();
 
-  const [searchParams] = useSearchParams();
+  const { contents } = contentStore;
 
   if (!contents) {
     return (

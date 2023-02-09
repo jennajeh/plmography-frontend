@@ -5,8 +5,8 @@ import useContentStore from '../../hooks/useContentStore';
 import useReviewStore from '../../hooks/useReviewStore';
 import useSubscribeStore from '../../hooks/useSubscribeStore';
 import useUserStore from '../../hooks/useUserStore';
-import UserProfileInfoModal from '../modal/UserProfileInfoModal';
-import UserProfileSubscribeModal from '../modal/UserProfileSubscribeModal';
+import UserProfileSubscribeModal from './UserProfileSubscribeModal';
+import UserProfileInfoModal from './UserProfileInfoModal';
 
 const Container = styled.div`
   height: 100%;

@@ -5,7 +5,7 @@ import config from '../config';
 const baseUrl = config.apiBaseUrl;
 
 export default class LikeApiService {
-  async fetchLike() {
+  async fetchLikes() {
     const { data } = await axios.get(`${baseUrl}/likes`);
 
     const { likes } = data;

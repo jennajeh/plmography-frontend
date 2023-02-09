@@ -18,11 +18,11 @@ export default class LikeStore extends Store {
     this.isLikesLoading = false;
   }
 
-  async fetchLike() {
+  async fetchLikes() {
     this.startLikesLoad();
 
     try {
-      const { likes } = await likeApiService.fetchLike();
+      const { likes } = await likeApiService.fetchLikes();
 
       this.completeLikesLoad(likes);
     } catch (e) {
@@ -107,6 +107,10 @@ export default class LikeStore extends Store {
     this.likes = [];
 
     this.publish();
+  }
+
+  isSamePostId(postId) {
+    return this.likes.filter((like) => like.postId === postId);
   }
 
   get isLikeStatusSuccessful() {

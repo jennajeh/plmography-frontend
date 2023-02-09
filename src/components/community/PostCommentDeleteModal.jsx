@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
@@ -26,7 +27,7 @@ const Dialog = styled.div`
   }
 `;
 
-export default function ReviewModal({
+export default function PostCommentDeleteModal({
   buttonName, content, onClose,
 }) {
   const [isOpen, setIsOpen] = useState(false);

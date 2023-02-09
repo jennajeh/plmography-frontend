@@ -15,7 +15,7 @@ export default class PostCommentStore extends Store {
     this.isCommentLoading = false;
     this.isMyCommentsLoading = false;
 
-    this.createCommentButtonOpened = false;
+    this.modifyCommentButtonOpened = false;
 
     this.createStatus = '';
     this.modifyStatus = '';
@@ -33,7 +33,7 @@ export default class PostCommentStore extends Store {
     this.isCommentLoading = false;
     this.isMyCommentsLoading = false;
 
-    this.createCommentButtonOpened = false;
+    this.modifyCommentButtonOpened = false;
 
     this.createStatus = '';
     this.modifyStatus = '';
@@ -181,14 +181,10 @@ export default class PostCommentStore extends Store {
     this.publish();
   }
 
-  changeCreateCommentButtonStatus() {
-    this.createCommentButtonOpened = !this.createCommentButtonOpened;
+  changeModifyCommentButtonStatus() {
+    this.modifyCommentButtonOpened = !this.modifyCommentButtonOpened;
 
     this.publish();
-  }
-
-  isDeleted() {
-    return this.reviewComments.filter((comment) => !comment.deleted);
   }
 
   startWrite() {

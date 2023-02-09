@@ -4,7 +4,7 @@ import useReviewCommentFormStore from '../../hooks/useReviewCommentFormStore';
 import useReviewCommentStore from '../../hooks/useReviewCommentStore';
 import useUserStore from '../../hooks/useUserStore';
 import dateFormat from '../../utils/dateFormat';
-import Modal from '../modal/ReviewModal';
+import Modal from '../common/Modal';
 import ReviewCommentForm from './ReviewCommentForm';
 
 export default function ReviewComment({ review }) {
@@ -15,8 +15,8 @@ export default function ReviewComment({ review }) {
 
   const { user } = userStore;
   const { id: userId } = user;
-
   const { createCommentButtonOpened } = reviewCommentStore;
+
   const commentNotDeleted = reviewCommentStore.isDeleted();
 
   const handleClickDeleteComment = async (comment) => {
