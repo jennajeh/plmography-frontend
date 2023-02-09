@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import usePostFormStore from '../../hooks/usePostFormStore';
@@ -57,7 +57,6 @@ export default function PostForm() {
   const navigate = useNavigate();
   const postStore = usePostStore();
   const postFormStore = usePostFormStore();
-  const formData = new FormData();
 
   const handleClickCancel = () => {
     navigate('/community');

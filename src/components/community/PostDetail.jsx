@@ -178,7 +178,7 @@ export default function PostDetail() {
                 수정
               </Link>
               <PostDeleteModal
-                buttonName="삭제하기"
+                buttonName="삭제"
                 content="정말 삭제하시겠습니까?"
                 onClose={handleClickDeletePost}
               />
@@ -201,7 +201,7 @@ export default function PostDetail() {
                         수정
                       </button>
                       <PostCommentDeleteModal
-                        buttonName="삭제하기"
+                        buttonName="삭제"
                         content="정말 삭제하시겠습니까?"
                         onClose={() => handleClickDeleteComment(comment)}
                       />

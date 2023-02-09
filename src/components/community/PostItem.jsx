@@ -67,7 +67,6 @@ export default function PostItem({ post }) {
     id: postId, comments, updatedAt, hit, postBody, title, writer,
   } = post;
   const likes = likeStore.isSamePostId(postId);
-  const notDeletedComments = comments.filter((comment) => !comment.deleted);
 
   function textLengthOverCut(text, length, lastText) {
     const result = text.substr(0, length) + lastText;
@@ -81,8 +80,8 @@ export default function PostItem({ post }) {
         <PostWrapper>
           <UserInfoWrapper>
             <UserInfo>
-              <img src={writer.profileImage} alt="profileImage" />
-              <span>{writer.nickname}</span>
+              <img src={writer?.profileImage} alt="profileImage" />
+              <span>{writer?.nickname}</span>
             </UserInfo>
             <PostDate>
               조회수
@@ -102,7 +101,7 @@ export default function PostItem({ post }) {
           </Likes>
           <Comment>
             댓글
-            {notDeletedComments.length}
+            {comments.length}
           </Comment>
         </PostWrapper>
       </Container>

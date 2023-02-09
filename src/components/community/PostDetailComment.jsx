@@ -13,9 +13,7 @@ const Wrapper = styled.div`
 `;
 
 export default function PostDetailComment({ comment }) {
-  const {
-    id: commentId, deleted, updatedAt, postCommentBody, postId, writer,
-  } = comment;
+  const { updatedAt, postCommentBody, writer } = comment;
 
   return (
     <Container>

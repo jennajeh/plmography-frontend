@@ -150,7 +150,7 @@ export default function PostEditForm() {
             content="게시물 수정을 취소하시겠습니까?"
             onClose={handleClickCancel}
           />
-          <SubmitButton type="submit">등록</SubmitButton>
+          <SubmitButton type="submit">수정</SubmitButton>
         </Buttons>
       </Form>
     </Container>
