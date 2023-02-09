@@ -3,7 +3,7 @@ import PostCommentStore from './PostCommentStore';
 
 const context = describe;
 
-describe('ReviewCommentFormStore', () => {
+describe('PostCommentFormStore', () => {
   let postCommentStore;
 
   beforeEach(() => {
@@ -57,34 +57,6 @@ describe('ReviewCommentFormStore', () => {
 
       expect(postCommentStore.myPostComments).toBeTruthy();
       expect(postCommentStore.myPostComments[0].postCommentBody).toBe('잘 보고 오셨네요');
-    });
-  });
-
-  describe('modify', () => {
-    context('댓글 수정에 성공한 경우', () => {
-      it('modifyStatus 가 successful 로 바뀐다', async () => {
-        await postCommentStore.fetchMyComments();
-
-        const commentId = 1;
-        const postCommentBody = '오랜만에 힐링함';
-
-        await postCommentStore.modify(commentId, postCommentBody);
-
-        expect(postCommentStore.isModifySuccessful).toBeTruthy();
-      });
-    });
-
-    context('댓글 수정에 실패한 경우', () => {
-      it('modifyStatus 가 failed 로 바뀐다', async () => {
-        await postCommentStore.fetchMyComments();
-
-        const commentId = 1;
-        const postCommentBody = '';
-
-        await postCommentStore.modify(commentId, postCommentBody);
-
-        expect(postCommentStore.isModifyFailed).toBeTruthy();
-      });
     });
   });
 

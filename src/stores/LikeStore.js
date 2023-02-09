@@ -36,7 +36,7 @@ export default class LikeStore extends Store {
     try {
       await likeApiService.like(postId, userId);
 
-      this.fetchLike();
+      this.fetchLikes();
 
       this.completeLike();
 

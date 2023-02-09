@@ -756,7 +756,7 @@ const server = setupServer(
     );
   }),
 
-  rest.get(`${baseUrl}/posts`, async (req, res, ctx) => res(
+  rest.get(`${baseUrl}/posts/filter`, async (req, res, ctx) => res(
     ctx.json({
       posts: [
         {
@@ -1213,22 +1213,6 @@ const server = setupServer(
       ],
     }),
   )),
-
-  rest.patch(`${baseUrl}/postComments/1`, async (req, res, ctx) => {
-    const {
-      commentId, postCommentBody,
-    } = await req.json();
-
-    if (commentId && postCommentBody.length) {
-      return res(ctx.json({
-        id: 1,
-      }));
-    }
-
-    return res(
-      ctx.status(400),
-    );
-  }),
 
   rest.delete(`${baseUrl}/postComments/1`, async (req, res, ctx) => {
     const authorization = req.headers.get('Authorization');

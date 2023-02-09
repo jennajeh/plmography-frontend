@@ -49,7 +49,7 @@ describe('ReviewCommentStore', () => {
     it('댓글 목록을 출력한다', async () => {
       await reviewCommentStore.fetchComments();
 
-      expect(reviewCommentStore.comments).toHaveLength(2);
+      expect(reviewCommentStore.reviewComments).toHaveLength(2);
     });
   });
 

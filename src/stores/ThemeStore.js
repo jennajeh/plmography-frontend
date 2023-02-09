@@ -11,6 +11,7 @@ export default class ThemeStore extends Store {
 
     this.isThemesLoading = false;
     this.isHitThemesLoading = false;
+    this.updateHitStatus = '';
   }
 
   reset() {
@@ -20,6 +21,7 @@ export default class ThemeStore extends Store {
 
     this.isThemesLoading = false;
     this.isHitThemesLoading = false;
+    this.updateHitStatus = '';
   }
 
   async fetchThemes({ page, size }) {

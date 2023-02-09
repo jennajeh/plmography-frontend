@@ -130,7 +130,7 @@ describe('PostStore', () => {
       it('deleteStatus 가 failed 로 바뀐다', async () => {
         postApiService.setAccessToken('');
 
-        const postId = 1;
+        const postId = '';
 
         await postStore.delete(postId);
 

@@ -90,8 +90,6 @@ export default class PostCommentStore extends Store {
     try {
       await postCommentApiService.modifyComment(commentId, postCommentBody);
 
-      this.postComments.postCommentBody = postCommentBody;
-
       this.completeModify();
 
       this.publish();
