@@ -28,7 +28,7 @@ export default class ProfileEditFormStore extends Store {
   fillFields(user) {
     this.fields = {
       nickname: user.nickname,
-      profileImage: user.profileImage,
+      image: user.profileImage,
     };
 
     this.publish();
@@ -42,19 +42,7 @@ export default class ProfileEditFormStore extends Store {
   }
 
   async changeImage(imageFile) {
-    // const formData = new FormData();
-
-    // formData.append('multipartFile', imageFile);
-
-    // const profileImage = await userApiService.uploadImage(formData);
-
-    this.fields.profileImage = imageFile;
-
-    this.publish();
-  }
-
-  validate() {
-    this.validateNickName();
+    this.fields.image = imageFile;
 
     this.publish();
   }

@@ -101,7 +101,7 @@ export default function LoginForm() {
           <label htmlFor="input-password">비밀번호</label>
           <Input
             id="input-password"
-            type="text"
+            type="password"
             name="password"
             placeholder="비밀번호"
             value={loginFormStore.fields.password || ''}

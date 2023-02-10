@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { useEffect } from 'react';
 import { useLocalStorage } from 'usehooks-ts';
 import useUserStore from '../../hooks/useUserStore';
 import useSignupFormStore from '../../hooks/useSignupFormStore';
@@ -42,7 +41,7 @@ export default function SignupForm() {
   const [, setAccessToken] = useLocalStorage('accessToken', '');
 
   const {
-    nickname, email, password, gender, birthYear,
+    nickname, email, password, passwordCheck,
   } = signupFormStore.fields;
 
   const handleSubmit = async (e) => {
@@ -52,28 +51,16 @@ export default function SignupForm() {
 
     if (signupFormStore.isValidateSuccessful) {
       await userStore.signup({
-        email, nickname, password, gender, birthYear,
+        email, nickname, password, passwordCheck,
       });
 
       const accessToken = await userStore.login({ email, password });
 
       setAccessToken(accessToken);
 
-      // if (userStore.signupSuccessful) {
-      //   navigate('/greeting');
-      // }
-    }
-
-    // const accessToken = await userStore.login({ email, password });
-
-    // setAccessToken(accessToken);
-  };
-
-  useEffect(() => {
-    if (userStore.signupSuccessful) {
       navigate('/greeting');
     }
-  }, [userStore.signupSuccessful]);
+  };
 
   return (
     <Container>
@@ -94,7 +81,7 @@ export default function SignupForm() {
             <Input
               name="password"
               label="비밀번호:"
-              type="text"
+              type="password"
               value={signupFormStore.fields.password || ''}
               onChange={(e) => signupFormStore.changePassword(e.target.value)}
               message="8글자 이상의 영문(대소문자), 숫자, 특수문자가 모두 포함되어야 합니다."
@@ -118,24 +105,11 @@ export default function SignupForm() {
               type="text"
               value={signupFormStore.fields.nickname || ''}
               onChange={(e) => signupFormStore.changeNickname(e.target.value)}
-              message="특수문자를 제외하고 입력해 주세요."
+              message="특수문자 제외, 3~12 자 이내여야 합니다."
               errorMessage={signupFormStore.errors.nickname}
             />
           </InputWrapper>
         </Inputs>
-        <label htmlFor="select-birth">출생연도:</label>
-        <select
-          id="select-birth"
-          name="birth"
-          value={signupFormStore.fields.birth || ''}
-          onChange={(e) => signupFormStore.changeBirth(e.target.value)}
-        >
-          <option value="1990">1990</option>
-          <option value="1991">1991</option>
-          <option value="1992">1992</option>
-          <option value="1993">1993</option>
-          <option value="1994">1994</option>
-        </select>
         <Button type="submit">회원가입</Button>
       </form>
     </Container>

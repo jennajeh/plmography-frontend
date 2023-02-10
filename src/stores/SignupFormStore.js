@@ -8,12 +8,12 @@ export default class SignupFormStore extends Store {
     this.errorMessages = {
       email: {
         empty: '이메일을 입력해 주세요.',
-        invalid: '이메일을 다시 확인해 주세요.',
+        invalid: '이메일이 올바르지 않습니다.',
         exist: '이미 존재하는 이메일 입니다.',
       },
       password: {
         empty: '비밀번호를 입력해 주세요.',
-        invalid: '비밀번호를 다시 확인해 주세요.',
+        invalid: '8글자 이상의 영문(대소문자), 숫자, 특수문자가 모두 포함되어야 합니다.',
       },
       passwordCheck: {
         empty: '비밀번호를 입력해 주세요.',
@@ -21,7 +21,7 @@ export default class SignupFormStore extends Store {
       },
       nickname: {
         empty: '닉네임을 입력해 주세요.',
-        invalid: '닉네임을 다시 확인해 주세요.',
+        invalid: '특수문자 제외, 3~12 자 이내여야 합니다.',
         exist: '이미 존재하는 닉네임 입니다.',
       },
     };
@@ -29,7 +29,7 @@ export default class SignupFormStore extends Store {
     this.patterns = {
       email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
       password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-      nickname: /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]+$/,
+      nickname: /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]{3,12}$/,
     };
 
     this.reset();
@@ -37,16 +37,7 @@ export default class SignupFormStore extends Store {
 
   changeEmail(email) {
     this.fields.email = email;
-
-    if (this.timer) {
-      clearTimeout(this.timer);
-    }
-
-    this.timer = setTimeout(async () => {
-      await this.validateEmail();
-
-      this.publish();
-    }, 500);
+    this.validateEmail();
 
     this.publish();
   }
@@ -72,18 +63,6 @@ export default class SignupFormStore extends Store {
     this.publish();
   }
 
-  changeGender(gender) {
-    this.fields.gender = gender;
-
-    this.publish();
-  }
-
-  changeBirth(birth) {
-    this.fields.birth = birth;
-
-    this.publish();
-  }
-
   reset() {
     this.fields = {};
     this.errors = {};
@@ -93,8 +72,8 @@ export default class SignupFormStore extends Store {
   }
 
   async validate() {
-    await this.validateNickname();
-    await this.validateEmail();
+    this.validateNickname();
+    this.validateEmail();
     this.validatePassword();
     this.validatePasswordCheck();
 
@@ -113,14 +92,12 @@ export default class SignupFormStore extends Store {
 
       return;
     }
-
-    const fieldEmail = this.fields.email;
-    const fieldNickname = this.fields.nickname;
+    const inputNickname = this.fields.nickname;
 
     const { countNickname } = await userApiService
-      .countEmailAndNickname({ fieldEmail, fieldNickname });
+      .countEmailAndNickname({ email: 'not@gmail.com', nickname: inputNickname });
 
-    if (countNickname !== 0) {
+    if (countNickname > 0) {
       this.errors.nickname = this.errorMessages.nickname.exist;
 
       return;
@@ -142,11 +119,10 @@ export default class SignupFormStore extends Store {
       return;
     }
 
-    const fieldEmail = this.fields.email;
-    const fieldNickname = this.fields.nickname;
+    const inputEmail = this.fields.email;
 
     const { countEmail } = await userApiService
-      .countEmailAndNickname({ fieldEmail, fieldNickname });
+      .countEmailAndNickname({ email: inputEmail, nickname: 'notYet' });
 
     if (countEmail !== 0) {
       this.errors.email = this.errorMessages.email.exist;

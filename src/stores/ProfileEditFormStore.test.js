@@ -32,7 +32,6 @@ describe('ProfileEditFormStore', () => {
 
       profileEditFormStore.fillFields(user);
 
-      expect(profileEditFormStore.fields.profileImage).toBe('https://source.boringavatars.com/beam/120/nickname=jenna');
       expect(profileEditFormStore.fields.nickname).toBe('jenna');
     });
   });

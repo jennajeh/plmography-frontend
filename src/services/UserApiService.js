@@ -25,10 +25,10 @@ export default class UserApiService {
   }
 
   async createUser({
-    email, nickname, password,
+    email, nickname, password, passwordCheck,
   }) {
     const { data } = await this.instance.post('/users', {
-      email, nickname, password,
+      email, nickname, password, passwordCheck,
     });
 
     return data;
@@ -58,7 +58,7 @@ export default class UserApiService {
     return users;
   }
 
-  async changeProfile(nickname, profileImage) {
+  async changeProfile({ nickname, profileImage }) {
     const { data } = await this.instance.patch('/users', { nickname, profileImage });
 
     return { data };
@@ -86,7 +86,9 @@ export default class UserApiService {
 
     const { data } = await axios.post(url, formData);
 
-    return { data };
+    const image = data;
+
+    return image;
   }
 }
 
