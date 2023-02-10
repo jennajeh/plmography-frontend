@@ -4,14 +4,15 @@ import HotPost from '../community/HotPost';
 
 const Title = styled.h1`
   color: ${((props) => props.theme.text.white)};
-  font-size: 30px;
+  font-size: 26px;
   font-weight: bold;
-  margin-top: 1em;
+  margin: 5px 0 20px 0;
 `;
 
 const List = styled.ul`
   display: flex;
   flex-direction: column;
+  margin: 0 0 100px 0;
   gap: 1em;
 `;
 
@@ -26,6 +27,8 @@ export default function HomeCommunity() {
   const postStore = usePostStore();
 
   const { hitPosts } = postStore;
+
+  let count = 1;
 
   if (!hitPosts) {
     return (
@@ -42,6 +45,7 @@ export default function HomeCommunity() {
             <HotPost
               key={hitPost.id}
               hitPost={hitPost}
+              count={count++}
             />
           ))}
         </List>

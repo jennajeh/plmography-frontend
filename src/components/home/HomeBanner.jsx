@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { bannerImage } from '../../assets/contents';
 
 const Container = styled.article`
-  margin: 100px 0 100px 0;
+  margin: 100px 0 120px 0;
 `;
 
 const ImageWrapper = styled.div`

@@ -44,9 +44,21 @@ import CommunityPostDetailPage from './pages/CommunityPostDetailPage';
 import PostCreatePage from './pages/PostCreatePage';
 import PostEditPage from './pages/PostEditPage';
 
+const Container = styled.div`
+  margin: 0 auto;
+  min-height: 100vh;
+`;
+
 const Main = styled.main`
-  height: calc(100vh - 64px);
-  padding-inline: 230px;
+  max-width: 1080px;
+  min-width: 1072px;
+  margin: 0 auto;
+`;
+
+const Content = styled.div`
+  display: inline-block;
+  vertical-align: text-top;
+  width: 1080px;
 `;
 
 export default function App() {
@@ -65,43 +77,47 @@ export default function App() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <GlobalStyle />
-      <Main>
-        <Header />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/themes" element={<ThemesPage />} />
-          <Route path="/themes/:id" element={<ThemesDetailPage />} />
-          <Route path="/community" element={<CommunityPage />} />
-          <Route path="/community/posts/:id" element={<CommunityPostDetailPage />} />
-          <Route path="/community/posts/write" element={<PostCreatePage />} />
-          <Route path="/community/posts/:id/edit" element={<PostEditPage />} />
-          <Route path="/contents/:id" element={<ContentDetailPage />} />
-          <Route path="/reviews/write" element={<ReviewCreatePage />} />
-          <Route path="/reviews/:id/edit" element={<ReviewEditPage />} />
-          <Route path="/explore" element={<ExplorePage />} />
-          <Route path="/new-contents" element={<NewContentsPage />} />
-          {/* <Route path="/ranking" element={<DailyRankingPage />} /> */}
-          {/* <Route path="/next-contents" element={<NextContentsPage />} /> */}
-          <Route path="/articles" element={<ArticlesPage />} />
-          <Route path="/articles/:id" element={<ArticleDetailPage />} />
-          <Route path="/profile" element={<MyProfilePage />} />
-          <Route path="/profile/search" element={<ProfileSearchPage />} />
-          <Route path="/profile/edit" element={<MyProfileEditPage />} />
-          <Route path="/users/:id" element={<UserProfilePage />} />
-          <Route path="/users/:id/wishes" element={<UserWishesPage />} />
-          <Route path="/users/:id/watched" element={<UserWatchedPage />} />
-          <Route path="/users/:id/reviews" element={<UserReviewsPage />} />
-          {/* <Route path="/users/:id/services/edit" element={<ServiceChoicePage />} /> */}
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="/greeting" element={<GreetingPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/events" element={<EventsPage />} />
-          {/* <Route path="/events/:id" element={<EventsDetailPage />} /> */}
-          <Route path="/support" element={<SupportPage />} />
-        </Routes>
-        <Footer />
-      </Main>
+      <Container>
+        <GlobalStyle />
+        <Main>
+          <Header />
+          <Content>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/themes" element={<ThemesPage />} />
+              <Route path="/themes/:id" element={<ThemesDetailPage />} />
+              <Route path="/community" element={<CommunityPage />} />
+              <Route path="/community/posts/:id" element={<CommunityPostDetailPage />} />
+              <Route path="/community/posts/write" element={<PostCreatePage />} />
+              <Route path="/community/posts/:id/edit" element={<PostEditPage />} />
+              <Route path="/contents/:id" element={<ContentDetailPage />} />
+              <Route path="/reviews/write" element={<ReviewCreatePage />} />
+              <Route path="/reviews/:id/edit" element={<ReviewEditPage />} />
+              <Route path="/explore" element={<ExplorePage />} />
+              <Route path="/new-contents" element={<NewContentsPage />} />
+              {/* <Route path="/ranking" element={<DailyRankingPage />} /> */}
+              {/* <Route path="/next-contents" element={<NextContentsPage />} /> */}
+              <Route path="/articles" element={<ArticlesPage />} />
+              <Route path="/articles/:id" element={<ArticleDetailPage />} />
+              <Route path="/profile" element={<MyProfilePage />} />
+              <Route path="/profile/search" element={<ProfileSearchPage />} />
+              <Route path="/profile/edit" element={<MyProfileEditPage />} />
+              <Route path="/users/:id" element={<UserProfilePage />} />
+              <Route path="/users/:id/wishes" element={<UserWishesPage />} />
+              <Route path="/users/:id/watched" element={<UserWatchedPage />} />
+              <Route path="/users/:id/reviews" element={<UserReviewsPage />} />
+              {/* <Route path="/users/:id/services/edit" element={<ServiceChoicePage />} /> */}
+              <Route path="/signup" element={<SignupPage />} />
+              <Route path="/greeting" element={<GreetingPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/events" element={<EventsPage />} />
+              {/* <Route path="/events/:id" element={<EventsDetailPage />} /> */}
+              <Route path="/support" element={<SupportPage />} />
+            </Routes>
+          </Content>
+          <Footer />
+        </Main>
+      </Container>
     </ThemeProvider>
   );
 }

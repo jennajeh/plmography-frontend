@@ -11,8 +11,6 @@ const GlobalStyle = createGlobalStyle`
   body {
     font-size: ${((props) => props.theme.size.default)};
     background-color: ${((props) => props.theme.colors.background)};
-
-    min-width: 1510px;
   }
 
   a {

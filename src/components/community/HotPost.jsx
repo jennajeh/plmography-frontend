@@ -4,21 +4,40 @@ import styled from 'styled-components';
 import { BasePreview } from '../../assets/common';
 
 const ImgWrapper = styled.article`
-  margin: 1em 0 1em 0;
+  display: flex;
+  margin: 5px 0 5px 0;
+  width: 500px;
+  height: 50px;
+  background-color: ${((props) => props.theme.colors.second)};
+  border-radius: 10px;
 
-h4 {
-  text-align: center;
-  font-size: 24px;
-  color: ${((props) => props.theme.text.primary)};
-}
+  p {
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    font-size: 27px;
+    font-weight: 800;
+  }
+
+  span {
+    display: flex;
+    align-items: center;
+    padding-left: 17px;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    color: ${((props) => props.theme.text.primary)};
+  }
 
   img {
-    border-radius: 0.6em;
-    width: 3em;
+    object-fit: cover;
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
   }
 `;
 
-export default function HotPost({ hitPost }) {
+export default function HotPost({ hitPost, count }) {
   const {
     id: postId, title, image,
   } = hitPost;
@@ -35,8 +54,11 @@ export default function HotPost({ hitPost }) {
         <ImgWrapper>
           {image ? (
             <img src={image} alt="img" />
-          ) : <img src={BasePreview} alt="img" />}
-          <h4>{textLengthOverCut(title, '25', '...')}</h4>
+          ) : (
+            <img src={BasePreview} alt="img" />
+          )}
+          <p>{count}</p>
+          <span>{textLengthOverCut(title, '25', '...')}</span>
         </ImgWrapper>
       </Link>
     </div>

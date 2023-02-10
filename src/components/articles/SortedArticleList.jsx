@@ -3,9 +3,10 @@ import useArticleStore from '../../hooks/useArticleStore';
 import ArticleItem from './ArticleItem';
 
 const Title = styled.h1`
-  font-size: ${((props) => props.theme.size.h4)};
+  color: ${((props) => props.theme.text.white)};
+  font-size: 26px;
   font-weight: bold;
-  margin-top: 1em;
+  margin: 5px 0 25px 0;
 `;
 
 const List = styled.ul`
@@ -25,6 +26,8 @@ export default function SortedArticleList() {
 
   const { sortedArticles } = articleStore;
 
+  let count = 1;
+
   if (!sortedArticles) {
     return (
       <p>Loading...</p>
@@ -40,6 +43,7 @@ export default function SortedArticleList() {
             <ArticleItem
               key={article.id}
               article={article}
+              count={count++}
             />
           ))}
         </List>

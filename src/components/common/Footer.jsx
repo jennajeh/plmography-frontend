@@ -6,7 +6,6 @@ const FooterContainer = styled.div`
     margin-top: 140px;
     padding: 40px;
     border-top: 1px solid ${((props) => props.theme.text.footer)};
-    /* background-color: #f5f5f5; */
     letter-spacing: 0.5px;
     word-spacing: 1px;
   `;
