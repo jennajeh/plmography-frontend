@@ -6,6 +6,7 @@ export default class ArticleStore extends Store {
     super();
 
     this.articles = [];
+    this.sortedArticles = [];
     this.article = {};
 
     this.totalPages = 0;
@@ -16,6 +17,14 @@ export default class ArticleStore extends Store {
 
     this.articles = articles;
     this.totalPages = pages.totalPages;
+
+    this.publish();
+  }
+
+  async fetchRecentlyCreatedArticles() {
+    const { articles } = await articleApiService.fetchRecentlyCreatedArticles();
+
+    this.sortedArticles = articles;
 
     this.publish();
   }

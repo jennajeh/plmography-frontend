@@ -1,74 +1,91 @@
+import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useLocalStorage } from 'usehooks-ts';
-import { userStore } from '../../stores/UserStore';
+import { PlmographyLogo } from '../../assets/common';
+import { LogoutProfile } from '../../assets/profile';
+import useUserStore from '../../hooks/useUserStore';
 
 const Container = styled.header`
-background-color: black;
-border-bottom: 1px solid #D9D9D9;
-height: 4em;
+  background-color: ${((props) => props.theme.colors.background)};
+  height: 78px;
 `;
 
 const Wrapper = styled.div`
-display: flex;
-justify-content: space-between;
-padding-inline: calc((100% - 900px) / 2);
-height: 100%;
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
 `;
 
 const MainMenu = styled.nav`
-display: flex;
-height: 100%;
+  display: flex;
+  height: 100%;
 `;
 
 const List = styled.ul`
-display: flex;
-align-items: center;
+  display: flex;
+  align-items: center;
 
 li {
   font-weight: bold;
-  padding-right: 2.5em;
-
-  :hover {
-    margin-bottom: 10px;
-  }
+  padding-right: 40px;
 }
 `;
 
 const StyledLink = styled(Link)`
-  color: white;
+  color: ${((props) => props.theme.colors.white)};
+  font-size: 22px;
 
-:hover {
-  color: #ff006a;
-}
+  :hover {
+    color: ${((props) => props.theme.colors.first)}
+  }
+
+  img {
+    width: 2em;
+  }
+`;
+
+const StyledUserLink = styled(Link)`
+  color: ${((props) => props.theme.colors.white)};
+  font-size: 14px;
+
+  :hover {
+    color: ${((props) => props.theme.colors.first)}
+  }
+
+  img {
+    width: 2em;
+  }
 `;
 
 const LogoBox = styled.div`
-  width: 10em;
-
   img {
-    width: 100%;
+    width: 154px;
+    height: 25px;
   }
 `;
 
 const SideMenu = styled.nav`
-display: flex;
-align-items: center;
+  display: flex;
+  align-items: center;
 `;
 
-const LogoutButton = styled.button`
-font-size: 1em;
-font-weight: bold;
-color: white;
-background: none;
-border: none;
-cursor: pointer;
+const Button = styled.button`
+  font-size: 14px;
+  font-weight: bold;
+  color: ${((props) => props.theme.text.white)};
+  background: none;
+  border: none;
+
+  :hover {
+    color: ${((props) => props.theme.colors.first)}
+  }
 `;
 
 export default function Header() {
-  const homeLogo = 'https://plmographybucket.s3.ap-northeast-2.amazonaws.com/%E1%84%8B%E1%85%A1%E1%86%AB%E1%84%82%E1%85%A7%E1%86%BC.png';
-
   const navigate = useNavigate();
+  const userStore = useUserStore();
+  const { user } = userStore;
 
   const [accessToken, setAccessToken] = useLocalStorage('accessToken', '');
 
@@ -81,7 +98,13 @@ export default function Header() {
     const token = await userStore.login({ email: 'jenna@gmail.com', password: 'Test123!' });
 
     setAccessToken(token);
+
+    navigate('/');
   };
+
+  useEffect(() => {
+    userStore.fetchMe();
+  }, []);
 
   return (
     <Container>
@@ -91,7 +114,7 @@ export default function Header() {
             <li>
               <StyledLink to="/">
                 <LogoBox>
-                  <img src={homeLogo} alt="logo" />
+                  <img src={PlmographyLogo} alt="logo" />
                 </LogoBox>
               </StyledLink>
             </li>
@@ -113,21 +136,26 @@ export default function Header() {
           <SideMenu>
             <List>
               <li>
-                <LogoutButton
+                <Button
                   type="button"
                   onClick={handleClickLogout}
                 >
                   로그아웃
-                </LogoutButton>
+                </Button>
               </li>
               <li>
-                <StyledLink to="/profile">마이페이지</StyledLink>
+                <StyledUserLink to="/events">이벤트</StyledUserLink>
               </li>
               <li>
-                <StyledLink to="/events">이벤트</StyledLink>
+                <StyledUserLink to="/support">작품 제안</StyledUserLink>
               </li>
               <li>
-                <StyledLink to="/support">작품 제안</StyledLink>
+                <StyledUserLink to="/profile">
+                  <img
+                    src={user.profileImage}
+                    alt="profileImage"
+                  />
+                </StyledUserLink>
               </li>
             </List>
           </SideMenu>
@@ -135,12 +163,12 @@ export default function Header() {
           <SideMenu>
             <List>
               <li>
-                <button
+                <Button
                   type="button"
                   onClick={handleClickTestLogin}
                 >
                   체험하기
-                </button>
+                </Button>
               </li>
               <li>
                 <StyledLink to="/login">로그인</StyledLink>
@@ -150,6 +178,14 @@ export default function Header() {
               </li>
               <li>
                 <StyledLink to="/login">작품 제안</StyledLink>
+              </li>
+              <li>
+                <StyledLink to="/">
+                  <img
+                    src={LogoutProfile}
+                    alt="LogoutProfile"
+                  />
+                </StyledLink>
               </li>
             </List>
           </SideMenu>
