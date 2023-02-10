@@ -1,5 +1,10 @@
 import styled from 'styled-components';
 
+const Container = styled.article`
+  display: flex;
+  gap: 16px;
+`;
+
 const Title = styled.h2`
   font-size: ${((props) => props.theme.size.h4)};
   font-weight: bold;
@@ -7,12 +12,22 @@ const Title = styled.h2`
 `;
 
 const ImageWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 1em;
-  
+  margin: 1em 0 1em 0;
+  display: inline-block;
+  vertical-align: middle;
+
   img {
-    width: 4em;
+    border-radius: 0.6em;
+    width: 7em;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  p {
+    font-size: ${((props) => props.theme.size.h6)};
+    margin-left: 1em;
+    display: inline-block;
+    vertical-align: middle;
   }
 `;
 
@@ -24,28 +39,30 @@ export default function HomeExpireContents() {
   const identity = 'https://nujhrcqkiwag1408085.cdn.ntruss.com/static/upload/movie_poster_images/movie_3997_1608690874.jpg';
 
   return (
-    <div>
+    <>
       <Title>2월 넷플릭스 종료 예정작 ⏳ </Title>
-      <ImageWrapper>
-        <p>트루먼쇼</p>
-        <img src={trumanShow} alt="trumanShow" />
-      </ImageWrapper>
-      <ImageWrapper>
-        <p>너의 이름은</p>
-        <img src={yourName} alt="yourName" />
-      </ImageWrapper>
-      <ImageWrapper>
-        <p>맘마미아</p>
-        <img src={mammaMia} alt="mammaMia" />
-      </ImageWrapper>
-      <ImageWrapper>
-        <p>벤자민 버튼의 시간은 거꾸로 간다</p>
-        <img src={benjaminButton} alt="benjaminButton" />
-      </ImageWrapper>
-      <ImageWrapper>
-        <p>23 아이덴티티</p>
-        <img src={identity} alt="identity" />
-      </ImageWrapper>
-    </div>
+      <Container>
+        <ImageWrapper>
+          <img src={trumanShow} alt="trumanShow" />
+          <p>트루먼쇼</p>
+        </ImageWrapper>
+        <ImageWrapper>
+          <img src={yourName} alt="yourName" />
+          <p>너의 이름은</p>
+        </ImageWrapper>
+        <ImageWrapper>
+          <img src={mammaMia} alt="mammaMia" />
+          <p>맘마미아</p>
+        </ImageWrapper>
+        <ImageWrapper>
+          <img src={benjaminButton} alt="benjaminButton" />
+          <p>벤자민 버튼의 시간은 거꾸로 간다</p>
+        </ImageWrapper>
+        <ImageWrapper>
+          <img src={identity} alt="identity" />
+          <p>23 아이덴티티</p>
+        </ImageWrapper>
+      </Container>
+    </>
   );
 }

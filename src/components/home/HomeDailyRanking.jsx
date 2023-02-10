@@ -2,21 +2,31 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import useContentStore from '../../hooks/useContentStore';
 
-const Title = styled.h2`
-  font-size: ${((props) => props.theme.size.h4)};
+const Title = styled.h1`
+  color: ${((props) => props.theme.text.white)};
+  font-size: 30px;
   font-weight: bold;
   margin-top: 1em;
 `;
 
 const List = styled.ul`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: 1em;
 `;
 
 const ImageWrapper = styled.div`
+  margin: 1em 0 1em 0;
+
+  h4 {
+    text-align: center;
+    font-size: 24px;
+    color: ${((props) => props.theme.text.primary)};
+  }
+
   img {
-    width: 4em;
+    border-radius: 0.6em;
+    width: 3em;
   }
 `;
 
@@ -30,7 +40,6 @@ const Error = styled.p`
 export default function HomeDailyRanking() {
   const contentStore = useContentStore();
   const { contents } = contentStore;
-  const count = 0;
 
   return (
     <div>
@@ -39,11 +48,10 @@ export default function HomeDailyRanking() {
         <List>
           {contents.map((content) => (
             <li key={content.id}>
-              <span>{count + 1}</span>
               <Link to={`/contents/${content.tmdbId}`}>
                 <ImageWrapper>
                   <img src={content.imageUrl} alt="imageUrl" />
-                  {content.korTitle}
+                  <h4>{content.korTitle}</h4>
                 </ImageWrapper>
               </Link>
             </li>

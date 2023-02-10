@@ -3,26 +3,27 @@ import { FaFacebook, FaInstagramSquare } from 'react-icons/fa';
 import styled from 'styled-components';
 
 const FooterContainer = styled.div`
-    margin-top: 120px;
-    padding: 64px;
-    width: 100%;
-    background-color: #f5f5f5;
+    margin-top: 140px;
+    padding: 40px;
+    border-top: 1px solid ${((props) => props.theme.text.footer)};
+    /* background-color: #f5f5f5; */
     letter-spacing: 0.5px;
     word-spacing: 1px;
   `;
 
 const FooterContents = styled.div`
     width: 1024px;
-    color: #989898;
+    color: ${((props) => props.theme.text.footer)};
     font-size: 13px;
   `;
 
 const FooterLink = styled.div`
     display: flex;
     text-align: center;
+
     a {
       text-decoration: none;
-      color: #989898;
+      color: ${((props) => props.theme.text.footer)};
     }
   `;
 
@@ -73,7 +74,6 @@ const FooterIcons = styled.div`
     display: flex;
     padding-top: 10px;
     width: 621px;
-    border-top: 1px solid #ebebeb;
   `;
 
 const FooterIconsEach = styled.div`
@@ -127,7 +127,7 @@ export default function Footer() {
           <span className="hotline">
             <Bold>고객행복센터 1235-5678</Bold>
             {' '}
-            오전 9시 - 새벽 3시
+            오전 9시 - 오후 6시
           </span>
         </FooterHotline>
 
@@ -157,9 +157,7 @@ export default function Footer() {
               전자우편주소 : plmography@plmography.kr
             </BrandInfoDetail>
             <BrandInfoCaution>
-              (주) 플모그래피는 통신판매중개자로서 통신판매의 당사자가
-              아니며, 상품의 구매, 이용 및 환불 등과 관련한 의무와 책임은 각
-              판매자에게 있습니다.
+              모든 콘텐츠의 저작권은 저작권자 또는 제공처에 있으며, 이를 무단으로 이용하는 경우 관련 법령에 따라 법적 책임을 질 수 있습니다.
             </BrandInfoCaution>
             <BrandCopyright>
               Copyright Plmography Corp. All rights reserved.

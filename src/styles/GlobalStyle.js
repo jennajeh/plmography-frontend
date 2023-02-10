@@ -10,14 +10,13 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     font-size: ${((props) => props.theme.size.default)};
+    background-color: ${((props) => props.theme.colors.background)};
 
-    max-width: 1680px;
-    min-width: 720px;
-    min-height: 100vh;
+    min-width: 1510px;
   }
 
   a {
-    color: ${((props) => props.theme.text.primary)};
+    color: ${((props) => props.theme.text.white)};
     
     text-decoration: none;
   }

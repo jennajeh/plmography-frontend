@@ -3,13 +3,8 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Container = styled.div`
-  display: inline-block;
-  vertical-align: middle;
-
-  img {
-    border-radius: 0.6em;
-    width: 7em;
-  }
+  display: flex;
+  gap: 16px;
 `;
 
 const ImgWrapper = styled.article`

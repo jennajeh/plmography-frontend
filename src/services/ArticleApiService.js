@@ -20,6 +20,14 @@ export default class ArticleApiService {
 
     return { data };
   }
+
+  async fetchRecentlyCreatedArticles() {
+    const { data } = await axios.get(`${baseUrl}/articles/sortByCreatedAt`);
+
+    const { articles } = data;
+
+    return { articles };
+  }
 }
 
 export const articleApiService = new ArticleApiService();

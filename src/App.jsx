@@ -14,7 +14,8 @@ import { postCommentApiService } from './services/PostCommentApiService';
 
 import defaultTheme from './styles/defaultTheme';
 
-import Header from './components/header-footer/Header';
+import Footer from './components/common/Footer';
+import Header from './components/common/Header';
 import HomePage from './pages/HomePage';
 import CommunityPage from './pages/CommunityPage';
 import ContentDetailPage from './pages/ContentDetailPage';
@@ -42,11 +43,10 @@ import ThemesDetailPage from './pages/ThemesDetailPage';
 import CommunityPostDetailPage from './pages/CommunityPostDetailPage';
 import PostCreatePage from './pages/PostCreatePage';
 import PostEditPage from './pages/PostEditPage';
-import Footer from './components/header-footer/Footer';
 
 const Main = styled.main`
   height: calc(100vh - 64px);
-  padding-inline: 2em;
+  padding-inline: 230px;
 `;
 
 export default function App() {
@@ -66,8 +66,8 @@ export default function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <GlobalStyle />
-      <Header />
       <Main>
+        <Header />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/themes" element={<ThemesPage />} />
@@ -100,8 +100,8 @@ export default function App() {
           {/* <Route path="/events/:id" element={<EventsDetailPage />} /> */}
           <Route path="/support" element={<SupportPage />} />
         </Routes>
+        <Footer />
       </Main>
-      <Footer />
     </ThemeProvider>
   );
 }

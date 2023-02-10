@@ -1,13 +1,14 @@
 /* eslint-disable react/prop-types */
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { BasePreview } from '../../assets/common';
 
 const ImgWrapper = styled.article`
   margin: 1em 0 1em 0;
 
 h4 {
   text-align: center;
-  font-size: ${((props) => props.theme.size.h6)};
+  font-size: 24px;
   color: ${((props) => props.theme.text.primary)};
 }
 
@@ -19,7 +20,7 @@ h4 {
 
 export default function HotPost({ hitPost }) {
   const {
-    id: postId, title, image, writer,
+    id: postId, title, image,
   } = hitPost;
 
   function textLengthOverCut(text, length, lastText) {
@@ -34,7 +35,7 @@ export default function HotPost({ hitPost }) {
         <ImgWrapper>
           {image ? (
             <img src={image} alt="img" />
-          ) : <img src={writer.profileImage} alt="img" />}
+          ) : <img src={BasePreview} alt="img" />}
           <h4>{textLengthOverCut(title, '25', '...')}</h4>
         </ImgWrapper>
       </Link>
