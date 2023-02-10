@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { userApiService } from '../services/UserApiService';
 import Store from './Store';
 
@@ -11,19 +12,22 @@ export default class UserStore extends Store {
     this.nickname = '';
     this.profileImage = '';
 
+    this.countEmail = 0;
+    this.countNickname = 0;
+
     this.loginStatus = '';
     this.signupStatus = '';
     this.editStatus = '';
   }
 
   async signup({
-    email, nickname, password,
+    email, nickname, password, passwordCheck,
   }) {
     this.changeSignupStatus('processing');
 
     try {
       const { data } = await userApiService.createUser({
-        email, nickname, password,
+        email, nickname, password, passwordCheck,
       });
 
       this.changeSignupStatus('successful');
@@ -76,22 +80,40 @@ export default class UserStore extends Store {
     this.publish();
   }
 
-  async changeProfile(nickname, formData) {
-    this.changeEditStatus('processing');
+  async checkDuplicate({ email, nickname }) {
+    const { countEmail, countNickname } = await userApiService.countEmailAndNickname({ email, nickname });
+
+    this.countEmail = countEmail;
+    this.countNickname = countNickname;
+
+    this.publish();
+  }
+
+  async changeProfile({ nickname, image }) {
+    this.startModify();
 
     try {
-      const { profileImage } = await userApiService.uploadImage(formData);
+      if (typeof image !== 'string') {
+        const formData = new FormData();
 
-      const { data } = await userApiService.changeProfile(nickname, profileImage);
+        formData.append('multipartFile', image);
 
-      this.nickname = data.nickname;
-      this.profileImage = data.profileImage;
+        const profileImage = await userApiService.uploadImage(formData);
 
-      this.changeEditStatus('successful');
+        await userApiService.changeProfile({ nickname, profileImage });
+
+        this.completeModify();
+
+        return;
+      }
+
+      await userApiService.changeProfile({ nickname, profileImage: image });
+
+      this.completeModify();
 
       this.publish();
     } catch (e) {
-      this.changeEditStatus('failed');
+      this.failModify();
 
       this.publish();
     }
@@ -121,14 +143,20 @@ export default class UserStore extends Store {
     this.publish();
   }
 
-  resetEditStatus() {
-    this.editStatus = '';
-
-    this.publish();
+  startModify() {
+    this.editStatus = 'processing';
   }
 
-  changeEditStatus(status) {
-    this.editStatus = status;
+  completeModify() {
+    this.editStatus = 'successful';
+  }
+
+  failModify() {
+    this.editStatus = 'failed';
+  }
+
+  resetEditStatus() {
+    this.editStatus = '';
 
     this.publish();
   }

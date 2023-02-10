@@ -1,9 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import usePostEditFormStore from '../../hooks/usePostEditFormStore';
-import usePostFormStore from '../../hooks/usePostFormStore';
 import usePostStore from '../../hooks/usePostStore';
 import Input from '../common/Input';
 import Modal from '../common/Modal';

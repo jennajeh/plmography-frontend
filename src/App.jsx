@@ -42,6 +42,7 @@ import ThemesDetailPage from './pages/ThemesDetailPage';
 import CommunityPostDetailPage from './pages/CommunityPostDetailPage';
 import PostCreatePage from './pages/PostCreatePage';
 import PostEditPage from './pages/PostEditPage';
+import Footer from './components/header-footer/Footer';
 
 const Main = styled.main`
   height: calc(100vh - 64px);
@@ -91,7 +92,6 @@ export default function App() {
           <Route path="/users/:id/wishes" element={<UserWishesPage />} />
           <Route path="/users/:id/watched" element={<UserWatchedPage />} />
           <Route path="/users/:id/reviews" element={<UserReviewsPage />} />
-          {/* <Route path="/users/:id/reset-password" element={<ResetPasswordPage />} /> */}
           {/* <Route path="/users/:id/services/edit" element={<ServiceChoicePage />} /> */}
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/greeting" element={<GreetingPage />} />
@@ -101,7 +101,7 @@ export default function App() {
           <Route path="/support" element={<SupportPage />} />
         </Routes>
       </Main>
-      {/* <Footer /> */}
+      <Footer />
     </ThemeProvider>
   );
 }

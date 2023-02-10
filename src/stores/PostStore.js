@@ -56,6 +56,8 @@ export default class PostStore extends Store {
 
         await postApiService.createPost(title, postBody, img);
 
+        this.completeWrite();
+
         return;
       }
 
@@ -134,6 +136,8 @@ export default class PostStore extends Store {
         const img = await postApiService.upload(formData);
 
         await postApiService.modifyPost(postId, title, postBody, img);
+
+        this.completeModify();
 
         return;
       }

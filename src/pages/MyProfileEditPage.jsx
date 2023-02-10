@@ -22,11 +22,11 @@ export default function MyProfileEditPage() {
   const loadData = async () => {
     await userStore.fetchMe();
     profileEditFormStore.reset();
-    profileEditFormStore.fillFields(userStore.user);
   };
 
   useEffect(() => {
-    loadData();
+    // loadData();
+    userStore.fetchMe();
   }, []);
 
   if (!accessToken) {

@@ -53,7 +53,7 @@ export default function MyProfile() {
       <Wrapper>
         <h1>마이 페이지</h1>
         <div>
-          <Link to="/myProfile/edit">
+          <Link to="/profile/edit">
             정보 수정하기
           </Link>
           <div>
