@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import useArticleStore from '../../hooks/useArticleStore';
 import useContentStore from '../../hooks/useContentStore';
+import useThemeStore from '../../hooks/useThemeStore';
 import Title from '../common/Title';
 
 const ContentWrapper = styled.div`
@@ -37,35 +37,30 @@ const TitleBox = styled.div`
   }
 `;
 
-export default function ContentDetailArticle() {
+export default function ContentDetailCollection() {
   const contentStore = useContentStore();
-  const articleStore = useArticleStore();
-  const { content } = contentStore;
-  const { articles } = articleStore;
+  const themeStore = useThemeStore();
 
-  const existArticle = articles.filter((article) => article.contentId === content.tmdbId);
+  const { content } = contentStore;
+  const { themes } = themeStore;
+
+  const existTheme = themes.filter((theme) => theme.id === content.themeId);
 
   return (
     <div>
-      {existArticle.length !== 0 && (
+      {existTheme.length !== 0 && (
         <ul>
-          {existArticle.map((article) => (
-            <li key={article.id}>
-              <Title>이 작품이 담긴 이야기</Title>
-              <Link to={`/articles/${article.contentId}`}>
+          {existTheme.map((theme) => (
+            <li key={theme.id}>
+              <Title>이 작품이 담긴 컬렉션</Title>
+              <Link to={`/themes/${theme.id}`}>
                 <ContentWrapper>
                   <SmallPosterBox>
-                    <img
-                      src={article.image}
-                      alt={article.title}
-                    />
+                    <img src={theme.image} alt={theme.title} />
                   </SmallPosterBox>
                   <TitleBox>
                     <p>
-                      {content.korTitle}
-                    </p>
-                    <p>
-                      {article.title}
+                      {theme.title}
                     </p>
                   </TitleBox>
                 </ContentWrapper>

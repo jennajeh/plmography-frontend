@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 const FooterContainer = styled.div`
     margin-top: 140px;
-    padding: 40px;
+    padding-top: 40px;
     border-top: 1px solid ${((props) => props.theme.text.footer)};
     letter-spacing: 0.5px;
     word-spacing: 1px;

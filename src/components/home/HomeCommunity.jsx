@@ -38,7 +38,7 @@ export default function HomeCommunity() {
 
   return (
     <div>
-      <Title>커뮤니티 인기글 🔥</Title>
+      <Title>커뮤니티 인기글</Title>
       {hitPosts.length ? (
         <List>
           {hitPosts.map((hitPost) => (

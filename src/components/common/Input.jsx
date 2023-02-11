@@ -3,7 +3,8 @@ import styled from 'styled-components';
 
 const StyledInput = styled.input`
   width: 100%;
-  padding: 1.5em;
+  padding: 20px;
+  margin-bottom: 20px;
   border: ${(props) => (`1px solid${props.error ? '#FF424D' : '#D8D8D8'}`)};
   color: ${((props) => props.theme.text.gray)};
   & + & {
@@ -21,6 +22,7 @@ const Label = styled.label`
   font-weight: 700;
   display: block;
   color: inherit;
+  margin-bottom: 20px;
 `;
 
 const Required = styled.span`

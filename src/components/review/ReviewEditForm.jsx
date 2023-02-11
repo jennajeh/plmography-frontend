@@ -2,10 +2,50 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import StarRatings from 'react-star-ratings';
+import styled from 'styled-components';
 import useContentStore from '../../hooks/useContentStore';
 import useReviewEditFormStore from '../../hooks/useReviewEditFormStore';
 import useReviewStore from '../../hooks/useReviewStore';
 import Input from '../common/Input';
+
+const Container = styled.div`
+  width: 700px;
+  height: 400px;
+`;
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: 30px;
+  padding: 10px;
+`;
+
+const Title = styled.h1`
+  font-size: 25px;
+  font-weight: 600;
+  margin: 30px 0;
+  color: ${((props) => props.theme.text.white)};
+`;
+
+const ButtonBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 15px;
+  gap: 5px;
+`;
+
+const Button = styled.button`
+  width: 70px;
+  height: 30px;
+  border-radius: 2px;
+  border: none;
+  margin: 5px;
+  color: ${((props) => props.theme.text.white)};
+  background-color: ${((props) => props.theme.text.sixthGrey)};
+  border-radius: 5px;
+`;
 
 export default function ReviewEditForm() {
   const navigate = useNavigate();
@@ -42,33 +82,43 @@ export default function ReviewEditForm() {
   }, []);
 
   return (
-    <form onSubmit={handleSubmit}>
-      <StarRatings
-        rating={reviewEditFormStore.starRate}
-        starRatedColor="#ffc501"
-        starHoverColor="#ffe899"
-        starDimension="40px"
-        starSpacing="15px"
-        changeRating={(value) => reviewEditFormStore.changeStarRate(value)}
-        isSelectable
-      />
-      <span>
-        {reviewEditFormStore.starRate}
-        점
-      </span>
-      <Input
-        name="body"
-        label="내가 쓴 리뷰 수정"
-        type="text"
-        value={reviewEditFormStore.body || ''}
-        onChange={(e) => reviewEditFormStore.changeBody(e.target.value)}
-      />
-      <button type="button" onClick={() => navigate(-1)}>
-        취소하기
-      </button>
-      <button type="submit">
-        수정하기
-      </button>
-    </form>
+    <Container>
+      <Wrapper>
+        <Title>리뷰 수정하기</Title>
+        <form onSubmit={handleSubmit}>
+          <StarRatings
+            rating={reviewEditFormStore.starRate}
+            starRatedColor="#0bdfaa"
+            starHoverColor="#1f8a6e"
+            starDimension="40px"
+            starSpacing="15px"
+            changeRating={(value) => reviewEditFormStore.changeStarRate(value)}
+            isSelectable
+          />
+          <span>
+            {reviewEditFormStore.starRate}
+            점
+          </span>
+          <Input
+            name="body"
+            label="내가 쓴 리뷰 수정"
+            type="text"
+            value={reviewEditFormStore.body || ''}
+            onChange={(e) => reviewEditFormStore.changeBody(e.target.value)}
+          />
+          <ButtonBox>
+            <Button
+              type="button"
+              onClick={() => navigate(-1)}
+            >
+              취소하기
+            </Button>
+            <Button type="submit">
+              수정하기
+            </Button>
+          </ButtonBox>
+        </form>
+      </Wrapper>
+    </Container>
   );
 }

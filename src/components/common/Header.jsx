@@ -34,7 +34,7 @@ li {
 
 const StyledLink = styled(Link)`
   color: ${((props) => props.theme.colors.white)};
-  font-size: 22px;
+  font-size: 20px;
 
   :hover {
     color: ${((props) => props.theme.colors.first)}
@@ -76,6 +76,21 @@ const Button = styled.button`
   color: ${((props) => props.theme.text.white)};
   background: none;
   border: none;
+
+  :hover {
+    color: ${((props) => props.theme.colors.first)}
+  }
+`;
+
+const TestButton = styled.button`
+  font-size: 14px;
+  font-weight: bold;
+  color: ${((props) => props.theme.text.white)};
+  background: none;
+  border: 1px solid;
+  border-radius: 10px;
+  width: 80px;
+  height: 30px;
 
   :hover {
     color: ${((props) => props.theme.colors.first)}
@@ -163,29 +178,29 @@ export default function Header() {
           <SideMenu>
             <List>
               <li>
-                <Button
+                <TestButton
                   type="button"
                   onClick={handleClickTestLogin}
                 >
                   체험하기
-                </Button>
+                </TestButton>
               </li>
               <li>
-                <StyledLink to="/login">로그인</StyledLink>
+                <StyledUserLink to="/login">로그인</StyledUserLink>
               </li>
               <li>
-                <StyledLink to="/events">이벤트</StyledLink>
+                <StyledUserLink to="/events">이벤트</StyledUserLink>
               </li>
               <li>
-                <StyledLink to="/login">작품 제안</StyledLink>
+                <StyledUserLink to="/login">작품 제안</StyledUserLink>
               </li>
               <li>
-                <StyledLink to="/">
+                <StyledUserLink to="/">
                   <img
                     src={LogoutProfile}
                     alt="LogoutProfile"
                   />
-                </StyledLink>
+                </StyledUserLink>
               </li>
             </List>
           </SideMenu>

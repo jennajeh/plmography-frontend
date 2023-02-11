@@ -1,14 +1,45 @@
-const PLATFORMS = {
-  id: 1,
-  title: '플랫폼',
-  sections: [
-    { code: 'netflix', name: '넷플릭스', image: 'https://plmographybucket.s3.ap-northeast-2.amazonaws.com/commom/btn_netflix.png' },
-    { code: 'wavve', name: '웨이브', image: 'https://plmographybucket.s3.ap-northeast-2.amazonaws.com/commom/btn_wavve.png' },
-    { code: 'watcha', name: '왓챠', image: 'https://plmographybucket.s3.ap-northeast-2.amazonaws.com/commom/btn_watcha.png' },
-    { code: 'disney', name: '디즈니플러스', image: 'https://plmographybucket.s3.ap-northeast-2.amazonaws.com/commom/btn_disneyplus.png' },
-    { code: 'tving', name: '티빙', image: 'https://plmographybucket.s3.ap-northeast-2.amazonaws.com/commom/btn_tving.png' },
-    { code: 'apple', name: '애플티비', image: 'https://plmographybucket.s3.ap-northeast-2.amazonaws.com/commom/btn_appletv.png' },
-  ],
-};
+import {
+  BtnAppletv,
+  BtnDisneyplus, BtnNetflix, BtnTving, BtnWatcha, BtnWavve,
+} from '../assets/platform';
+
+const PLATFORMS = [
+  {
+    id: 1,
+    name: 'netflix',
+    title: '넷플릭스',
+    image: BtnNetflix,
+  },
+  {
+    id: 2,
+    name: 'wavve',
+    title: '웨이브',
+    image: BtnWavve,
+  },
+  {
+    id: 3,
+    name: 'watcha',
+    title: '왓챠',
+    image: BtnWatcha,
+  },
+  {
+    id: 4,
+    name: 'disneyplus',
+    title: '디즈니 플러스',
+    image: BtnDisneyplus,
+  },
+  {
+    id: 5,
+    name: 'tving',
+    title: '티빙',
+    image: BtnTving,
+  },
+  {
+    id: 6,
+    name: 'tv.apple',
+    title: '애플TV',
+    image: BtnAppletv,
+  },
+];
 
 export default PLATFORMS;

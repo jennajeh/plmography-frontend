@@ -48,10 +48,10 @@ const InfoBox = styled.div`
 const RateBox = styled.div`
   display: flex;
   flex-direction: row;
-  margin: 0 20px;
+  align-items: center;
+  margin: 0 0 7px 20px;
 
   img {
-    margin: 0 0 10px 0;
     width: 20px;
   }
 
@@ -71,7 +71,7 @@ export default function HomeExpireContents() {
 
   return (
     <>
-      <Title>2월 넷플릭스 종료 예정작 ⏳ </Title>
+      <Title>2월 넷플릭스 종료 예정작</Title>
       <Container>
         <ContentsWrapper>
           <ImageBox>

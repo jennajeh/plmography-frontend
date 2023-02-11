@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 import styled from 'styled-components';
 import useArticleStore from '../../hooks/useArticleStore';
 import ArticleItem from './ArticleItem';
@@ -36,7 +37,7 @@ export default function SortedArticleList() {
 
   return (
     <div>
-      <Title>볼까 말까 고민된다면? 🧐</Title>
+      <Title>볼까 말까 고민된다면?</Title>
       {sortedArticles.length ? (
         <List>
           {sortedArticles.map((article) => (
