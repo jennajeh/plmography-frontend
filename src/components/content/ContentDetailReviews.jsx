@@ -1,12 +1,16 @@
+import styled from 'styled-components';
 import MyReview from '../review/MyReview';
 import OtherReview from '../review/OtherReview';
 
+const Container = styled.div`
+  color: ${((props) => props.theme.text.white)};
+`;
+
 export default function ContentDetailReviews() {
   return (
-    <div>
-      <h3 style={{ color: 'red' }}>리뷰</h3>
+    <Container>
       <MyReview />
       <OtherReview />
-    </div>
+    </Container>
   );
 }

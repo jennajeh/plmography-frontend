@@ -1,14 +1,18 @@
 /* eslint-disable react/prop-types */
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useLocalStorage } from 'usehooks-ts';
+import {
+  Eye, Heart, ImdbLogo, PencilSimple, ReviewStar, TomatoLogo,
+} from '../../assets/contents';
 import useContentStore from '../../hooks/useContentStore';
 import useReviewStore from '../../hooks/useReviewStore';
 
-const HeaderWrapper = styled.div`
-  height: 250px;
+const ImageWrapper = styled.div`
   width: 100%;
+  height: 600px;
   position: relative;
+  margin-top: 50px;
   margin-bottom: 4px;
 
   z-index: 1;
@@ -16,13 +20,12 @@ const HeaderWrapper = styled.div`
   overflow: hidden;
 `;
 
-const BackgroundImageBox = styled.div`
+const BackgroundImage = styled.div`
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: 40%;
 
   width: 100%;
-  /* height: 100%; */
 
   opacity: 0.9;
 
@@ -43,12 +46,19 @@ const ContentHeaderBox = styled.div`
   bottom: 0;
   z-index: 100;
   display: flex;
-  justify-content: space-between;
+  justify-content: right;
   align-items: flex-end;
 `;
 
+const HeaderWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-block: 50px;
+  padding-bottom: 50px;
+  border-bottom: 1px solid ${((props) => props.theme.colors.second)};;
+`;
+
 const TitleWrapper = styled.div`
-  vertical-align: middle;
   width: calc(100% - 107px);
 
   h3 {
@@ -57,13 +67,13 @@ const TitleWrapper = styled.div`
     font-weight: 700;
     line-height: 28px;
     color: #efefef;
-    letter-spacing: -.4px;
+    letter-spacing: 1px;
   }
 
   p {
     font-size: 14px;
     color: #c3cad6;
-    letter-spacing: -.1px;
+    letter-spacing: 1px;
     line-height: 20px;
     font-weight: 400;
   }
@@ -77,6 +87,7 @@ const RatingWrapper = styled.div`
 const LogoBox = styled.div`
   display: inline-block;
   vertical-align: middle;
+  padding-right: 15px;
 
   img {
     width: 25px;
@@ -118,18 +129,39 @@ const SmallPosterBox = styled.div`
 const MyButtonArea = styled.div`
   display: flex;
   margin: 1em;
+  gap: 1em;
+`;
+
+const Button = styled.button`
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 85px;
+  height: 35px;
+  border: none;
+  border-radius: 0.7em;
+  background-color: ${((props) => props.theme.text.sixthGrey)};
+  animation-fill-mode: forwards;
+
+  .active {
+    background-color: ${((props) => props.theme.colors.first)};
+  }
+  
+  p {
+    color: ${((props) => props.theme.text.white)};
+    font-size: 13px;
+  }
+
+  img {
+    width: 17px;
+  }
 `;
 
 export default function ContentDetailHeader() {
-  const [accessToken] = useLocalStorage('accessToken', '');
   const navigate = useNavigate();
-
-  const rottenTomato = 'https://plmographybucket.s3.ap-northeast-2.amazonaws.com/rotten-tomato.png';
-
-  const imdbLogo = 'https://plmographybucket.s3.ap-northeast-2.amazonaws.com/imdb-logo.png';
-
-  const contentStore = useContentStore();
   const reviewStore = useReviewStore();
+  const contentStore = useContentStore();
+  const [accessToken] = useLocalStorage('accessToken', '');
 
   const { content } = contentStore;
 
@@ -139,6 +171,17 @@ export default function ContentDetailHeader() {
 
   const sameContentReviews = reviewStore.isMySameContentReview(tmdbId);
   const notDeletedReview = reviewStore.isDeletedMyReviews(sameContentReviews);
+
+  function changeButton(e) {
+    const btns = document.querySelectorAll('.button');
+    btns.forEach((btn, i) => {
+      if (e.currentTarget === btn) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+  }
 
   const handleClickWriteReview = () => {
     if (!accessToken) {
@@ -156,93 +199,101 @@ export default function ContentDetailHeader() {
     navigate('/reviews/write');
   };
 
-  const handleClickWish = async () => {
+  const handleClickWish = async (e) => {
     if (!accessToken) {
       navigate('/login');
 
       return;
     }
+
+    changeButton(e);
 
     await contentStore.toggleWish(tmdbId);
   };
 
-  const handleClickWatched = async () => {
+  const handleClickWatched = async (e) => {
     if (!accessToken) {
       navigate('/login');
 
       return;
     }
+
+    changeButton(e);
 
     await contentStore.toggleWatched(tmdbId);
   };
 
-  const handleClickFavorite = async () => {
+  const handleClickFavorite = async (e) => {
     if (!accessToken) {
       navigate('/login');
 
       return;
     }
+
+    changeButton(e);
 
     await contentStore.toggleFavorite(tmdbId);
   };
 
   return (
     <>
-      <HeaderWrapper>
-        <BackgroundImageBox>
+      <ImageWrapper>
+        <BackgroundImage>
           <img src={imageUrl} alt={korTitle} />
-        </BackgroundImageBox>
+        </BackgroundImage>
         <ContentHeaderBox>
-          <TitleWrapper>
-            <h3>{korTitle}</h3>
-            <p>
-              <span>{engTitle}</span>
-              {' '}
-              -
-              {' '}
-              <span>{releaseDate}</span>
-            </p>
-            <RatingWrapper>
-              <LogoBox>
-                <img src={rottenTomato} alt="rotten-tomato" />
-                {' '}
-                <p>82%</p>
-              </LogoBox>
-              <LogoBox>
-                <img src={imdbLogo} alt="imdb-logo" />
-                {' '}
-                <p>7.9</p>
-              </LogoBox>
-              <LogoBox>
-                <p>⭐️</p>
-                {' '}
-                <p>4.0</p>
-              </LogoBox>
-            </RatingWrapper>
-          </TitleWrapper>
           <SmallPosterBox>
             <img src={imageUrl} alt="poster" />
           </SmallPosterBox>
         </ContentHeaderBox>
+      </ImageWrapper>
+      <HeaderWrapper>
+        <TitleWrapper>
+          <h3>{korTitle}</h3>
+          <p>
+            <span>{engTitle}</span>
+            {' '}
+            -
+            {' '}
+            <span>{releaseDate}</span>
+          </p>
+          <RatingWrapper>
+            <LogoBox>
+              <img src={TomatoLogo} alt="TomatoLogo" />
+              {' '}
+              <p>82%</p>
+            </LogoBox>
+            <LogoBox>
+              <img src={ImdbLogo} alt="ImdbLogo" />
+              {' '}
+              <p>7.9</p>
+            </LogoBox>
+            <LogoBox>
+              <img src={ReviewStar} alt="ReviewStar" />
+              {' '}
+              <p>4.0</p>
+            </LogoBox>
+          </RatingWrapper>
+        </TitleWrapper>
+        <MyButtonArea>
+          <Button className="active" type="button" onClick={handleClickWish}>
+            <img src={Heart} alt="imdb-logo" />
+            <p>찜하기</p>
+          </Button>
+          <Button className="active" type="button" onClick={handleClickWatched}>
+            <img src={Eye} alt="imdb-logo" />
+            <p>봤어요</p>
+          </Button>
+          <Button className="active" type="button" onClick={handleClickFavorite}>
+            <img src={Heart} alt="imdb-logo" />
+            <p>인생작품</p>
+          </Button>
+          <Button type="button" onClick={handleClickWriteReview}>
+            <img src={PencilSimple} alt="imdb-logo" />
+            <p>리뷰쓰기</p>
+          </Button>
+        </MyButtonArea>
       </HeaderWrapper>
-      <MyButtonArea>
-        <button type="button" onClick={handleClickWish}>
-          {/* 이미지 넣기 */}
-          <p>찜하기</p>
-        </button>
-        <button type="button" onClick={handleClickFavorite}>
-          {/* 이미지 넣기 */}
-          <p>인생 작품 등록하기</p>
-        </button>
-        <button type="button" onClick={handleClickWatched}>
-          {/* 이미지 넣기 */}
-          <p>봤어요</p>
-        </button>
-        <button type="button" onClick={handleClickWriteReview}>
-          {/* 이미지 넣기 */}
-          <p>리뷰쓰기</p>
-        </button>
-      </MyButtonArea>
     </>
   );
 }

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
@@ -19,15 +20,38 @@ const Dialog = styled.div`
   height: 10em;
   width: 18em;
   background-color: white;
-  border-radius: 3px;
+  border-radius: 10px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  
   p {
+    color: black;
     font-size: .9em;
   }
 `;
 
+const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  gap: 10px;
+`;
+
+const ButtonBox = styled.div`
+  display: flex;
+  gap: 5px;
+`;
+
 const Button = styled.button`
-  width: 47%;
+  width: 70px;
+  height: 30px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  border: none;
+  color: ${((props) => props.theme.text.white)};
+  background-color: ${((props) => props.theme.text.sixthGrey)};
 `;
 
 export default function Modal({ buttonName, content, onClose }) {
@@ -71,11 +95,26 @@ export default function Modal({ buttonName, content, onClose }) {
       {isOpen && (
         <Container>
           <Dialog ref={modalRef}>
-            <div>
-              {content}
-            </div>
-            <Button type="button" onClick={handleClickDelete}>예</Button>
-            <Button type="button" onClick={() => setIsOpen(false)}>아니오</Button>
+            <Content>
+              <p>
+                {content}
+              </p>
+              <ButtonBox>
+                <Button
+                  type="button"
+                  onClick={handleClickDelete}
+                >
+                  예
+
+                </Button>
+                <Button
+                  type="button"
+                  onClick={() => setIsOpen(false)}
+                >
+                  아니오
+                </Button>
+              </ButtonBox>
+            </Content>
           </Dialog>
         </Container>
       )}

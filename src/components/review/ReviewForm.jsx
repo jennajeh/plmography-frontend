@@ -10,31 +10,42 @@ import useReviewFormStore from '../../hooks/useReviewFormStore';
 import useContentStore from '../../hooks/useContentStore';
 
 const Container = styled.div`
-  width: 30em;
+  width: 700px;
+  height: 400px;
 `;
 
-const RateSection = styled.div`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  padding-block: 1.5em;
-  label {
-    color: #A0A0A0;
-    font-weight: 400;
-    width: 70px;
-    margin-bottom: .5em;
-  }
-  select {
-    width: 200px;
-    height: 40px;
-    padding-inline: .5em;
-    border: 1px #A0A0A0 solid;
-  }
+  text-align: center;
+  margin: 30px;
+  padding: 10px;
 `;
 
-const Error = styled.p`
-  font-size: .9em;
-  color: #ff0000;
-  margin-top: .7em;
+const Title = styled.h1`
+  font-size: 25px;
+  font-weight: 600;
+  margin: 30px 0;
+  color: ${((props) => props.theme.text.white)};
+`;
+
+const ButtonBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 15px;
+  gap: 5px;
+`;
+
+const Button = styled.button`
+  width: 70px;
+  height: 30px;
+  border-radius: 2px;
+  border: none;
+  margin: 5px;
+  color: ${((props) => props.theme.text.white)};
+  background-color: ${((props) => props.theme.text.sixthGrey)};
+  border-radius: 5px;
 `;
 
 export default function ReviewForm() {
@@ -45,6 +56,7 @@ export default function ReviewForm() {
 
   const { content } = contentStore;
   const contentId = content.tmdbId;
+  console.log(content);
 
   const { body, starRate } = reviewFormStore;
 
@@ -62,13 +74,6 @@ export default function ReviewForm() {
     navigate(`/contents/${contentId}`);
   };
 
-  // const handleRateChange = (e) => {
-  //   const selectedRate = e.target.value;
-  //   reviewFormStore.setStarRate(selectedRate);
-
-  //   reviewFormStore.validateStarRate();
-  // };
-
   const handleClickCancel = () => {
     reviewFormStore.reset();
     reviewStore.reset();
@@ -78,46 +83,31 @@ export default function ReviewForm() {
 
   return (
     <Container>
-      <h1>리뷰 작성하기</h1>
-      <form onSubmit={handleSubmit}>
-        <StarRatings
-          rating={starRate}
-          starRatedColor="#ffc501"
-          starHoverColor="#ffe899"
-          starDimension="40px"
-          starSpacing="15px"
-          changeRating={(value) => reviewFormStore.changeStarRate(value)}
-          isSelectable
-        />
-        <span>
-          {starRate}
-          점
-        </span>
-        {/* <RateSection>
-          <label htmlFor="rate-select">평점</label>
-          <select id="rate-select" onChange={handleRateChange}>
-            <option defaultValue hidden>선택</option>
-            <option>⭐️⭐️⭐️⭐️⭐️</option>
-            <option>⭐️⭐️⭐️⭐️</option>
-            <option>⭐️⭐️⭐️</option>
-            <option>⭐️⭐️</option>
-            <option>⭐️</option>
-          </select>
-          {reviewFormStore.isRateEmpty && (
-            <Error>{reviewFormStore.errors.starRate}</Error>
-          )}
-        </RateSection> */}
-        <Input
-          name="body"
-          label="리뷰 내용"
-          type="text"
-          value={reviewFormStore.body || ''}
-          onChange={(e) => reviewFormStore.changeBody(e.target.value)}
-          errorMessage={reviewFormStore.errors.body}
-        />
-        <button type="submit">등록하기</button>
-        <button type="button" onClick={handleClickCancel}>취소하기</button>
-      </form>
+      <Wrapper>
+        <Title>리뷰 작성하기</Title>
+        <form onSubmit={handleSubmit}>
+          <StarRatings
+            rating={starRate}
+            starRatedColor="#0bdfaa"
+            starHoverColor="#1f8a6e"
+            starDimension="40px"
+            starSpacing="15px"
+            changeRating={(value) => reviewFormStore.changeStarRate(value)}
+            isSelectable
+          />
+          <Input
+            name="body"
+            type="text"
+            value={reviewFormStore.body || ''}
+            onChange={(e) => reviewFormStore.changeBody(e.target.value)}
+            errorMessage={reviewFormStore.errors.body}
+          />
+          <ButtonBox>
+            <Button type="submit">등록하기</Button>
+            <Button type="button" onClick={handleClickCancel}>취소하기</Button>
+          </ButtonBox>
+        </form>
+      </Wrapper>
     </Container>
   );
 }

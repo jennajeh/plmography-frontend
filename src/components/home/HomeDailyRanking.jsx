@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import useContentStore from '../../hooks/useContentStore';
@@ -64,7 +65,7 @@ export default function HomeDailyRanking() {
 
   return (
     <div>
-      <Title>오늘의 랭킹 🏅</Title>
+      <Title>오늘의 TOP 6</Title>
       {contents.length ? (
         <List>
           {contents.map((content) => (

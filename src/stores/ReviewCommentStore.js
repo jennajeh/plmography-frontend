@@ -7,6 +7,7 @@ export default class ReviewCommentStore extends Store {
 
     this.reviewComments = [];
     this.reviewComment = {};
+    this.selectedReviewId = 0;
 
     this.isCommentsLoading = false;
     this.isCommentLoading = false;
@@ -20,6 +21,7 @@ export default class ReviewCommentStore extends Store {
   reset() {
     this.reviewComments = [];
     this.reviewComment = {};
+    this.selectedReviewId = 0;
 
     this.isCommentsLoading = false;
     this.isCommentLoading = false;
@@ -99,8 +101,10 @@ export default class ReviewCommentStore extends Store {
     this.publish();
   }
 
-  changeCreateCommentButtonStatus() {
+  changeCreateCommentButtonStatus(reviewId) {
     this.createCommentButtonOpened = !this.createCommentButtonOpened;
+
+    this.selectedReviewId = reviewId;
 
     this.publish();
   }

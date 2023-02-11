@@ -49,7 +49,12 @@ export default function Posts() {
         <SearchBar>
           <form onSubmit={handleSearchPosts}>
             <label hidden htmlFor="input-search">커뮤니티 검색</label>
-            <input name="search" placeholder="제목 혹은 내용을 입력하세요" id="input-search" type="text" />
+            <input
+              name="search"
+              placeholder="제목 혹은 내용을 입력하세요"
+              id="input-search"
+              type="text"
+            />
             <button type="submit">검색</button>
           </form>
         </SearchBar>

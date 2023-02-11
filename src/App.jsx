@@ -45,7 +45,6 @@ import PostCreatePage from './pages/PostCreatePage';
 import PostEditPage from './pages/PostEditPage';
 
 const Container = styled.div`
-  margin: 0 auto;
   min-height: 100vh;
 `;
 
