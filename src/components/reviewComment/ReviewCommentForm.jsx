@@ -6,8 +6,8 @@ import Input from '../common/Input';
 
 const CommentBox = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
   gap: 5px;
 `;
 
@@ -36,6 +36,7 @@ export default function ReviewCommentForm({ onSubmit }) {
     <form onSubmit={onSubmit}>
       <CommentBox>
         <Input
+          height={30}
           name="input-comment"
           type="text"
           value={reviewCommentFormStore.body || ''}

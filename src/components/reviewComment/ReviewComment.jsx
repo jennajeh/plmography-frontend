@@ -10,10 +10,6 @@ import dateFormat from '../../utils/dateFormat';
 import Modal from '../common/Modal';
 import ReviewCommentForm from './ReviewCommentForm';
 
-const Container = styled.div`
-  
-`;
-
 const List = styled.ul`
   display: flex;
   flex-direction: column;
@@ -86,8 +82,14 @@ export default function ReviewComment({ review }) {
     }
   };
 
+  if (!user) {
+    return (
+      <p>Loading...</p>
+    );
+  }
+
   return (
-    <Container>
+    <div>
       {createCommentButtonOpened && commentNotDeleted.length !== 0 && (
         <List>
           {commentNotDeleted.map((comment) => (
@@ -121,11 +123,11 @@ export default function ReviewComment({ review }) {
           ))}
         </List>
       )}
-      {createCommentButtonOpened && (
+      {createCommentButtonOpened && commentNotDeleted.length && (
         <ReviewCommentForm
           onSubmit={handleSubmitCreateComment}
-        />
+        />,
       )}
-    </Container>
+    </div>
   );
 }

@@ -9,22 +9,9 @@ import HotPosts from '../components/community/HotPosts';
 import Posts from '../components/community/Posts';
 import MyPostInformation from '../components/community/MyPostInformation';
 
-const Container = styled.div`
-  min-height: calc(100vh - env(safe-area-inset-bottom) - 56px);
-  max-width: 70em;
-  margin: 0 auto;
-  padding-bottom: calc(env(safe-area-inset-bottom) + 56px);
-  overflow: hidden;
-`;
-
-const HotPostWrapper = styled.div`
-  margin: 1em;
-  border-bottom: 1px solid #c9c9c9;
-`;
-
 const PostsWrapper = styled.div`
-  margin: 1em;
-  border-bottom: 1px solid #c9c9c9;
+  display: grid;
+  grid-template-columns: 6fr 3fr;
 `;
 
 export default function CommunityPage() {
@@ -52,14 +39,14 @@ export default function CommunityPage() {
   }, []);
 
   return (
-    <Container>
-      <HotPostWrapper>
+    <div>
+      <div>
         <HotPosts />
-      </HotPostWrapper>
+      </div>
       <PostsWrapper>
         <Posts />
         <MyPostInformation />
       </PostsWrapper>
-    </Container>
+    </div>
   );
 }

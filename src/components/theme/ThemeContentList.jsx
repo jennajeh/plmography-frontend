@@ -21,26 +21,36 @@ const Main = styled.div`
 const Title = styled.h1`
   display: flex;
   justify-content: center;
-  font-size: ${((props) => props.theme.size.h4)};
+  color: white;
+  font-size: 24px;
   font-weight: bold;
-  margin-top: 1em;
+  margin: 1em 0 2em 0;
 `;
 
 const Tags = styled.ul`
   display: flex;
   align-items: center;
-  li{
+  
+  span {
+    color: ${((props) => props.theme.text.white)};
+    font-size: 14px;
+    font-weight: bold;
+    margin: 1em;
+  }
+
+  li {
     margin-inline-end: 1rem;
   }
 `;
 
 const PlatformFilter = styled.button`
   border: none;
-  padding: .5rem 1rem;
+  margin-block: 1em;
+  background-color: transparent;
+  `;
 
-  img {
-    width: 5em;
-  }
+const PlatformImage = styled.img`
+  width: 4em;
 `;
 
 const List = styled.ul`
@@ -55,13 +65,6 @@ const Error = styled.p`
   font-weight: 700;
   font-size: ${((props) => props.theme.size.h4)};
   text-align: center;
-`;
-
-const RefreshButton = styled.button`
-  display: block;
-  background: none;
-  border: 1px solid #d5dbe2;
-  border-radius: 50%;
 `;
 
 export default function ThemeContentList() {
@@ -103,12 +106,12 @@ export default function ThemeContentList() {
       <Main>
         <Title>{themes[0]?.title}</Title>
         <Tags>
-          <h3>플랫폼</h3>
-          {PLATFORMS.sections.map((section, idx) => (
+          <span>플랫폼</span>
+          {PLATFORMS.map((platform, idx) => (
             <li key={idx}>
-              <PlatformFilter type="button" onClick={() => handleFilterPlatforms(section.code)}>
-                <img
-                  src={section.image}
+              <PlatformFilter type="button" onClick={() => handleFilterPlatforms(platform.name)}>
+                <PlatformImage
+                  src={platform.image}
                   alt="platforms"
                 />
               </PlatformFilter>

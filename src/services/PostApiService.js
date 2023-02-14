@@ -36,6 +36,7 @@ export default class PostApiService {
     const filterQuery = filter
       ? `?${['keyword']
         .map((key) => (filter[key] ? `${key}=${filter[key]}` : ''))
+        .filter((query) => query)
         .join('&')}`
       : '';
 
@@ -48,6 +49,8 @@ export default class PostApiService {
       .join('&');
 
     const { data } = await this.instance.get(`/posts/filter${query}`);
+
+    (console.log('api-->>>>>>>>', this.instance.get(`/posts/filter${query}`)));
 
     const { posts, pages } = data;
 

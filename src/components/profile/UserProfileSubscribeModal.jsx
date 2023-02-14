@@ -5,6 +5,8 @@ import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import useSubscribeStore from '../../hooks/useSubscribeStore';
 import useUserStore from '../../hooks/useUserStore';
+import Button from '../common/Button';
+import Title from '../common/Title';
 
 const Container = styled.div`
   display: flex;
@@ -21,16 +23,57 @@ const Container = styled.div`
 `;
 
 const Dialog = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
   height: 40em;
   width: 30em;
-  background-color: white;
-  border-radius: 3px;
+  padding: 30px;
+  background-color: ${((props) => props.theme.text.fourthGrey)};
+  border-radius: 10px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 
   img {
     width: 5em;
     height: 3em;
   }
+`;
+
+const FollowerBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  gap: 30px;
+`;
+
+const FollowerList = styled.ul`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+li {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 40px;
+
+  div {
+    display: flex;
+    align-items: center;
+  }
+}
+`;
+
+const SubscriptionButton = styled.button`
+  border: none;
+  background-color: transparent;
+  color: ${((props) => props.theme.text.secondGrey)};
+  padding: 0 3px 0 0;
+`;
+
+const Following = styled.div`
 `;
 
 export default function SubscribeModal({
@@ -81,60 +124,110 @@ export default function SubscribeModal({
 
   return (
     <>
-      <button
+      <SubscriptionButton
         type="button"
         onClick={() => setIsOpen(true)}
       >
         {buttonName}
-      </button>
+      </SubscriptionButton>
       {isOpen && followings?.length && (
         <Container>
           <Dialog ref={modalRef}>
-            <div>
-              <div>팔로잉</div>
+            <FollowerBox>
+              <Title>팔로잉</Title>
               {followings?.length === 0 ? (
                 <div>팔로잉 내역이 없습니다</div>
               ) : (
-                <ul>
+                <FollowerList>
                   {followings?.map((following, idx) => (
                     <li key={idx}>
-                      <img src={following.profileImage} alt="profile" />
-                      {following.nickname}
-                      <button type="button" onClick={() => handleClickUnFollow(following.userId)}>팔로우 취소</button>
+                      <div>
+                        <img
+                          src={following.profileImage}
+                          alt="profile"
+                        />
+                        <span>{following.nickname}</span>
+                      </div>
+                      <Button
+                        width={80}
+                        height={30}
+                        bgcolor="#afbaca"
+                        type="button"
+                        onClick={() => handleClickUnFollow(following.userId)}
+                      >
+                        unfollow
+                      </Button>
                     </li>
                   ))}
-                </ul>
+                </FollowerList>
               )}
-            </div>
-            <button type="button" onClick={() => setIsOpen(false)}>닫기</button>
+            </FollowerBox>
+            <Button
+              size={15}
+              width={80}
+              height={30}
+              bgcolor="#afbaca"
+              type="button"
+              type="button"
+              onClick={() => setIsOpen(false)}
+            >
+              닫기
+
+            </Button>
           </Dialog>
         </Container>
       )}
       {isOpen && followers?.length && (
         <Container>
           <Dialog ref={modalRef}>
-            <div>
-              <div>팔로워</div>
+            <FollowerBox>
+              <Title size={20}>팔로워</Title>
               {followers?.length === 0 ? (
                 <div>팔로워 내역이 없습니다</div>
               ) : (
-                <ul>
+                <FollowerList>
                   {followers?.map((follower, idx) => (
                     <li key={idx}>
-                      <img src={follower.profileImage} alt="profile" />
-                      {follower.nickname}
+                      <div>
+                        <img src={follower.profileImage} alt="profile" />
+                        <span>{follower.nickname}</span>
+                      </div>
                       {follower.subscribeStatus === true ? (
-                        <button type="button" onClick={() => handleClickUnFollow(follower.userId)}>팔로우 취소</button>
+                        <Button
+                          width={80}
+                          height={30}
+                          bgcolor="#afbaca"
+                          type="button"
+                          onClick={() => handleClickUnFollow(follower.userId)}
+                        >
+                          unfollow
+                        </Button>
                       ) : (
-                        <button type="button" onClick={() => handleClickFollow(follower.userId)}>팔로우</button>
+                        <Button
+                          width={80}
+                          height={30}
+                          bgcolor="#afbaca"
+                          type="button"
+                          onClick={() => handleClickFollow(follower.userId)}
+                        >
+                          follow
+                        </Button>
                       )}
-
                     </li>
                   ))}
-                </ul>
+                </FollowerList>
               )}
-            </div>
-            <button type="button" onClick={() => setIsOpen(false)}>닫기</button>
+            </FollowerBox>
+            <Button
+              size={15}
+              width={80}
+              height={30}
+              bgcolor="#afbaca"
+              type="button"
+              onClick={() => setIsOpen(false)}
+            >
+              닫기
+            </Button>
           </Dialog>
         </Container>
       )}

@@ -45,6 +45,12 @@ export default function ContentDetailArticle() {
 
   const existArticle = articles.filter((article) => article.contentId === content.tmdbId);
 
+  if (!content || !articles) {
+    return (
+      <p>Loading...</p>
+    );
+  }
+
   return (
     <div>
       {existArticle.length !== 0 && (

@@ -9,6 +9,10 @@ import useSubscribeStore from '../hooks/useSubscribeStore';
 import MyProfile from '../components/profile/MyProfile';
 
 const Container = styled.div`
+  height: 100%;
+`;
+
+const Error = styled.div`
   display: flex;
   position: relative;
   width: 100%;
@@ -33,11 +37,11 @@ export default function MyProfilePage() {
 
   if (!accessToken || !userStore.user) {
     return (
-      <Container>
+      <Error>
         <p>
           잘못된 접근입니다.
         </p>
-      </Container>
+      </Error>
     );
   }
 
@@ -74,6 +78,8 @@ export default function MyProfilePage() {
   }, [userId, wishContentId]);
 
   return (
-    <MyProfile />
+    <Container>
+      <MyProfile />
+    </Container>
   );
 }

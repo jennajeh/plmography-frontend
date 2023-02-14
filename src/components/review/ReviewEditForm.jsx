@@ -81,6 +81,12 @@ export default function ReviewEditForm() {
     reviewEditFormStore.fillFields(notDeleted[0]);
   }, []);
 
+  if (!content) {
+    return (
+      <p>Loading...</p>
+    );
+  }
+
   return (
     <Container>
       <Wrapper>
@@ -95,13 +101,10 @@ export default function ReviewEditForm() {
             changeRating={(value) => reviewEditFormStore.changeStarRate(value)}
             isSelectable
           />
-          <span>
-            {reviewEditFormStore.starRate}
-            점
-          </span>
           <Input
+            width={500}
+            height={150}
             name="body"
-            label="내가 쓴 리뷰 수정"
             type="text"
             value={reviewEditFormStore.body || ''}
             onChange={(e) => reviewEditFormStore.changeBody(e.target.value)}

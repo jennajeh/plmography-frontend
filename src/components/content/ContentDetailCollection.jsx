@@ -46,6 +46,12 @@ export default function ContentDetailCollection() {
 
   const existTheme = themes.filter((theme) => theme.id === content.themeId);
 
+  if (!content || !themes) {
+    return (
+      <p>Loading...</p>
+    );
+  }
+
   return (
     <div>
       {existTheme.length !== 0 && (

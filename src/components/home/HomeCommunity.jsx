@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 import styled from 'styled-components';
 import usePostStore from '../../hooks/usePostStore';
 import HotPost from '../community/HotPost';

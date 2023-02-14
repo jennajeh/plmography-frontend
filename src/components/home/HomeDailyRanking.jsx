@@ -40,7 +40,10 @@ const ImageWrapper = styled.div`
     font-weight: 400;
     font-size: 18px;
     line-height: 20px;
-    color: ${((props) => props.theme.text.primary)};
+    
+    :hover {
+      color: ${((props) => props.theme.colors.first)};
+    }
   }
 
   img {

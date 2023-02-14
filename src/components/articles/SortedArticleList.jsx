@@ -1,3 +1,5 @@
+/* eslint-disable import/no-named-as-default */
+/* eslint-disable import/no-named-as-default-member */
 /* eslint-disable no-plusplus */
 import styled from 'styled-components';
 import useArticleStore from '../../hooks/useArticleStore';
@@ -18,7 +20,7 @@ const List = styled.ul`
 const Error = styled.p`
   margin: 80px;
   font-weight: 700;
-  font-size: ${((props) => props.theme.size.h4)};
+  font-size: 1.5em;
   text-align: center;
 `;
 

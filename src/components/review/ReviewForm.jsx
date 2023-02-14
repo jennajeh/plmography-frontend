@@ -10,16 +10,12 @@ import useReviewFormStore from '../../hooks/useReviewFormStore';
 import useContentStore from '../../hooks/useContentStore';
 
 const Container = styled.div`
-  width: 700px;
-  height: 400px;
 `;
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   text-align: center;
-  margin: 30px;
-  padding: 10px;
 `;
 
 const Title = styled.h1`
@@ -56,7 +52,6 @@ export default function ReviewForm() {
 
   const { content } = contentStore;
   const contentId = content.tmdbId;
-  console.log(content);
 
   const { body, starRate } = reviewFormStore;
 
@@ -81,6 +76,12 @@ export default function ReviewForm() {
     navigate(-1);
   };
 
+  if (!content) {
+    return (
+      <p>Loading...</p>
+    );
+  }
+
   return (
     <Container>
       <Wrapper>
@@ -96,6 +97,8 @@ export default function ReviewForm() {
             isSelectable
           />
           <Input
+            width={500}
+            height={150}
             name="body"
             type="text"
             value={reviewFormStore.body || ''}

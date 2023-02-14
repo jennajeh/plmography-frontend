@@ -3,32 +3,22 @@ import styled from 'styled-components';
 const Button = styled.button`
   display: block;
 
-  width: 100%;
-  padding: 0.8em 10em; 
+  width: ${(props) => `${props.width}` || 35}px;
+  height: ${(props) => `${props.height}` || 35}px;
 
   border: none;
-  border-radius: 8px;
-  cursor: pointer;
+  border-radius: 5px;
+  cursor: ${(props) => `${props.cursor}` || 'pointer'};
 
   color: ${((props) => props.theme.text.white)};
-  background-color: ${((props) => props.theme.colors.primary)};
-
-  font-size: ${((props) => props.theme.size.default)};
-  font-weight: 700;
+  background-color: ${(props) => `${props.bgcolor}` || props.theme.colors.primary};
 
   :hover {
-    color: ${((props) => props.theme.text.mouseOver)};
-  }
+      color: ${((props) => props.theme.colors.first)};
+    }
 
-  :active {
-    color: ${((props) => props.theme.text.white)};
-    background-color: ${((props) => props.theme.colors.active)};
-  }
-
-  :disabled {
-    color: ${((props) => props.theme.text.white)};
-    background-color: ${((props) => props.theme.colors.inactive)};
-  }
+  font-size: ${(props) => `${props.size}` || 16}px;
+  font-weight: 700;
 `;
 
 export default Button;

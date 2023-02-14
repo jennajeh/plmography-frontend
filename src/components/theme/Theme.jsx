@@ -3,17 +3,20 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const ImgWrapper = styled.article`
-  margin: 1em 0 1em 0;
-
-h4 {
-  text-align: center;
-  font-size: ${((props) => props.theme.size.h6)};
-  color: ${((props) => props.theme.text.primary)};
-}
+  margin-bottom: 2em;
+  
+  h4 {
+    text-align: center;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: ${((props) => props.theme.text.white)};
+  }
 
   img {
     border-radius: 0.6em;
-    width: 100%;
+    margin-bottom: 1em;
+    width: 16em;
+    height: 10em;
   }
 `;
 

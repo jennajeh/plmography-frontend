@@ -41,14 +41,17 @@ const Content = styled.div`
 
 const ButtonBox = styled.div`
   display: flex;
+  align-items: center;
   gap: 5px;
 `;
 
 const Button = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 70px;
   height: 30px;
   border-radius: 5px;
-  margin-bottom: 20px;
   border: none;
   color: ${((props) => props.theme.text.white)};
   background-color: ${((props) => props.theme.text.sixthGrey)};

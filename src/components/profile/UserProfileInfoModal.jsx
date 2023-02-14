@@ -44,8 +44,25 @@ const Content = styled.div`
   }
 `;
 
+const ButtonName = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
+
+const Button = styled.button`
+  border: none;
+  background-color: transparent;
+  color: ${((props) => props.theme.text.white)};
+
+  span:first-child {
+    font-size: 20px;
+  }
+`;
+
 export default function UserProfileInfoModal({
   buttonName,
+  count,
   userId,
   watchedContentIds,
   watchedContents,
@@ -108,17 +125,20 @@ export default function UserProfileInfoModal({
 
   return (
     <>
-      <button
+      <Button
         type="button"
         onClick={() => setIsOpen(true)}
       >
-        {buttonName}
-      </button>
+        <ButtonName>
+          <span>{count}</span>
+          <span>{buttonName}</span>
+        </ButtonName>
+      </Button>
       {isOpen && watchedContentIds?.length && (
         <Container>
           <Dialog ref={modalRef}>
             <div>
-              <h3>봤어요</h3>
+              <span>봤어요</span>
               {watchedContents?.length === 0 ? (
                 <div>내역이 없습니다</div>
               ) : (

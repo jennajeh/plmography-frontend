@@ -59,7 +59,7 @@ const UserBox = styled.div`
 const ButtonBox = styled.div`
   display: flex;
   flex-direction: row;
-  padding: 15px 0 0 15px;
+  padding: 15px 0 15px 15px;
   gap: 5px;
 `;
 
@@ -116,6 +116,12 @@ export default function MyReview() {
 
     return a.image;
   };
+
+  if (!content || !myReviews) {
+    return (
+      <p>Loading...</p>
+    );
+  }
 
   return (
     <div>

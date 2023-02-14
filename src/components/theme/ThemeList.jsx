@@ -1,14 +1,9 @@
 import { useLocation, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import useThemeStore from '../../hooks/useThemeStore';
+import Title from '../common/Title';
 import Pagination from '../page/Pagination';
 import Theme from './Theme';
-
-const SubTitle = styled.h3`
-  font-size: ${((props) => props.theme.size.h5)};
-  font-weight: bold;
-  margin-top: 1em;
-`;
 
 const List = styled.ul`
   display: grid;
@@ -39,7 +34,7 @@ export default function ThemeList() {
 
   return (
     <div>
-      <SubTitle>테마 리스트</SubTitle>
+      <Title size={20} weight="bold">테마 리스트</Title>
       {themes.length ? (
         <>
           <List>
