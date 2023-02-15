@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 import styled from 'styled-components';
 import usePostStore from '../../hooks/usePostStore';
 import HotPost from '../community/HotPost';
@@ -31,9 +32,7 @@ export default function HomeCommunity() {
   let count = 1;
 
   if (!hitPosts) {
-    return (
-      <p>Loading...</p>
-    );
+    return <p>Loading...</p>;
   }
 
   return (

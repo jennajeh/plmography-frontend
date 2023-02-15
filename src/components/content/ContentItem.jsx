@@ -2,9 +2,11 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const ImgWrapper = styled.article`
-  margin: 1;
+const Container = styled.article`
+  margin-block: 1em;
+`;
 
+const ImgWrapper = styled.article`
   h4 {
     text-align: center;
     font-size: ${((props) => props.theme.size.h6)};
@@ -23,11 +25,13 @@ export default function ContentItem({ content }) {
   } = content;
 
   return (
-    <Link to={`/contents/${tmdbId}`}>
-      <ImgWrapper>
-        <img src={imageUrl} alt="img" />
-        <h4>{korTitle}</h4>
-      </ImgWrapper>
-    </Link>
+    <Container>
+      <Link to={`/contents/${tmdbId}`}>
+        <ImgWrapper>
+          <img src={imageUrl} alt="img" />
+          <h4>{korTitle}</h4>
+        </ImgWrapper>
+      </Link>
+    </Container>
   );
 }

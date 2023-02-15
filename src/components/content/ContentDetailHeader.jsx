@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useLocalStorage } from 'usehooks-ts';
@@ -142,14 +143,14 @@ const Button = styled.button`
   border-radius: 0.7em;
   background-color: ${((props) => props.theme.text.sixthGrey)};
   animation-fill-mode: forwards;
-
-  .active {
-    background-color: ${((props) => props.theme.colors.first)};
-  }
   
   p {
     color: ${((props) => props.theme.text.white)};
     font-size: 13px;
+
+    :hover {
+      color: ${((props) => props.theme.colors.first)};
+    }
   }
 
   img {
@@ -235,6 +236,10 @@ export default function ContentDetailHeader() {
     await contentStore.toggleFavorite(tmdbId);
   };
 
+  if (!content) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <>
       <ImageWrapper>
@@ -276,19 +281,31 @@ export default function ContentDetailHeader() {
           </RatingWrapper>
         </TitleWrapper>
         <MyButtonArea>
-          <Button className="active" type="button" onClick={handleClickWish}>
+          <Button
+            type="button"
+            onClick={handleClickWish}
+          >
             <img src={Heart} alt="imdb-logo" />
             <p>찜하기</p>
           </Button>
-          <Button className="active" type="button" onClick={handleClickWatched}>
+          <Button
+            type="button"
+            onClick={handleClickWatched}
+          >
             <img src={Eye} alt="imdb-logo" />
             <p>봤어요</p>
           </Button>
-          <Button className="active" type="button" onClick={handleClickFavorite}>
+          <Button
+            type="button"
+            onClick={handleClickFavorite}
+          >
             <img src={Heart} alt="imdb-logo" />
             <p>인생작품</p>
           </Button>
-          <Button type="button" onClick={handleClickWriteReview}>
+          <Button
+            type="button"
+            onClick={handleClickWriteReview}
+          >
             <img src={PencilSimple} alt="imdb-logo" />
             <p>리뷰쓰기</p>
           </Button>

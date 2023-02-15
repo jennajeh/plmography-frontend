@@ -75,8 +75,8 @@ export default function ContentDetailInformation() {
     tmdbCreditsApiStore.fetchActors();
   }, [credits]);
 
-  if (!credits) {
-    <p>Loading...</p>;
+  if (!credits || !actors || !content || !videoUrl) {
+    return <p>Loading...</p>;
   }
 
   return (

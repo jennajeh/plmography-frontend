@@ -1,17 +1,11 @@
 import styled from 'styled-components';
 import useThemeStore from '../../hooks/useThemeStore';
+import Title from '../common/Title';
 import HitTheme from './HitTheme';
-
-const SubTitle = styled.h3`
-  font-size: ${((props) => props.theme.size.h5)};
-  font-weight: bold;
-  margin-top: 1em;
-`;
 
 const List = styled.ul`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(2, 1fr);
   gap: 1em;
 `;
 
@@ -28,14 +22,12 @@ export default function RecommendTheme() {
   const { hitThemes } = themeStore;
 
   if (!hitThemes) {
-    return (
-      <p>Loading...</p>
-    );
+    return <p>Loading...</p>;
   }
 
   return (
     <div>
-      <SubTitle>추천 큐레이션</SubTitle>
+      <Title size={20} weight="bold">추천 큐레이션</Title>
       {hitThemes.length ? (
         <List>
           {hitThemes.map((hitTheme) => (

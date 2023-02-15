@@ -30,9 +30,7 @@ export default function ArticleList() {
   const [searchParams] = useSearchParams();
 
   if (!articles) {
-    return (
-      <p>Loading...</p>
-    );
+    return <p>Loading...</p>;
   }
 
   return (

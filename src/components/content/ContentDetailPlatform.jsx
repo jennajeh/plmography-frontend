@@ -51,7 +51,7 @@ const ArrowWrapper = styled.div`
   span {
     font-size: 12px;
     padding: 5px;
-    color: ${((props) => props.theme.text.blue)};
+    color: ${((props) => props.theme.colors.first)};
   }
   
   img {
@@ -89,6 +89,10 @@ export default function ContentDetailPlatform() {
 
     return a.title;
   };
+
+  if (!content || !platform) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <Container>

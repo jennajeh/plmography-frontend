@@ -8,6 +8,8 @@ import PLATFORMS from '../../constants/platforms';
 import RELEASEDATES from '../../constants/releaseDates';
 import TYPES from '../../constants/types';
 import useContentStore from '../../hooks/useContentStore';
+import Button from '../common/Button';
+import Input from '../common/Input';
 import ContentsList from './ContentsList';
 
 const Container = styled.div`
@@ -20,61 +22,94 @@ const Main = styled.div`
   padding-inline: 2rem;
 `;
 
-const SearchBar = styled.div`
+const InputBox = styled.div`
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  margin-block: 1em;
+`;
+
+const MainTitle = styled.h1`
+  display: flex;
+  justify-content: center;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 1em 0;
+`;
+
+const SearchForm = styled.form`
+  display: flex;
+  justify-content: flex-end;
   align-items: center;
-  >div{
-    display: flex;
+  gap: 15px;
+
+  input {
+    width: 20em;
+    height: 2.5em;
   }
 `;
 
 const Tags = styled.ul`
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
   align-items: center;
-  li{
-    margin-inline-end: 1rem;
+
+  li {
+    padding: 0.5em;
   }
+
+  h1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`;
+
+const Title = styled.h1`
+  font-size: 1em;
+  font-weight: 600;
+  margin: 20px;
+  color: ${((props) => props.theme.text.white)};
 `;
 
 const PlatformFilter = styled.button`
   border: none;
-  padding: .5rem 1rem;
+  background-color: transparent;
+`;
 
-  img {
-    width: 5em;
-  }
+const PlatformImage = styled.img`
+  width: ${((props) => (props.selected ? '5em' : '4em'))};
 `;
 
 const TypeFilter = styled.button`
-border: none;
-padding: .5rem 1rem;
-border-radius: 2rem;
-background: #e4e4e4;
+  border: none;
+  width: 7em;
+  height: 2.5em;
+  border-radius: 2rem;
+  background-color: ${((props) => (props.selected ? props.theme.colors.first : props.theme.colors.third))};
+  color: ${((props) => props.theme.text.white)};
 `;
 
 const DateFilter = styled.button`
-border: none;
-padding: .5rem 1rem;
-border-radius: 2rem;
-background: #e4e4e4;
+  border: none;
+  width: 7em;
+  height: 2.5em;
+  border-radius: 2rem;
+  background-color: ${((props) => (props.selected ? props.theme.colors.first : props.theme.colors.third))};
+  color: ${((props) => props.theme.text.white)};
 `;
 
 const GenreFilter = styled.button`
   border: none;
-  padding: .5rem 1rem;
+  padding: 6px;
+  width: 7em;
+  height: 2.5em;
   border-radius: 2rem;
-  background: #9be2e2;
+  background-color: ${((props) => (props.selected ? props.theme.colors.first : props.theme.colors.third))};
+  color: ${((props) => props.theme.text.white)};
 `;
 
-const RefreshButton = styled.button`
-  display: block;
-  background: none;
-  border: 1px solid #d5dbe2;
-  border-radius: 50%;
-`;
-
-const Buttons = styled.div`
+const ButtonBox = styled.div`
   display: flex;
   justify-content: flex-end;
   gap: 1em;
@@ -155,24 +190,44 @@ export default function Category() {
     contentStore.fetchContents({ page, size: 8, filter });
   }, [page, filter]);
 
+  if (!PLATFORMS || !TYPES || !GENRES || !RELEASEDATES) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <Container>
       <Main>
-        <SearchBar>
-          <h1>검색하기</h1>
-          <form onSubmit={handleSearchContents}>
+        <MainTitle>탐색 하기</MainTitle>
+        <InputBox>
+          <SearchForm onSubmit={handleSearchContents}>
             <label hidden htmlFor="input-search">컨텐츠 검색</label>
-            <input name="search" placeholder="검색" id="input-search" type="text" />
-            <button type="submit">검색</button>
-          </form>
-        </SearchBar>
+            <Input
+              name="search"
+              placeholder="검색"
+              id="input-search"
+              type="text"
+            />
+            <Button
+              width={70}
+              height={30}
+              bgcolor="#5e677c"
+              type="submit"
+            >
+              검색
+            </Button>
+          </SearchForm>
+        </InputBox>
         <Tags>
-          <h3>플랫폼</h3>
-          {PLATFORMS.sections.map((section, idx) => (
+          <Title>플랫폼</Title>
+          {PLATFORMS.map((platform, idx) => (
             <li key={idx}>
-              <PlatformFilter type="button" onClick={() => handleFilterPlatforms(section.code)}>
-                <img
-                  src={section.image}
+              <PlatformFilter
+                type="button"
+                onClick={() => handleFilterPlatforms(platform.name)}
+              >
+                <PlatformImage
+                  selected={filter.platform === platform.name}
+                  src={platform.image}
                   alt="platforms"
                 />
               </PlatformFilter>
@@ -180,49 +235,85 @@ export default function Category() {
           ))}
         </Tags>
         <Tags>
-          <h3>영화/TV</h3>
+          <Title>영화/TV</Title>
           {TYPES.sections.map((section, idx) => (
             <li key={idx}>
-              <TypeFilter type="button" onClick={() => handleFilterTypes(section.code)}>
+              <TypeFilter
+                selected={filter.type === section.code}
+                type="button"
+                onClick={() => handleFilterTypes(section.code, idx)}
+              >
                 {section.name}
               </TypeFilter>
             </li>
           ))}
         </Tags>
         <Tags>
-          <h3>장르</h3>
+          <Title>장르</Title>
           {GENRES.sections.map((section, idx) => (
             <li key={idx}>
-              <GenreFilter type="button" onClick={() => handleFilterGenres(section.code)}>
+              <GenreFilter
+                selected={filter.genre === section.code}
+                type="button"
+                onClick={() => handleFilterGenres(section.code)}
+              >
                 {section.name}
               </GenreFilter>
             </li>
           ))}
         </Tags>
         <Tags>
-          <h3>개봉연도</h3>
+          <Title>개봉연도</Title>
           {RELEASEDATES.sections.map((section, idx) => (
             <li key={idx}>
-              <DateFilter type="button" onClick={() => handleFilterReleaseDate(section.year)}>
+              <DateFilter
+                selected={filter.date === section.year}
+                type="button"
+                onClick={() => handleFilterReleaseDate(section.year)}
+              >
                 {section.name}
               </DateFilter>
             </li>
           ))}
         </Tags>
-        <RefreshButton type="button" onClick={handleRefreshFilter}>
-          초기화
-        </RefreshButton>
-        <Buttons>
-          <button type="button" onClick={handleClickLatest}>
+        <ButtonBox>
+          <Button
+            width={70}
+            height={30}
+            bgcolor="#5e677c"
+            type="button"
+            onClick={handleRefreshFilter}
+          >
+            초기화
+          </Button>
+          <Button
+            width={70}
+            height={30}
+            bgcolor="#5e677c"
+            type="button"
+            onClick={handleClickLatest}
+          >
             최신순
-          </button>
-          <button type="button" onClick={handleClickPopular}>
+          </Button>
+          <Button
+            width={70}
+            height={30}
+            bgcolor="#5e677c"
+            type="button"
+            onClick={handleClickPopular}
+          >
             인기순
-          </button>
-          <button type="button" onClick={handleClickName}>
+          </Button>
+          <Button
+            width={70}
+            height={30}
+            bgcolor="#5e677c"
+            type="button"
+            onClick={handleClickName}
+          >
             이름순
-          </button>
-        </Buttons>
+          </Button>
+        </ButtonBox>
         <ContentsList />
       </Main>
     </Container>

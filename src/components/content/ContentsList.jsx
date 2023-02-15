@@ -26,9 +26,7 @@ export default function ContentsList() {
   const { contents } = contentStore;
 
   if (!contents) {
-    return (
-      <p>Loading...</p>
-    );
+    return <p>Loading...</p>;
   }
 
   return (

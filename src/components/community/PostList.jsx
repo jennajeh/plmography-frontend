@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import usePostStore from '../../hooks/usePostStore';
@@ -5,7 +6,7 @@ import Pagination from '../page/Pagination';
 import PostItem from './PostItem';
 
 const Container = styled.div`
-  display: flex;
+  
 `;
 
 const Wrapper = styled.div`
@@ -14,7 +15,13 @@ const Wrapper = styled.div`
 `;
 
 const List = styled.ul`
-  padding: 2em;
+  display: flex;
+  width: 700px;
+  flex-direction: column;
+  gap: 20px;
+
+  
+  
 `;
 
 const Error = styled.p`
@@ -32,9 +39,7 @@ export default function PostList() {
   const { posts } = postStore;
 
   if (!posts) {
-    return (
-      <p>Loading...</p>
-    );
+    return <p>Loading...</p>;
   }
 
   return (

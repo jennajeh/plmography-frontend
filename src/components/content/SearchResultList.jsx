@@ -68,10 +68,8 @@ export default function SearchResultList() {
     contentStore.fetchFavoriteContents({ userId, favoriteContentId });
   };
 
-  if (!contents) {
-    return (
-      <p>Loading...</p>
-    );
+  if (!contents || !user || !favoriteContents) {
+    return <p>Loading...</p>;
   }
 
   return (

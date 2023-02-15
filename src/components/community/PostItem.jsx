@@ -3,17 +3,22 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import useLikeStore from '../../hooks/useLikeStore';
 import dateFormat from '../../utils/dateFormat';
+import Title from '../common/Title';
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
+const Container = styled.li`
+    height: fit-content;
+    display: flex;
+    gap: 20px;
+    padding: 1rem;
+    border-radius: 10px;
+    background-color: ${((props) => props.theme.colors.third)};
+
 `;
 
 const PostWrapper = styled.article`
   display: flex;
-  align-items: center;
-  margin: 1;
-  background-color: #c9c9c9;
+  flex-direction: column;
+  width: 100%;
   border-radius: 0.6em;
 
   h4 {
@@ -27,33 +32,32 @@ const PostWrapper = styled.article`
   }
 `;
 
+const UserInfoWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
 const UserInfo = styled.div`
   display: flex;
+  align-items: center;
+  gap: 10px;
 
-`;
-
-const UserInfoWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(1, 1fr);
-  gap: 1em;
-
-`;
-
-const PostDate = styled.div`
-  text-align: right;
-`;
-
-const Title = styled.h4`
-  text-align: left;
+  img {
+    border-radius: 50%;
+  }
 `;
 
 const Content = styled.span`
   text-align: left;
+  font-weight: 300;
 `;
 
-const Likes = styled.div`
-  
+const LikeBox = styled.div`
+  display: flex;
+  align-items: flex-end;
+  height: 30px;
+  gap: 10px;
 `;
 
 const Comment = styled.div`
@@ -64,17 +68,24 @@ export default function PostItem({ post }) {
   const likeStore = useLikeStore();
 
   const {
-    id: postId, comments, updatedAt, hit, postBody, title, writer,
+    id: postId, comments, createdAt, postBody, title, writer,
   } = post;
   const likes = likeStore.isSamePostId(postId);
 
   function textLengthOverCut(text, length, lastText) {
-    const result = text.substr(0, length) + lastText;
+    if (!text.length) {
+      return null;
+    }
 
-    return result;
+    if (text.length <= length) {
+      return text;
+    }
+
+    return text.substr(0, length) + lastText;
   }
 
   return (
+
     <Link to={`/community/posts/${postId}`}>
       <Container>
         <PostWrapper>
@@ -83,26 +94,30 @@ export default function PostItem({ post }) {
               <img src={writer?.profileImage} alt="profileImage" />
               <span>{writer?.nickname}</span>
             </UserInfo>
-            <PostDate>
-              조회수
-              {hit}
-              {dateFormat(updatedAt)}
-            </PostDate>
+            <div>
+              <span>{dateFormat(createdAt)}</span>
+            </div>
           </UserInfoWrapper>
-          <Title>
-            {textLengthOverCut(title, '25', '...')}
-          </Title>
-          <Content>
-            {textLengthOverCut(postBody, '90', '...')}
-          </Content>
-          <Likes>
-            좋아요
-            {likes.length}
-          </Likes>
-          <Comment>
-            댓글
-            {comments.length}
-          </Comment>
+          <div>
+            <Title size={17}>
+              {textLengthOverCut(title, '50', '...')}
+            </Title>
+            <Content>
+              {textLengthOverCut(postBody, '90', '...')}
+            </Content>
+          </div>
+          <LikeBox>
+            <div>
+              좋아요
+              {' '}
+              {likes.length}
+            </div>
+            <Comment>
+              댓글
+              {' '}
+              {comments.length}
+            </Comment>
+          </LikeBox>
         </PostWrapper>
       </Container>
     </Link>

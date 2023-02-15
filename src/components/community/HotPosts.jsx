@@ -1,16 +1,15 @@
 import styled from 'styled-components';
 import usePostStore from '../../hooks/usePostStore';
+import Title from '../common/Title';
 import HotPost from './HotPost';
 
-const Title = styled.h1`
-  display: flex;
-  font-size: ${((props) => props.theme.size.h4)};
-  font-weight: bold;
-  margin-top: 1em;
+const Container = styled.div`
+  border-bottom: solid 1px #5e677c;
+  padding-bottom: 1rem;
 `;
-
 const List = styled.ul`
   display: grid;
+  justify-content: center;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(3, 1fr);
   gap: 1em;
@@ -29,14 +28,14 @@ export default function HotPosts() {
   const { hitPosts } = postStore;
 
   if (!hitPosts) {
-    return (
-      <p>Loading...</p>
-    );
+    return <p>Loading...</p>;
   }
 
   return (
-    <div>
-      <Title>인기글 🔥</Title>
+    <Container>
+      <Title size={25} weight={600}>
+        인기글
+      </Title>
       {hitPosts.length ? (
         <List>
           {hitPosts.map((hitPost) => (
@@ -49,6 +48,6 @@ export default function HotPosts() {
       ) : (
         <Error>작품이 존재하지 않습니다.</Error>
       )}
-    </div>
+    </Container>
   );
 }

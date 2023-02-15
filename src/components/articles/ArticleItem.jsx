@@ -39,6 +39,10 @@ const Title = styled.p`
   vertical-align: middle;
   word-break: normal;
   padding: 10px;
+
+  :hover {
+    color: ${((props) => props.theme.colors.first)}
+  }
 `;
 
 const StyledLink = styled.div`

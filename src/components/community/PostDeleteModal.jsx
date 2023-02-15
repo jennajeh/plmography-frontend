@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import Button from '../common/Button';
 
 const Container = styled.div`
   display: flex;
@@ -17,14 +18,26 @@ const Container = styled.div`
 `;
 
 const Dialog = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
   height: 10em;
   width: 18em;
   background-color: white;
   border-radius: 3px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  
   p {
+    color: black;
     font-size: .9em;
   }
+`;
+
+const ButtonBox = styled.div`
+  display: flex;
+  gap: 10px;
 `;
 
 export default function PostDeleteModal({
@@ -60,20 +73,39 @@ export default function PostDeleteModal({
 
   return (
     <>
-      <button
+      <Button
+        width={70}
+        height={30}
+        bgcolor="#5e677c"
         type="button"
         onClick={() => setIsOpen(true)}
       >
         {buttonName}
-      </button>
+      </Button>
       {isOpen && (
         <Container>
           <Dialog ref={modalRef}>
-            <div>
-              {content}
-            </div>
-            <button type="button" onClick={handleClickDelete}>예</button>
-            <button type="button" onClick={() => setIsOpen(false)}>아니오</button>
+            <p>{content}</p>
+            <ButtonBox>
+              <Button
+                width={70}
+                height={30}
+                bgcolor="#5e677c"
+                type="button"
+                onClick={handleClickDelete}
+              >
+                예
+              </Button>
+              <Button
+                width={70}
+                height={30}
+                bgcolor="#5e677c"
+                type="button"
+                onClick={() => setIsOpen(false)}
+              >
+                아니오
+              </Button>
+            </ButtonBox>
           </Dialog>
         </Container>
       )}

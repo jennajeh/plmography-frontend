@@ -3,65 +3,142 @@ import {
 } from 'react-router-dom';
 import styled from 'styled-components';
 import { useLocalStorage } from 'usehooks-ts';
+import { useState } from 'react';
 import useLikeStore from '../../hooks/useLikeStore';
 import usePostCommentEditFormStore from '../../hooks/usePostCommentEditFormStore';
 import usePostCommentFormStore from '../../hooks/usePostCommentFormStore';
 import usePostCommentStore from '../../hooks/usePostCommentStore';
 import usePostStore from '../../hooks/usePostStore';
 import useUserStore from '../../hooks/useUserStore';
+import Title from '../common/Title';
 import PostCommentDeleteModal from './PostCommentDeleteModal';
 import PostCommentEditForm from './PostCommentEditForm';
 import PostCommentForm from './PostCommentForm';
 import PostDeleteModal from './PostDeleteModal';
 import PostDetailComment from './PostDetailComment';
+import Button from '../common/Button';
 
-const Title = styled.h1`
+const ProfileBox = styled.div`
   display: flex;
-  font-size: ${((props) => props.theme.size.h4)};
-  font-weight: bold;
-  margin-top: 1em;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+  color: white;
+`;
+
+const Profile = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  img {
+    border-radius: 50%;
+    width: 3.5em;
+  }
+
+  span {
+    color: white;
+    font-size: 1.3em;
+  }
+`;
+
+const ContentBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  color: white;
+
+  div:nth-of-type(2) {
+    line-height: 2rem;
+  }
+
+  img {
+    width: 40em;
+  }
+`;
+
+const ButtonBox = styled.div`
+display: flex;
+justify-content: space-between;
+padding-block: 2rem;
+border-bottom: 1px solid #5e677c;
+
+div {
+  display: flex;
+  gap: 10px;
+}
+  
 `;
 
 const List = styled.ul`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(3, 1fr);
-  gap: 1em;
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+
+  li {
+    color: white;
+    border-bottom: 1px solid #5e677c;
+  }
+
+  li:last-child {
+    border-bottom: none;
+  }
+`;
+
+const StyledLink = styled(Link)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 5px;
+  width: 70px;
+  height: 30px;
+  font-size: 14px;
+  font-weight: 600;
+  background-color: #5e677c;
 `;
 
 const Error = styled.p`
   margin: 80px;
   font-weight: 700;
   font-size: ${((props) => props.theme.size.h4)};
+  color: white;
   text-align: center;
 `;
 
+const EditBox = styled.div`
+  display: flex;
+  gap: 15px;
+  padding-block: 1rem;
+`;
+
 export default function PostDetail() {
+  const postStore = usePostStore();
   const [accessToken] = useLocalStorage('accessToken', '');
+  const [isOpen, setIsOpen] = useState('');
   const location = useLocation();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
-  const postStore = usePostStore();
   const postCommentStore = usePostCommentStore();
   const postCommentFormStore = usePostCommentFormStore();
   const postCommentEditFormStore = usePostCommentEditFormStore();
   const likeStore = useLikeStore();
   const userStore = useUserStore();
 
+  const { post } = postStore;
+  const { user } = userStore;
+  const { id: userId } = user;
+  const { postComments } = postCommentStore;
+
+  const {
+    createdAt, image, postBody, title, writer,
+  } = post;
+
   const page = searchParams.get('page') ?? 1;
   const path = location.pathname;
   const pathId = path.split('/')[3];
   const postId = Number(pathId);
-
-  const { post } = postStore;
-  const { user } = userStore;
-  const { id: userId } = user;
-  const { modifyCommentButtonOpened, postComments } = postCommentStore;
-
-  const {
-    updatedAt, hit, image, postBody, title, writer,
-  } = post;
 
   const likes = likeStore.isSamePostId(postId);
 
@@ -90,7 +167,7 @@ export default function PostDetail() {
     await likeStore.fetchLikes();
   };
 
-  const handleClickModifyComment = () => {
+  const handleClickModifyComment = (commentId) => {
     if (!accessToken) {
       navigate('/login');
 
@@ -98,6 +175,12 @@ export default function PostDetail() {
     }
 
     postCommentStore.changeModifyCommentButtonStatus();
+
+    setIsOpen((element) => (element.isOpen !== commentId ? commentId : ''));
+
+    if (isOpen === commentId) {
+      setIsOpen(false);
+    }
   };
 
   const handleClickDeletePost = async () => {
@@ -125,6 +208,8 @@ export default function PostDetail() {
       await postCommentStore.modify(comment.id, body);
 
       await postCommentStore.fetchComments({ page, size: 10, postId });
+
+      setIsOpen(false);
     }
   };
 
@@ -137,92 +222,109 @@ export default function PostDetail() {
   return (
     <div>
       <div>
-        <div>
+        <ProfileBox>
+          <Profile>
+            <img src={writer?.profileImage} alt="profileImage" width={50} />
+            <span>{writer?.nickname}</span>
+          </Profile>
           <div>
-            <img src={writer?.profileImage} alt="profileImage" />
-            조회수 :
-            {' '}
-            {hit}
-            {' '}
-            {writer?.nickname}
+            {createdAt?.split('T')[0]}
           </div>
-
-          <div>
-            {updatedAt?.split('T')[0]}
-          </div>
-        </div>
-        <div>
+        </ProfileBox>
+        <Title size={20}>
           {title}
-        </div>
-        <div>
-          {image && (
-            <img src={image} alt="uploadImage" />
-          )}
-          {postBody}
-        </div>
-        <div>
-          <button type="button" onClick={handleClickLike}>
-            좋아요
-            {likes.length}
-          </button>
+        </Title>
+        <ContentBox>
           <div>
-            댓글
-            {postComments?.length}
+            {image && (
+              <img src={image} alt="uploadImage" />
+            )}
           </div>
-          <Link to="/community">
-            목록
-          </Link>
+          <div>
+            {postBody}
+          </div>
+        </ContentBox>
+        <ButtonBox>
+          <div>
+            <Button
+              width={70}
+              height={30}
+              bgcolor="#5e677c"
+              type="button"
+              onClick={handleClickLike}
+            >
+              좋아요
+              {' '}
+              {likes.length}
+            </Button>
+            <Button
+              width={70}
+              height={30}
+              bgcolor="#5e677c"
+              cursor="default"
+            >
+              댓글
+              {' '}
+              {postComments?.length}
+            </Button>
+          </div>
           {writer?.id === userId && accessToken && (
-            <>
-              <Link to={`/community/posts/${postId}/edit`}>
+            <div>
+              <StyledLink to={`/community/posts/${postId}/edit`}>
                 수정
-              </Link>
+              </StyledLink>
               <PostDeleteModal
                 buttonName="삭제"
                 content="정말 삭제하시겠습니까?"
                 onClose={handleClickDeletePost}
               />
-            </>
+            </div>
           )}
-        </div>
-        <Title>댓글</Title>
-        <div>
-          {postComments?.length ? (
-            <List>
-              {postComments.map((comment) => (
-                <div key={comment.id}>
-                  <PostDetailComment
-                    key={comment.id}
-                    comment={comment}
-                  />
-                  {comment.writer.id === userId && accessToken && (
-                    <>
-                      <button type="button" onClick={handleClickModifyComment}>
+        </ButtonBox>
+        <Title size={20}>댓글</Title>
+        <PostCommentForm
+          onSubmit={handleSubmitCreateComment}
+        />
+        {postComments?.length ? (
+          <List>
+            {postComments.map((comment) => (
+              <li key={comment.id}>
+                <PostDetailComment
+                  key={comment.id}
+                  comment={comment}
+                />
+                {comment.writer.id === userId && accessToken && (
+                  <div>
+                    <EditBox>
+                      <Button
+                        width={70}
+                        height={30}
+                        bgcolor="#5e677c"
+                        type="button"
+                        onClick={() => handleClickModifyComment(comment.id)}
+                      >
                         수정
-                      </button>
+                      </Button>
                       <PostCommentDeleteModal
                         buttonName="삭제"
                         content="정말 삭제하시겠습니까?"
                         onClose={() => handleClickDeleteComment(comment)}
                       />
-                      {modifyCommentButtonOpened && (
-                        <PostCommentEditForm
-                          comment={comment}
-                          onSubmit={(e) => handleSubmitModifyComment(e, comment)}
-                        />
-                      )}
-                    </>
-                  )}
-                </div>
-              ))}
-            </List>
-          ) : (
-            <Error>댓글이 존재하지 않습니다.</Error>
-          )}
-        </div>
-        <PostCommentForm
-          onSubmit={handleSubmitCreateComment}
-        />
+                    </EditBox>
+                    {isOpen === comment.id && (
+                      <PostCommentEditForm
+                        comment={comment}
+                        onSubmit={(e) => handleSubmitModifyComment(e, comment)}
+                      />
+                    )}
+                  </div>
+                )}
+              </li>
+            ))}
+          </List>
+        ) : (
+          <Error>댓글이 존재하지 않습니다.</Error>
+        )}
       </div>
     </div>
   );

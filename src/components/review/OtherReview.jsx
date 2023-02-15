@@ -140,6 +140,10 @@ export default function OtherReview() {
     return a.image;
   };
 
+  if (!content) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <>
       <Title>모든 리뷰</Title>
@@ -183,9 +187,9 @@ export default function OtherReview() {
                     {review.commentNumber}
                   </Button>
                 </ButtonBox>
-                {isOpen === review.id ? (
+                {isOpen === review.id && (
                   <ReviewComment review={review} />
-                ) : null}
+                )}
               </li>
             ))}
           </List>

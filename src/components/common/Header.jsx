@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useLocalStorage } from 'usehooks-ts';
 import { PlmographyLogo } from '../../assets/common';
@@ -28,12 +28,15 @@ const List = styled.ul`
 
 li {
   font-weight: bold;
-  padding-right: 40px;
+  padding-left: 40px;
 }
 `;
 
 const StyledLink = styled(Link)`
-  color: ${((props) => props.theme.colors.white)};
+  color: ${((props) => (props.selected
+    ? props.theme.colors.first
+    : props.theme.colors.white))};
+  border-bottom: ${((props) => (props.selected ? '2px solid #3caafa' : 'none'))};
   font-size: 20px;
 
   :hover {
@@ -46,7 +49,8 @@ const StyledLink = styled(Link)`
 `;
 
 const StyledUserLink = styled(Link)`
-  color: ${((props) => props.theme.colors.white)};
+  color: ${((props) => (props.selected ? props.theme.colors.first : props.theme.colors.white))};
+  border-bottom: ${((props) => (props.selected ? '2px solid #3caafa' : 'none'))};
   font-size: 14px;
 
   :hover {
@@ -55,6 +59,7 @@ const StyledUserLink = styled(Link)`
 
   img {
     width: 2em;
+    border-radius: 50%;
   }
 `;
 
@@ -98,9 +103,11 @@ const TestButton = styled.button`
 `;
 
 export default function Header() {
+  const location = useLocation();
   const navigate = useNavigate();
   const userStore = useUserStore();
   const { user } = userStore;
+  const { pathname } = location;
 
   const [accessToken, setAccessToken] = useLocalStorage('accessToken', '');
 
@@ -129,21 +136,44 @@ export default function Header() {
             <li>
               <StyledLink to="/">
                 <LogoBox>
-                  <img src={PlmographyLogo} alt="logo" />
+                  <img
+                    src={PlmographyLogo}
+                    alt="logo"
+                  />
                 </LogoBox>
               </StyledLink>
             </li>
             <li>
-              <StyledLink to="/themes">테마 추천</StyledLink>
+              <StyledLink
+                to="/themes"
+                selected={pathname === '/themes'}
+              >
+                테마 추천
+              </StyledLink>
             </li>
             <li>
-              <StyledLink to="/community">커뮤니티</StyledLink>
+              <StyledLink
+                to="/community"
+                selected={pathname === '/community'}
+              >
+                커뮤니티
+              </StyledLink>
             </li>
             <li>
-              <StyledLink to="/explore">탐색</StyledLink>
+              <StyledLink
+                to="/explore"
+                selected={pathname === '/explore'}
+              >
+                탐색
+              </StyledLink>
             </li>
             <li>
-              <StyledLink to="/new-contents">신작</StyledLink>
+              <StyledLink
+                to="/new-contents"
+                selected={pathname === '/new-contents'}
+              >
+                신작
+              </StyledLink>
             </li>
           </List>
         </MainMenu>
@@ -159,10 +189,20 @@ export default function Header() {
                 </Button>
               </li>
               <li>
-                <StyledUserLink to="/events">이벤트</StyledUserLink>
+                <StyledUserLink
+                  to="/events"
+                  selected={pathname === '/events'}
+                >
+                  이벤트
+                </StyledUserLink>
               </li>
               <li>
-                <StyledUserLink to="/support">작품 제안</StyledUserLink>
+                <StyledUserLink
+                  to="/support"
+                  selected={pathname === '/support'}
+                >
+                  작품 제안
+                </StyledUserLink>
               </li>
               <li>
                 <StyledUserLink to="/profile">

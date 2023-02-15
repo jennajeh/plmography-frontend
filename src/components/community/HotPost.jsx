@@ -26,7 +26,10 @@ const ImgWrapper = styled.article`
     font-weight: 400;
     font-size: 18px;
     line-height: 20px;
-    color: ${((props) => props.theme.text.primary)};
+    
+    :hover {
+      color: ${((props) => props.theme.colors.first)};
+    }
   }
 
   img {
@@ -43,9 +46,15 @@ export default function HotPost({ hitPost, count }) {
   } = hitPost;
 
   function textLengthOverCut(text, length, lastText) {
-    const result = text.substr(0, length) + lastText;
+    if (!text.length) {
+      return null;
+    }
 
-    return result;
+    if (text.length <= length) {
+      return text;
+    }
+
+    return text.substr(0, length) + lastText;
   }
 
   return (

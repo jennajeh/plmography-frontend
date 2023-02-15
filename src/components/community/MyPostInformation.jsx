@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useLocalStorage } from 'usehooks-ts';
@@ -6,27 +7,60 @@ import usePostStore from '../../hooks/usePostStore';
 import useUserStore from '../../hooks/useUserStore';
 import UserPostInfoModal from './UserPostInfoModal';
 
-const Container = styled.div`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  padding-top: 5.7em;
+  gap: 15px;
+
 `;
 
-const Wrapper = styled.div`
-  
+const UserBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  gap: 30px;
+  width: 17em;
+  height: 12em;
+  background-color: ${((props) => props.theme.colors.third)};
+  padding-block: 1rem;
 `;
 
 const User = styled.div`
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+`;
+
+const ImageBox = styled.div`
+  width: 70px;
   img {
-    width: 3em;
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    overflow: hidden;
   }
 `;
 
-const MyPosts = styled.div`
-  
+const CommentsBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
 `;
 
-const MyComments = styled.div`
-  
+const LinkBox = styled.div`
+  display: flex;
+  align-items: center;
+  border-radius: 7px;
+  width: 300px;
+  height: 40px;
+  justify-content: center;
+  background-color:  ${((props) => props.theme.colors.first)};
 `;
 
 export default function MyPostInformation() {
@@ -40,30 +74,36 @@ export default function MyPostInformation() {
   const { myPostComments } = postCommentStore;
 
   return (
-    <Container>
+    <>
       {accessToken ? (
         <Wrapper>
-          <User>
-            <img src={user.profileImage} alt="profileImage" />
-            {user.nickname}
-          </User>
-          <MyPosts>
-            <UserPostInfoModal
-              buttonName={`내가 쓴 글: ${myPosts.length}`}
-              myPosts={myPosts}
-            />
-          </MyPosts>
-          <MyComments>
-            <UserPostInfoModal
-              buttonName={`내가 쓴 댓글: ${myPostComments.length}`}
-              myPostComments={myPostComments}
-            />
-          </MyComments>
-          <Link to="/community/posts/write">
-            글 작성하기
-          </Link>
+          <UserBox>
+            <User>
+              <ImageBox>
+                <img src={user.profileImage} alt="profileImage" />
+              </ImageBox>
+              {user.nickname}
+            </User>
+            <CommentsBox>
+              <UserPostInfoModal
+                buttonName="내가 쓴 글"
+                count={myPosts.length}
+                myPosts={myPosts}
+              />
+              <UserPostInfoModal
+                buttonName="내가 쓴 댓글"
+                count={myPostComments.length}
+                myPostComments={myPostComments}
+              />
+            </CommentsBox>
+          </UserBox>
+          <LinkBox>
+            <Link to="/community/posts/write">
+              글 작성하기
+            </Link>
+          </LinkBox>
         </Wrapper>
       ) : null}
-    </Container>
+    </>
   );
 }
