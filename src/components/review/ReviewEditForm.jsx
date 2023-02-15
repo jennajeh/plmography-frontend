@@ -82,9 +82,7 @@ export default function ReviewEditForm() {
   }, []);
 
   if (!content) {
-    return (
-      <p>Loading...</p>
-    );
+    return <p>Loading...</p>;
   }
 
   return (

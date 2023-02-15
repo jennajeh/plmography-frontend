@@ -18,7 +18,7 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   transform: translate(-50%, -50%);
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.479);
   z-index: 999;
 `;
 
@@ -73,25 +73,55 @@ const SubscriptionButton = styled.button`
   padding: 0 3px 0 0;
 `;
 
-const Following = styled.div`
+const FollowButton = styled.button`
+  display: block;
+  width: 80px;
+  height: 30px;
+  border: none;
+  border-radius: 5px;
+  color: ${((props) => props.theme.text.white)};
+  background-color: ${((props) => props.theme.colors.first)};
+  font-size: 16px;
+  font-weight: 700;
+
+  :hover {
+    color: ${((props) => props.theme.colors.first)};
+    background-color: ${((props) => props.theme.colors.fourth)};
+  }
 `;
 
 export default function SubscribeModal({
   buttonName, followings, followers,
 }) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isFollowingsOpen, setIsFollowingsOpen] = useState(false);
+  const [isFollowersOpen, setIsFollowersOpen] = useState(false);
   const [searchParams] = useSearchParams();
   const userStore = useUserStore();
   const subscribeStore = useSubscribeStore();
-  const modalRef = useRef(null);
+  const followingsModalRef = useRef(null);
+  const followersModalRef = useRef(null);
   const { user } = userStore;
   const { id: userId } = user;
   const page = searchParams.get('page') ?? 1;
 
   const handleClickBackground = (event) => {
-    if (modalRef.current && !modalRef.current.contains(event.target)) {
-      setIsOpen(false);
+    if (followingsModalRef.current && !followingsModalRef.current.contains(event.target)) {
+      setIsFollowingsOpen(false);
     }
+
+    if (followersModalRef.current && !followersModalRef.current.contains(event.target)) {
+      setIsFollowersOpen(false);
+    }
+  };
+
+  const handleClickOpen = () => {
+    if (buttonName === `팔로워 ${followers?.length}`) {
+      setIsFollowersOpen(true);
+
+      return;
+    }
+
+    setIsFollowingsOpen(true);
   };
 
   const handleClickUnFollow = async (followingUserId) => {
@@ -109,32 +139,32 @@ export default function SubscribeModal({
   };
 
   useEffect(() => {
-    if (isOpen) {
+    if (isFollowingsOpen || isFollowersOpen) {
       document.addEventListener('mousedown', handleClickBackground);
     }
 
-    if (!isOpen) {
+    if (!isFollowingsOpen || !isFollowersOpen) {
       document.removeEventListener('mousedown', handleClickBackground);
     }
 
     return () => {
       document.addEventListener('mousedown', handleClickBackground);
     };
-  }, [isOpen]);
+  }, [isFollowingsOpen, isFollowersOpen]);
 
   return (
     <>
       <SubscriptionButton
         type="button"
-        onClick={() => setIsOpen(true)}
+        onClick={handleClickOpen}
       >
         {buttonName}
       </SubscriptionButton>
-      {isOpen && followings?.length && (
+      {isFollowingsOpen && (
         <Container>
-          <Dialog ref={modalRef}>
+          <Dialog ref={followingsModalRef}>
             <FollowerBox>
-              <Title>팔로잉</Title>
+              <Title size={20}>팔로잉</Title>
               {followings?.length === 0 ? (
                 <div>팔로잉 내역이 없습니다</div>
               ) : (
@@ -148,38 +178,29 @@ export default function SubscribeModal({
                         />
                         <span>{following.nickname}</span>
                       </div>
-                      <Button
-                        width={80}
-                        height={30}
-                        bgcolor="#afbaca"
+                      <FollowButton
                         type="button"
                         onClick={() => handleClickUnFollow(following.userId)}
                       >
                         unfollow
-                      </Button>
+                      </FollowButton>
                     </li>
                   ))}
                 </FollowerList>
               )}
             </FollowerBox>
-            <Button
-              size={15}
-              width={80}
-              height={30}
-              bgcolor="#afbaca"
+            <FollowButton
               type="button"
-              type="button"
-              onClick={() => setIsOpen(false)}
+              onClick={() => setIsFollowingsOpen(false)}
             >
               닫기
-
-            </Button>
+            </FollowButton>
           </Dialog>
         </Container>
       )}
-      {isOpen && followers?.length && (
+      {isFollowersOpen && (
         <Container>
-          <Dialog ref={modalRef}>
+          <Dialog ref={followersModalRef}>
             <FollowerBox>
               <Title size={20}>팔로워</Title>
               {followers?.length === 0 ? (
@@ -193,25 +214,19 @@ export default function SubscribeModal({
                         <span>{follower.nickname}</span>
                       </div>
                       {follower.subscribeStatus === true ? (
-                        <Button
-                          width={80}
-                          height={30}
-                          bgcolor="#afbaca"
+                        <FollowButton
                           type="button"
                           onClick={() => handleClickUnFollow(follower.userId)}
                         >
                           unfollow
-                        </Button>
+                        </FollowButton>
                       ) : (
-                        <Button
-                          width={80}
-                          height={30}
-                          bgcolor="#afbaca"
+                        <FollowButton
                           type="button"
                           onClick={() => handleClickFollow(follower.userId)}
                         >
                           follow
-                        </Button>
+                        </FollowButton>
                       )}
                     </li>
                   ))}
@@ -219,12 +234,11 @@ export default function SubscribeModal({
               )}
             </FollowerBox>
             <Button
-              size={15}
-              width={80}
+              width={70}
               height={30}
-              bgcolor="#afbaca"
+              bgcolor="#5e677c"
               type="button"
-              onClick={() => setIsOpen(false)}
+              onClick={() => setIsFollowersOpen(false)}
             >
               닫기
             </Button>

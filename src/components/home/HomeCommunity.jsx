@@ -32,9 +32,7 @@ export default function HomeCommunity() {
   let count = 1;
 
   if (!hitPosts) {
-    return (
-      <p>Loading...</p>
-    );
+    return <p>Loading...</p>;
   }
 
   return (

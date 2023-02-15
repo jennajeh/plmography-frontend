@@ -134,6 +134,10 @@ export default class ReviewStore extends Store {
     return myReviews.filter((review) => !review.deleted);
   }
 
+  isDeletedMyAllReviews() {
+    return this.myReviews.filter((review) => !review.deleted);
+  }
+
   isDeletedAllReviews(reviews) {
     return reviews.filter((review) => !review.deleted);
   }

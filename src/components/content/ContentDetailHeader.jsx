@@ -237,9 +237,7 @@ export default function ContentDetailHeader() {
   };
 
   if (!content) {
-    return (
-      <p>Loading...</p>
-    );
+    return <p>Loading...</p>;
   }
 
   return (

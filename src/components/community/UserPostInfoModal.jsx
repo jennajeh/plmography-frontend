@@ -17,16 +17,20 @@ const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.479);
   z-index: 999;
 `;
 
 const Dialog = styled.div`
-  height: 50vw;
-  width: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 40em;
+  width: 30em;
   color: white;
-  background-color: #0d0e12;
+  background-color: ${((props) => props.theme.text.fourthGrey)};
   padding-inline: 2rem;
-  border-radius: 5px;
+  border-radius: 10px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 
   img {
@@ -46,15 +50,16 @@ const PostContainer = styled.div`
 const PostList = styled.ul`
   display: flex;
   flex-direction: column;
-  gap:40px;
+  gap: 10px;
   
 `;
 
 const Article = styled.li`
   border-radius: 10px;
-  background-color: ${((props) => props.theme.colors.third)};;
-  padding: 2rem 1rem;
+  background-color: transparent;
+  padding-block: 1rem;
 `;
+
 const ButtonBox = styled.div`
   display: flex ;
   justify-content: center;
@@ -78,15 +83,14 @@ const StyledButton = styled.button`
 
 const StyledLink = styled(Link)`
   display: flex;
-  flex-direction: column;
-  gap: 15px;
+  justify-content: space-between;
 
   p:first-child {
-    font-size: 18px;
+    font-size: 17px;
   }
 
   p:nth-of-type(2) {
-  color: ${((props) => props.theme.text.sixthGrey)};
+    color: ${((props) => props.theme.text.sixthGrey)};
   }
 `;
 
@@ -96,41 +100,69 @@ export default function UserPostInfoModal({
   myPosts,
   myPostComments,
 }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const modalRef = useRef(null);
+  const [isPostOpen, setIsPostOpen] = useState(false);
+  const [isCommentOpen, setIsCommentOpen] = useState(false);
+  const postModalRef = useRef(null);
+  const commentModalRef = useRef(null);
+
+  function textLengthOverCut(text, length, lastText) {
+    if (!text.length) {
+      return null;
+    }
+
+    if (text.length <= length) {
+      return text;
+    }
+
+    return text.substr(0, length) + lastText;
+  }
 
   const handleClickBackground = (event) => {
-    if (modalRef.current && !modalRef.current.contains(event.target)) {
-      setIsOpen(false);
+    if (postModalRef.current && !postModalRef.current.contains(event.target)) {
+      setIsPostOpen(false);
+    }
+
+    if (commentModalRef.current && !commentModalRef.current.contains(event.target)) {
+      setIsCommentOpen(false);
     }
   };
 
+  const handleClickOpen = () => {
+    if (buttonName === '내가 쓴 글') {
+      setIsPostOpen(true);
+
+      return;
+    }
+
+    setIsCommentOpen(true);
+  };
+
   useEffect(() => {
-    if (isOpen) {
+    if (isPostOpen || isCommentOpen) {
       document.addEventListener('mousedown', handleClickBackground);
     }
 
-    if (!isOpen) {
+    if (!isPostOpen || !isCommentOpen) {
       document.removeEventListener('mousedown', handleClickBackground);
     }
 
     return () => {
       document.addEventListener('mousedown', handleClickBackground);
     };
-  }, [isOpen]);
+  }, [isPostOpen, isCommentOpen]);
 
   return (
     <>
       <StyledButton
         type="button"
-        onClick={() => setIsOpen(true)}
+        onClick={handleClickOpen}
       >
         <span>{buttonName}</span>
         <span>{count}</span>
       </StyledButton>
-      {isOpen && myPosts?.length && (
+      {isPostOpen && (
         <Wrapper>
-          <Dialog ref={modalRef}>
+          <Dialog ref={postModalRef}>
             <Title size={25}>작성한 글</Title>
             <PostContainer>
               {myPosts?.length === 0 ? (
@@ -140,7 +172,7 @@ export default function UserPostInfoModal({
                   {myPosts?.map((post) => (
                     <Article key={post.id}>
                       <StyledLink to={`/community/posts/${post.id}`}>
-                        <p>{post.title}</p>
+                        <p>{textLengthOverCut(post.title, '25', '...')}</p>
                         <p>{dateFormat(post.createdAt)}</p>
                       </StyledLink>
                     </Article>
@@ -153,7 +185,7 @@ export default function UserPostInfoModal({
                   height={30}
                   bgcolor="#5e677c"
                   type="button"
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => setIsPostOpen(false)}
                 >
                   닫기
                 </Button>
@@ -162,16 +194,16 @@ export default function UserPostInfoModal({
           </Dialog>
         </Wrapper>
       )}
-      {isOpen && myPostComments?.length && (
+      {isCommentOpen && (
         <Wrapper>
-          <Dialog ref={modalRef}>
+          <Dialog ref={commentModalRef}>
             <Title size={25}>작성한 댓글</Title>
             <PostContainer>
-              {myPostComments?.length === 0 ? (
+              {myPostComments.length === 0 ? (
                 <div>내역이 없습니다</div>
               ) : (
                 <PostList>
-                  {myPostComments?.map((comment) => (
+                  {myPostComments.map((comment) => (
                     <Article key={comment.id}>
                       <StyledLink to={`/community/posts/${comment.postId}`}>
                         <p>{comment.postCommentBody}</p>
@@ -187,7 +219,7 @@ export default function UserPostInfoModal({
                   height={30}
                   bgcolor="#5e677c"
                   type="button"
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => setIsCommentOpen(false)}
                 >
                   닫기
                 </Button>

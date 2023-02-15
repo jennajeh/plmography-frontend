@@ -83,9 +83,7 @@ export default function ReviewComment({ review }) {
   };
 
   if (!user) {
-    return (
-      <p>Loading...</p>
-    );
+    return <p>Loading...</p>;
   }
 
   return (

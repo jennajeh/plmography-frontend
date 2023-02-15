@@ -191,9 +191,7 @@ export default function Category() {
   }, [page, filter]);
 
   if (!PLATFORMS || !TYPES || !GENRES || !RELEASEDATES) {
-    return (
-      <p>Loading...</p>
-    );
+    return <p>Loading...</p>;
   }
 
   return (

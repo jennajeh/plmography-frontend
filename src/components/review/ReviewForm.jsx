@@ -77,9 +77,7 @@ export default function ReviewForm() {
   };
 
   if (!content) {
-    return (
-      <p>Loading...</p>
-    );
+    return <p>Loading...</p>;
   }
 
   return (

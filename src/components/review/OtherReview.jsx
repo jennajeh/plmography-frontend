@@ -141,9 +141,7 @@ export default function OtherReview() {
   };
 
   if (!content) {
-    return (
-      <p>Loading...</p>
-    );
+    return <p>Loading...</p>;
   }
 
   return (

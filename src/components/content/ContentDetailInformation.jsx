@@ -76,7 +76,7 @@ export default function ContentDetailInformation() {
   }, [credits]);
 
   if (!credits || !actors || !content || !videoUrl) {
-    <p>Loading...</p>;
+    return <p>Loading...</p>;
   }
 
   return (

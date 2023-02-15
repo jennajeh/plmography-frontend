@@ -96,9 +96,7 @@ export default function ThemeContentList() {
   }, [page, filter]);
 
   if (!contents) {
-    return (
-      <p>Loading...</p>
-    );
+    return <p>Loading...</p>;
   }
 
   return (

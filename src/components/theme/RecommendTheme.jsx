@@ -22,9 +22,7 @@ export default function RecommendTheme() {
   const { hitThemes } = themeStore;
 
   if (!hitThemes) {
-    return (
-      <p>Loading...</p>
-    );
+    return <p>Loading...</p>;
   }
 
   return (

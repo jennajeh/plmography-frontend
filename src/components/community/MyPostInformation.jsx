@@ -11,7 +11,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 64px;
+  padding-top: 5.7em;
   gap: 15px;
 
 `;
@@ -19,10 +19,10 @@ const Wrapper = styled.div`
 const UserBox = styled.div`
   display: flex;
   flex-direction: column;
-  border-radius: 5px;
-  gap:10px;
-  width: 300px;
-  height: 218px;
+  border-radius: 10px;
+  gap: 30px;
+  width: 17em;
+  height: 12em;
   background-color: ${((props) => props.theme.colors.third)};
   padding-block: 1rem;
 `;
@@ -49,7 +49,7 @@ const ImageBox = styled.div`
 const CommentsBox = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 20px;
   align-items: center;
 `;
 

@@ -28,9 +28,7 @@ export default function HotPosts() {
   const { hitPosts } = postStore;
 
   if (!hitPosts) {
-    return (
-      <p>Loading...</p>
-    );
+    return <p>Loading...</p>;
   }
 
   return (

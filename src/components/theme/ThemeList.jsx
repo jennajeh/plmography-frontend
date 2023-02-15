@@ -27,9 +27,7 @@ export default function ThemeList() {
   const { themes } = themeStore;
 
   if (!themes) {
-    return (
-      <p>Loading...</p>
-    );
+    return <p>Loading...</p>;
   }
 
   return (

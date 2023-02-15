@@ -6,10 +6,11 @@ import useReviewStore from '../../hooks/useReviewStore';
 import useSubscribeStore from '../../hooks/useSubscribeStore';
 import useUserStore from '../../hooks/useUserStore';
 import UserProfileSubscribeModal from './UserProfileSubscribeModal';
-import UserProfileInfoModal from './UserProfileInfoModal';
 import Title from '../common/Title';
 import { EditProfile } from '../../assets/profile';
 import StyledLink from '../common/StyledLink';
+import UserProfileContentsModal from './UserProfileContentsModal';
+import UserProfileReviewsModal from './UserProfileReviewsModal';
 
 const Container = styled.div`
   display: flex;
@@ -82,16 +83,6 @@ const NoFavoriteContents = styled.div`
   }
 `;
 
-// const StyledLink = styled(Link)`
-//   display: flex;
-//   background-color: ${((props) => props.theme.text.blue)};
-//   width: 150px;
-//   height: 50px;
-//   justify-content: center;
-//   align-items: center;
-//   border-radius: 5px;
-// `;
-
 export default function MyProfile() {
   const userStore = useUserStore();
   const reviewStore = useReviewStore();
@@ -99,7 +90,6 @@ export default function MyProfile() {
   const subscribeStore = useSubscribeStore();
 
   const { user } = userStore;
-  const { myReviews } = reviewStore;
   const { followings, followers } = subscribeStore;
   const { favoriteContents, watchedContents, wishContents } = contentStore;
 
@@ -107,7 +97,9 @@ export default function MyProfile() {
     id: userId, nickname, profileImage, favoriteContentIds, watchedContentIds, wishContentIds,
   } = user;
 
-  const notDeletedMyReviews = reviewStore.isDeletedMyReviews(myReviews);
+  const notDeletedMyReviews = reviewStore.isDeletedMyAllReviews();
+
+  console.log('notDeletedMyReviews', notDeletedMyReviews);
 
   return (
     <Container>
@@ -138,24 +130,24 @@ export default function MyProfile() {
           </UserInfo>
         </UserInfoBox>
         <ContentsInfoBox>
-          <UserProfileInfoModal
+          <UserProfileContentsModal
             buttonName="찜했어요"
             count={`${wishContentIds?.length}`}
             userId={userId}
             wishContentIds={wishContentIds}
             wishContents={wishContents}
           />
-          <UserProfileInfoModal
+          <UserProfileContentsModal
             buttonName="봤어요"
             count={`${watchedContentIds?.length}`}
             userId={userId}
             watchedContentIds={watchedContentIds}
             watchedContents={watchedContents}
           />
-          <UserProfileInfoModal
+          <UserProfileReviewsModal
             buttonName="작성한 리뷰"
             count={`${notDeletedMyReviews?.length}`}
-            notDeletedMyReviews={notDeletedMyReviews}
+            reviews={notDeletedMyReviews}
           />
         </ContentsInfoBox>
         <div>

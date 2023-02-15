@@ -91,9 +91,7 @@ export default function ContentDetailPlatform() {
   };
 
   if (!content || !platform) {
-    return (
-      <p>Loading...</p>
-    );
+    return <p>Loading...</p>;
   }
 
   return (

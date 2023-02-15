@@ -39,9 +39,7 @@ export default function PostList() {
   const { posts } = postStore;
 
   if (!posts) {
-    return (
-      <p>Loading...</p>
-    );
+    return <p>Loading...</p>;
   }
 
   return (

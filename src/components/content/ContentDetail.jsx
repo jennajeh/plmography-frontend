@@ -20,7 +20,7 @@ export default function ContentDetail() {
   const { content } = contentStore;
 
   if (!content) {
-    <p>Loading...</p>;
+    return <p>Loading...</p>;
   }
 
   return (

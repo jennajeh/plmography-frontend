@@ -99,9 +99,9 @@ const StyledLinkWriteReview = styled(Link)`
 export default function MyReview() {
   const [accessToken] = useLocalStorage('accessToken', '');
   const contentStore = useContentStore();
-  const { content } = contentStore;
   const reviewStore = useReviewStore();
-  const { myReviews } = reviewStore;
+
+  const { content } = contentStore;
 
   const mySameContentReview = reviewStore.isMySameContentReview(content.tmdbId);
   const reviewNotDeleted = reviewStore.isDeletedMyReviews(mySameContentReview);
@@ -117,7 +117,7 @@ export default function MyReview() {
     return a.image;
   };
 
-  if (!content || !myReviews) {
+  if (!content || !reviewNotDeleted) {
     return (
       <p>Loading...</p>
     );
@@ -125,10 +125,10 @@ export default function MyReview() {
 
   return (
     <div>
-      {accessToken ? (
+      {accessToken && (
         <form>
           <Title>내가 쓴 리뷰</Title>
-          {myReviews.length && mySameContentReview.length && reviewNotDeleted.length ? (
+          {reviewNotDeleted.length ? (
             <Container>
               <List>
                 {reviewNotDeleted.map((review) => (
@@ -175,7 +175,7 @@ export default function MyReview() {
             </NoReview>
           )}
         </form>
-      ) : null}
+      )}
     </div>
   );
 }

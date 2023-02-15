@@ -32,9 +32,7 @@ export default function SortedArticleList() {
   let count = 1;
 
   if (!sortedArticles) {
-    return (
-      <p>Loading...</p>
-    );
+    return <p>Loading...</p>;
   }
 
   return (

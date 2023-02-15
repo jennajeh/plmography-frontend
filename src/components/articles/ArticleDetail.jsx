@@ -65,7 +65,7 @@ export default function ArticleDetail() {
   } = article;
 
   if (!article) {
-    <p>Loading...</p>;
+    return <p>Loading...</p>;
   }
 
   return (

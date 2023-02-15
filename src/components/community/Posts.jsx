@@ -27,8 +27,8 @@ const SearchBar = styled.div`
 
 const SearchForm = styled.form`
   display: flex;
+  align-items: flex-start;
   gap: 15px;
-  align-items: center;
 `;
 
 export default function Posts() {
@@ -65,7 +65,7 @@ export default function Posts() {
           />
           <Button
             width={80}
-            height={30}
+            height={38}
             bgcolor="#afbaca"
             type="submit"
           >
