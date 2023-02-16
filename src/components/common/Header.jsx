@@ -168,12 +168,12 @@ export default function Header() {
               </StyledLink>
             </li>
             <li>
-              <StyledLink
+              {/* <StyledLink
                 to="/new-contents"
                 selected={pathname === '/new-contents'}
               >
                 신작
-              </StyledLink>
+              </StyledLink> */}
             </li>
           </List>
         </MainMenu>
