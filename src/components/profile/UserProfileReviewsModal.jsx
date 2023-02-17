@@ -39,6 +39,10 @@ const Dialog = styled.div`
   }
 `;
 
+const NoContents = styled.div`
+  color: ${((props) => props.theme.text.white)};
+`;
+
 const ButtonName = styled.div`
   display: flex;
   flex-direction: column;
@@ -115,7 +119,7 @@ export default function UserProfileReviewsModal({ buttonName, count, reviews }) 
             <div>
               <Title size={25}>작성한 리뷰</Title>
               {reviews.length === 0 ? (
-                <div>내역이 없습니다</div>
+                <NoContents>내역이 없습니다</NoContents>
               ) : (
                 <ul>
                   {reviews.map((review, idx) => (

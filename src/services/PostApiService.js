@@ -50,8 +50,6 @@ export default class PostApiService {
 
     const { data } = await this.instance.get(`/posts/filter${query}`);
 
-    (console.log('api-->>>>>>>>', this.instance.get(`/posts/filter${query}`)));
-
     const { posts, pages } = data;
 
     return { posts, pages };

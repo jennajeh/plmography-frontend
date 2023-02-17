@@ -72,7 +72,7 @@ const ContentsInfoBox = styled.div`
   background-color: ${((props) => props.theme.colors.third)};
 `;
 
-const NoFavoriteContents = styled.div`
+const NoContents = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -80,6 +80,7 @@ const NoFavoriteContents = styled.div`
 
   p {
     font-size: 16px;
+    color: ${((props) => props.theme.text.white)};
   }
 `;
 
@@ -98,8 +99,6 @@ export default function MyProfile() {
   } = user;
 
   const notDeletedMyReviews = reviewStore.isDeletedMyAllReviews();
-
-  console.log('notDeletedMyReviews', notDeletedMyReviews);
 
   return (
     <Container>
@@ -174,18 +173,18 @@ export default function MyProfile() {
               </Link>
             </>
           ) : (
-            <NoFavoriteContents>
+            <NoContents>
               <p>등록된 작품이 아직 없습니다.</p>
               <StyledLink width={140} height={50} to="/profile/search">
                 인생작품 등록하기
               </StyledLink>
-            </NoFavoriteContents>
+            </NoContents>
           )}
         </div>
         <Title>찜한 리스트작품</Title>
-        <NoFavoriteContents>
+        <NoContents>
           <p>내역이 없습니다.</p>
-        </NoFavoriteContents>
+        </NoContents>
       </Wrapper>
     </Container>
   );

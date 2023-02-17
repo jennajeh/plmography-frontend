@@ -47,6 +47,10 @@ const PostContainer = styled.div`
   padding-bottom: 2rem;
 `;
 
+const NoContents = styled.div`
+  color: ${((props) => props.theme.text.white)};
+`;
+
 const PostList = styled.ul`
   display: flex;
   flex-direction: column;
@@ -166,7 +170,7 @@ export default function UserPostInfoModal({
             <Title size={25}>작성한 글</Title>
             <PostContainer>
               {myPosts?.length === 0 ? (
-                <div>내역이 없습니다</div>
+                <NoContents>내역이 없습니다</NoContents>
               ) : (
                 <PostList>
                   {myPosts?.map((post) => (
@@ -200,7 +204,7 @@ export default function UserPostInfoModal({
             <Title size={25}>작성한 댓글</Title>
             <PostContainer>
               {myPostComments.length === 0 ? (
-                <div>내역이 없습니다</div>
+                <NoContents>내역이 없습니다</NoContents>
               ) : (
                 <PostList>
                   {myPostComments.map((comment) => (
