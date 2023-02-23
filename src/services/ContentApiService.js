@@ -21,7 +21,13 @@ export default class ContentApiService {
         baseURL: baseUrl,
         headers: { Authorization: `Bearer ${this.accessToken}` },
       });
+
+      return;
     }
+
+    this.instance = axios.create({
+      baseURL: baseUrl,
+    });
   }
 
   async fetchTopRatedContents() {

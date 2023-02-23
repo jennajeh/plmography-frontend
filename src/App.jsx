@@ -43,6 +43,7 @@ import ThemesDetailPage from './pages/ThemesDetailPage';
 import CommunityPostDetailPage from './pages/CommunityPostDetailPage';
 import PostCreatePage from './pages/PostCreatePage';
 import PostEditPage from './pages/PostEditPage';
+import KakaoLoginRedirectPage from './pages/KakaoLoginRedirectPage';
 
 const Container = styled.div`
   min-height: 100vh;
@@ -109,6 +110,7 @@ export default function App() {
               <Route path="/signup" element={<SignupPage />} />
               <Route path="/greeting" element={<GreetingPage />} />
               <Route path="/login" element={<LoginPage />} />
+              <Route path="/oauth/kakao" element={<KakaoLoginRedirectPage />} />
               <Route path="/events" element={<EventsPage />} />
               {/* <Route path="/events/:id" element={<EventsDetailPage />} /> */}
               <Route path="/support" element={<SupportPage />} />

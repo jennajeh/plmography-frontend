@@ -21,7 +21,13 @@ export default class UserApiService {
         baseURL: baseUrl,
         headers: { Authorization: `Bearer ${this.accessToken}` },
       });
+
+      return;
     }
+
+    this.instance = axios.create({
+      baseURL: baseUrl,
+    });
   }
 
   async createUser({
@@ -32,6 +38,14 @@ export default class UserApiService {
     });
 
     return data;
+  }
+
+  async sendKakaoAuthorizationCode(code) {
+    const { data } = await this.instance.get(`/oauth/kakao?code=${code}`);
+
+    return {
+      accessToken: data.accessToken,
+    };
   }
 
   async fetchMe() {

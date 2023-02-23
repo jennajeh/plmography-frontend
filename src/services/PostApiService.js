@@ -21,7 +21,13 @@ export default class PostApiService {
         baseURL: baseUrl,
         headers: { Authorization: `Bearer ${this.accessToken}` },
       });
+
+      return;
     }
+
+    this.instance = axios.create({
+      baseURL: baseUrl,
+    });
   }
 
   async createPost(title, postBody, image) {

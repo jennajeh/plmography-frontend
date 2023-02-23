@@ -21,7 +21,13 @@ export default class ThemeApiService {
         baseURL: baseUrl,
         headers: { Authorization: `Bearer ${this.accessToken}` },
       });
+
+      return;
     }
+
+    this.instance = axios.create({
+      baseURL: baseUrl,
+    });
   }
 
   async fetchThemes({ page = 1, size }) {

@@ -20,6 +20,22 @@ export default class UserStore extends Store {
     this.editStatus = '';
   }
 
+  async sendKakaoAuthorizationCode(code) {
+    this.changeLoginStatus('processing');
+
+    try {
+      const { accessToken } = await userApiService.sendKakaoAuthorizationCode(code);
+
+      this.changeLoginStatus('successful');
+
+      return accessToken;
+    } catch (e) {
+      this.changeLoginStatus('failed');
+
+      return '';
+    }
+  }
+
   async signup({
     email, nickname, password, passwordCheck,
   }) {
