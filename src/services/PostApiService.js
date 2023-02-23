@@ -21,7 +21,13 @@ export default class PostApiService {
         baseURL: baseUrl,
         headers: { Authorization: `Bearer ${this.accessToken}` },
       });
+
+      return;
     }
+
+    this.instance = axios.create({
+      baseURL: baseUrl,
+    });
   }
 
   async createPost(title, postBody, image) {
@@ -49,8 +55,6 @@ export default class PostApiService {
       .join('&');
 
     const { data } = await this.instance.get(`/posts/filter${query}`);
-
-    (console.log('api-->>>>>>>>', this.instance.get(`/posts/filter${query}`)));
 
     const { posts, pages } = data;
 

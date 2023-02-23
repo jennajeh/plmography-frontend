@@ -1,5 +1,5 @@
 const config = {
-  apiBaseUrl: 'http://localhost:8000',
+  apiBaseUrl: 'http://plmography-spring.fly.dev',
 };
 
 export default config;

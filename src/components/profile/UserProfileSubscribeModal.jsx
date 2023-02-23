@@ -66,6 +66,10 @@ li {
 }
 `;
 
+const NoSubscription = styled.div`
+  color: ${((props) => props.theme.text.white)};
+`;
+
 const SubscriptionButton = styled.button`
   border: none;
   background-color: transparent;
@@ -166,7 +170,7 @@ export default function SubscribeModal({
             <FollowerBox>
               <Title size={20}>팔로잉</Title>
               {followings?.length === 0 ? (
-                <div>팔로잉 내역이 없습니다</div>
+                <NoSubscription>팔로잉 내역이 없습니다</NoSubscription>
               ) : (
                 <FollowerList>
                   {followings?.map((following, idx) => (
@@ -204,7 +208,7 @@ export default function SubscribeModal({
             <FollowerBox>
               <Title size={20}>팔로워</Title>
               {followers?.length === 0 ? (
-                <div>팔로워 내역이 없습니다</div>
+                <NoSubscription>팔로워 내역이 없습니다</NoSubscription>
               ) : (
                 <FollowerList>
                   {followers?.map((follower, idx) => (

@@ -19,10 +19,7 @@ export default class PostCommentApiService {
     if (accessToken) {
       this.instance = axios.create({
         baseURL: baseUrl,
-        headers: {
-          Authorization: `Bearer ${this.accessToken}`,
-          // contentType: 'application/json',
-        },
+        headers: { Authorization: `Bearer ${this.accessToken}` },
       });
 
       return;

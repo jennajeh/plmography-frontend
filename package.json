@@ -21,7 +21,7 @@
   "bugs": {
     "url": "https://github.com/jennajeh/plmography-frontend/issues"
   },
-  "homepage": "https://github.com/jennajeh/plmography-frontend#readme",
+  "homepage": "https://jennajeh.github.io/plmography-frontend/",
   "devDependencies": {
     "@codeceptjs/configure": "^0.10.0",
     "@codeceptjs/ui": "^0.4.7",

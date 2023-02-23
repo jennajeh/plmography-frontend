@@ -3,6 +3,7 @@ import ChatsCircle from './chats_circle.svg';
 import PlmographyLogo from './plmography_logo.svg';
 import Search from './search.svg';
 import Arrow from './arrow.svg';
+import KaKao from './kakao.png';
 
 export {
   BasePreview,
@@ -10,4 +11,5 @@ export {
   PlmographyLogo,
   Search,
   Arrow,
+  KaKao,
 };

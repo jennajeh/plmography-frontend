@@ -41,6 +41,10 @@ const Dialog = styled.div`
   }
 `;
 
+const NoContents = styled.div`
+  color: ${((props) => props.theme.text.white)};
+`;
+
 const ContentBox = styled.div`
   display: flex;
   justify-content: space-between;
@@ -182,7 +186,7 @@ export default function UserProfileContentsModal({
             <div>
               <Title size={25}>봤어요</Title>
               {watchedContents?.length === 0 ? (
-                <div>내역이 없습니다</div>
+                <NoContents>내역이 없습니다</NoContents>
               ) : (
                 <ul>
                   {watchedContents?.map((watched, idx) => (
@@ -231,7 +235,7 @@ export default function UserProfileContentsModal({
             <div>
               <Title size={25}>찜했어요</Title>
               {wishContents?.length === 0 ? (
-                <div>내역이 없습니다</div>
+                <NoContents>내역이 없습니다</NoContents>
               ) : (
                 <ul>
                   {wishContents?.map((wish, idx) => (

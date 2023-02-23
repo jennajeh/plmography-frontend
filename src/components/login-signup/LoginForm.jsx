@@ -6,17 +6,15 @@ import useUserStore from '../../hooks/useUserStore';
 import useLoginFormStore from '../../hooks/useLoginFormStore';
 import Input from '../common/Input';
 import Button from '../common/Button';
+import kakaoAuthUrl from '../../../kakaoConfig';
+import { KaKao } from '../../assets/common';
 
 const Container = styled.article`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
   height: 100%;
-  a {
-    display: block;
-    margin-top: 60px;
-    text-align: center;
-  }
+  color: ${((props) => props.theme.text.white)};
 `;
 
 const Title = styled.h2`
@@ -27,14 +25,14 @@ const Title = styled.h2`
   text-align: center;
 `;
 
-const Inputs = styled.div`
-  #input-username {
-    margin-top: 60px;
-  }
+const InputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding-top: 2em;
 `;
 
 const Error = styled.div`
-  height: 60px;
+  height: 30px;
   
   p {
     padding-top: 20px;
@@ -42,6 +40,35 @@ const Error = styled.div`
     font-size: 15px;
     color: ${((props) => props.theme.text.red)};
   }
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2em;
+
+  button {
+    margin-bottom: 1em;
+    font-size: 15px;
+
+    :hover {
+      background-color: ${((props) => props.theme.text.white)};
+      color: ${((props) => props.theme.colors.first)};
+    }
+  }
+`;
+
+const KakaoButton = styled.a`
+  height: 50px;
+  width: 300px;
+  border: none;
+  background: url(/assets/common/kakao.png) no-repeat 0% 0%;
+`;
+
+const StyledLink = styled(Link)`
+  
 `;
 
 export default function LoginForm() {
@@ -87,39 +114,59 @@ export default function LoginForm() {
     <Container>
       <form onSubmit={handleSubmit}>
         <Title>USER LOGIN</Title>
-        <label htmlFor="input-email">이메일</label>
-        <Inputs>
+        <InputWrapper>
+          <label htmlFor="input-email">
+            이메일
+          </label>
           <Input
             id="input-email"
             type="text"
             name="email"
-            placeholder="이메일"
+            placeholder="이메일을 입력해 주세요"
+            width={400}
+            height={40}
             value={loginFormStore.fields.email || ''}
             error={loginFormStore.errors.email || userStore.loginFailed}
             onChange={handleChangeEmail}
           />
-          <label htmlFor="input-password">비밀번호</label>
+          <label htmlFor="input-password">
+            비밀번호
+          </label>
           <Input
             id="input-password"
             type="password"
             name="password"
-            placeholder="비밀번호"
+            placeholder="비밀번호를 입력해 주세요"
+            width={400}
+            height={40}
             value={loginFormStore.fields.password || ''}
             error={loginFormStore.errors.password || userStore.loginFailed}
             onChange={handleChangePassword}
           />
-        </Inputs>
-        <Error>
-          {loginFormStore.errorMessage
-            ? loginFormStore.errorMessage
-            : null}
-          {userStore.loginFailed
-            ? '이메일 혹은 비밀번호가 맞지 않습니다'
-            : null}
-        </Error>
-        <Button type="submit">로그인</Button>
-        <Link to="/signup">회원가입</Link>
+          <Error>
+            {loginFormStore.errorMessage
+              ? loginFormStore.errorMessage
+              : null}
+            {userStore.loginFailed
+              ? '이메일 혹은 비밀번호가 맞지 않습니다'
+              : null}
+          </Error>
+        </InputWrapper>
+        <ButtonWrapper>
+          <Button
+            type="submit"
+            width={300}
+            height={44}
+            bgcolor="#5e677c"
+          >
+            로그인
+          </Button>
+          <KakaoButton href={kakaoAuthUrl}>
+            <img src={KaKao} alt="kakao" />
+          </KakaoButton>
+        </ButtonWrapper>
       </form>
+      <StyledLink to="/signup">회원가입</StyledLink>
     </Container>
   );
 }
