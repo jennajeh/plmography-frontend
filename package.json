@@ -4,6 +4,7 @@
   "description": "플모그래피",
   "scripts": {
     "start": "parcel index.html --port 8080",
+    "build": "parcel build index.html",
     "lint": "eslint --fix --ext .js,.jsx .",
     "test": "jest",
     "watch:test": "npm test -- --watchAll",
@@ -11,17 +12,9 @@
     "codeceptjs:headless": "HEADLESS=true codeceptjs run --steps",
     "codeceptjs:ui": "codecept-ui --app"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jennajeh/plmography-frontend.git"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/jennajeh/plmography-frontend/issues"
-  },
-  "homepage": "https://github.com/jennajeh/plmography-frontend#readme",
   "devDependencies": {
     "@codeceptjs/configure": "^0.10.0",
     "@codeceptjs/ui": "^0.4.7",
