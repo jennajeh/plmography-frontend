@@ -19,9 +19,6 @@ const List = styled.ul`
   width: 700px;
   flex-direction: column;
   gap: 20px;
-
-  
-  
 `;
 
 const Error = styled.p`
@@ -29,6 +26,7 @@ const Error = styled.p`
   font-weight: 700;
   font-size: ${((props) => props.theme.size.h4)};
   text-align: center;
+  color: white;
 `;
 
 export default function PostList() {
