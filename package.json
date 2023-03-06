@@ -1,7 +1,7 @@
 {
   "name": "plmography-frontend",
   "version": "1.0.0",
-  "description": "",
+  "description": "플모그래피",
   "scripts": {
     "start": "parcel index.html --port 8080",
     "lint": "eslint --fix --ext .js,.jsx .",
@@ -21,7 +21,7 @@
   "bugs": {
     "url": "https://github.com/jennajeh/plmography-frontend/issues"
   },
-  "homepage": "https://jennajeh.github.io/plmography-frontend/",
+  "homepage": "https://jennajeh.github.io/plmography-frontend/#readme",
   "devDependencies": {
     "@codeceptjs/configure": "^0.10.0",
     "@codeceptjs/ui": "^0.4.7",
