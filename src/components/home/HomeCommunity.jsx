@@ -22,6 +22,7 @@ const Error = styled.p`
   font-weight: bold;
   font-size: 24px;
   text-align: center;
+  color: white;
 `;
 
 export default function HomeCommunity() {

@@ -19,6 +19,7 @@ const Error = styled.p`
   margin: 80px;
   font-weight: 700;
   font-size: ${((props) => props.theme.size.h4)};
+  color: white;
   text-align: center;
 `;
 

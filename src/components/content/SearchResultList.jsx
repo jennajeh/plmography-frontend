@@ -20,6 +20,7 @@ const Error = styled.p`
   font-weight: 700;
   font-size: ${((props) => props.theme.size.h4)};
   text-align: center;
+  color: white;
 `;
 
 const Button = styled.button`

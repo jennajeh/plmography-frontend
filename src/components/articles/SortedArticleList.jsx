@@ -22,6 +22,7 @@ const Error = styled.p`
   font-weight: 700;
   font-size: 1.5em;
   text-align: center;
+  color: white;
 `;
 
 export default function SortedArticleList() {
