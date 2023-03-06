@@ -95,8 +95,6 @@ export default function App() {
               <Route path="/reviews/:id/edit" element={<ReviewEditPage />} />
               <Route path="/explore" element={<ExplorePage />} />
               <Route path="/new-contents" element={<NewContentsPage />} />
-              {/* <Route path="/ranking" element={<DailyRankingPage />} /> */}
-              {/* <Route path="/next-contents" element={<NextContentsPage />} /> */}
               <Route path="/articles" element={<ArticlesPage />} />
               <Route path="/articles/:id" element={<ArticleDetailPage />} />
               <Route path="/profile" element={<MyProfilePage />} />
@@ -106,13 +104,11 @@ export default function App() {
               <Route path="/users/:id/wishes" element={<UserWishesPage />} />
               <Route path="/users/:id/watched" element={<UserWatchedPage />} />
               <Route path="/users/:id/reviews" element={<UserReviewsPage />} />
-              {/* <Route path="/users/:id/services/edit" element={<ServiceChoicePage />} /> */}
               <Route path="/signup" element={<SignupPage />} />
               <Route path="/greeting" element={<GreetingPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/oauth/kakao" element={<KakaoLoginRedirectPage />} />
               <Route path="/events" element={<EventsPage />} />
-              {/* <Route path="/events/:id" element={<EventsDetailPage />} /> */}
               <Route path="/support" element={<SupportPage />} />
             </Routes>
           </Content>
