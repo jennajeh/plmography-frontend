@@ -10,9 +10,9 @@ const StyledLink = styled(Link)`
   align-items: center;
   border-radius: 5px;
 
-  :hover {
+  /* :hover {
       color: ${((props) => props.theme.colors.first)};
-    }
+    } */
 `;
 
 export default StyledLink;

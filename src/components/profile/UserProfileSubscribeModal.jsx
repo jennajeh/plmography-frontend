@@ -193,12 +193,15 @@ export default function SubscribeModal({
                 </FollowerList>
               )}
             </FollowerBox>
-            <FollowButton
+            <Button
+              width={70}
+              height={30}
+              bgcolor="#5e677c"
               type="button"
               onClick={() => setIsFollowingsOpen(false)}
             >
               닫기
-            </FollowButton>
+            </Button>
           </Dialog>
         </Container>
       )}
