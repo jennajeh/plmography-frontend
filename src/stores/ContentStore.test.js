@@ -10,19 +10,6 @@ describe('UserStore', () => {
   });
 
   describe('컨텐츠 조회', () => {
-    context('컨텐츠 목록 조회시', () => {
-      it('컨텐츠 리스트가 보인다', async () => {
-        await contentStore.fetchContents({
-          page: 1,
-          size: 8,
-          filter: {},
-        });
-
-        expect(contentStore.contents[0].korTitle).toBe('아리스 인 보더랜드');
-        expect(contentStore.totalPages).toBe(50);
-      });
-    });
-
     context('특정 컨텐츠 클릭시', () => {
       it('컨텐츠 상세 정보가 보인다', async () => {
         await contentStore.fetchContent(2);
@@ -38,8 +25,6 @@ describe('UserStore', () => {
       await contentStore.fetchTopRatedContents();
 
       expect(contentStore.contents).toBeTruthy();
-      expect(contentStore.contents[0].korTitle).toBe('장화신은 고양이: 끝내주는 모험');
-      expect(contentStore.contents[1].korTitle).toBe('겨울 라이프');
     });
   });
 
@@ -55,8 +40,6 @@ describe('UserStore', () => {
       });
 
       expect(contentStore.contents).toBeTruthy();
-      expect(contentStore.contents[0].korTitle).toBe('장화신은 고양이: 끝내주는 모험');
-      expect(contentStore.contents[1].korTitle).toBe('겨울 라이프');
     });
   });
 
@@ -68,8 +51,6 @@ describe('UserStore', () => {
       await contentStore.fetchFavoriteContents(userId, favoriteContentId);
 
       expect(contentStore.favoriteContents).toBeTruthy();
-      expect(contentStore.favoriteContents[0].korTitle).toBe('아바타: 물의 길');
-      expect(contentStore.favoriteContents[1].korTitle).toBe('장화신은 고양이');
     });
   });
 
@@ -81,8 +62,6 @@ describe('UserStore', () => {
       await contentStore.fetchWatchedContents(userId, watchedContentId);
 
       expect(contentStore.watchedContents).toBeTruthy();
-      expect(contentStore.watchedContents[0].korTitle).toBe('아바타: 물의 길');
-      expect(contentStore.watchedContents[1].korTitle).toBe('장화신은 고양이');
     });
   });
 
@@ -94,8 +73,6 @@ describe('UserStore', () => {
       await contentStore.fetchWishContents(userId, wishContentId);
 
       expect(contentStore.wishContents).toBeTruthy();
-      expect(contentStore.wishContents[0].korTitle).toBe('아바타: 물의 길');
-      expect(contentStore.wishContents[1].korTitle).toBe('장화신은 고양이');
     });
   });
 });

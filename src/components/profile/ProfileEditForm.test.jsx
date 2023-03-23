@@ -12,11 +12,11 @@ const context = describe;
 describe('ProfileEditForm', () => {
   function renderProfileEditForm() {
     render((
-      <MemoryRouter>
-        <ThemeProvider theme={defaultTheme}>
+      <ThemeProvider theme={defaultTheme}>
+        <MemoryRouter>
           <ProfileEditForm />
-        </ThemeProvider>
-      </MemoryRouter>
+        </MemoryRouter>
+      </ThemeProvider>
     ));
   }
 

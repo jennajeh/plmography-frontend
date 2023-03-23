@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { useLocalStorage } from 'usehooks-ts';
 import ProfileEditForm from '../components/profile/ProfileEditForm';
 import useUserStore from '../hooks/useUserStore';
-import useProfileEditFormStore from '../hooks/useProfileEditFormStore';
 
 const Container = styled.div`
   display: flex;
@@ -17,15 +16,8 @@ const Container = styled.div`
 export default function MyProfileEditPage() {
   const [accessToken] = useLocalStorage('accessToken', '');
   const userStore = useUserStore();
-  const profileEditFormStore = useProfileEditFormStore();
-
-  const loadData = async () => {
-    await userStore.fetchMe();
-    profileEditFormStore.reset();
-  };
 
   useEffect(() => {
-    // loadData();
     userStore.fetchMe();
   }, []);
 

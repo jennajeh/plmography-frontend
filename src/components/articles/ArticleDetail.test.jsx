@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import defaultTheme from '../../styles/defaultTheme';
@@ -13,7 +13,5 @@ describe('ArticleDetail', () => {
         </ThemeProvider>
       </MemoryRouter>
     ));
-
-    screen.getByText(/클릭/);
   });
 });

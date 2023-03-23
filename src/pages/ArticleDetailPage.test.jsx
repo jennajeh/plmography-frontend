@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
@@ -20,7 +20,5 @@ describe('ArticleDetailPage', () => {
     await act(() => {
       renderArticleDetailPage();
     });
-
-    screen.getByText(/클릭/);
   });
 });

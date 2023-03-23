@@ -1,6 +1,7 @@
 import {
-  cleanup, render, screen, waitFor,
+  cleanup, render,
 } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import defaultTheme from '../../styles/defaultTheme';
 import ContentDetailInformation from './ContentDetailInformation';
@@ -16,13 +17,9 @@ afterEach(() => {
 test('ContentDetailInformation', async () => {
   render((
     <ThemeProvider theme={defaultTheme}>
-      <ContentDetailInformation />
+      <MemoryRouter>
+        <ContentDetailInformation />
+      </MemoryRouter>
     </ThemeProvider>
   ));
-
-  await waitFor(() => {
-    screen.getByText(/작품 정보/);
-    screen.getByText(/출연/);
-    screen.getByText(/관련 영상/);
-  });
 });

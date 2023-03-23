@@ -1,6 +1,8 @@
 import server from './testServer';
 
-beforeAll(() => server.listen({ onUnhandledRequest: 'bypass' }));
+beforeAll(() => {
+  server.listen();
+});
 
 afterEach(() => {
   server.resetHandlers();

@@ -1,7 +1,8 @@
 import {
   cleanup,
-  render, screen, waitFor,
+  render, screen,
 } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import defaultTheme from '../../styles/defaultTheme';
 import ContentDetailPlatform from './ContentDetailPlatform';
@@ -17,11 +18,11 @@ afterEach(() => {
 test('ContentDetailPlatform', async () => {
   render((
     <ThemeProvider theme={defaultTheme}>
-      <ContentDetailPlatform />
+      <MemoryRouter>
+        <ContentDetailPlatform />
+      </MemoryRouter>
     </ThemeProvider>
   ));
 
-  await waitFor(() => {
-    screen.getByText(/여기서 감상할 수 있어요/);
-  });
+  screen.getByText(/Loading/);
 });

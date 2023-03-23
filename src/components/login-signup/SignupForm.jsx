@@ -12,6 +12,14 @@ const Container = styled.article`
   justify-content: center;
   align-items: center;
   height: 100%;
+  color: white;
+`;
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Title = styled.h2`
@@ -31,6 +39,10 @@ const Inputs = styled.div`
 const InputWrapper = styled.div`
   & + & {
     margin-top: 24px;
+  }
+
+  input {
+    width: 100%;
   }
 `;
 
@@ -66,51 +78,76 @@ export default function SignupForm() {
     <Container>
       <form onSubmit={handleSubmit}>
         <Title>SIGN UP</Title>
-        <Inputs>
-          <InputWrapper>
-            <Input
-              name="email"
-              label="이메일:"
-              type="text"
-              value={signupFormStore.fields.email || ''}
-              onChange={(e) => signupFormStore.changeEmail(e.target.value)}
-              errorMessage={signupFormStore.errors.email}
-            />
-          </InputWrapper>
-          <InputWrapper>
-            <Input
-              name="password"
-              label="비밀번호:"
-              type="password"
-              value={signupFormStore.fields.password || ''}
-              onChange={(e) => signupFormStore.changePassword(e.target.value)}
-              message="8글자 이상의 영문(대소문자), 숫자, 특수문자가 모두 포함되어야 합니다."
-              errorMessage={signupFormStore.errors.password}
-            />
-          </InputWrapper>
-          <InputWrapper>
-            <Input
-              name="passwordCheck"
-              label="비밀번호 확인:"
-              type="password"
-              value={signupFormStore.fields.passwordCheck || ''}
-              onChange={(e) => signupFormStore.changePasswordCheck(e.target.value)}
-              errorMessage={signupFormStore.errors.passwordCheck}
-            />
-          </InputWrapper>
-          <InputWrapper>
-            <Input
-              name="nickname"
-              label="닉네임:"
-              type="text"
-              value={signupFormStore.fields.nickname || ''}
-              onChange={(e) => signupFormStore.changeNickname(e.target.value)}
-              message="특수문자 제외, 3~12 자 이내여야 합니다."
-              errorMessage={signupFormStore.errors.nickname}
-            />
-          </InputWrapper>
-        </Inputs>
-        <Button type="submit">회원가입</Button>
+        <Wrapper>
+          <Inputs>
+            <InputWrapper>
+              <label htmlFor="input-email">
+                이메일
+              </label>
+              <Input
+                name="email"
+                type="text"
+                value={signupFormStore.fields.email || ''}
+                onChange={(e) => signupFormStore.changeEmail(e.target.value)}
+                errorMessage={signupFormStore.errors.email}
+                height={40}
+              />
+            </InputWrapper>
+            <InputWrapper>
+              <label htmlFor="input-password">
+                비밀번호
+              </label>
+              <Input
+                name="password"
+                type="password"
+                value={signupFormStore.fields.password || ''}
+                onChange={(e) => signupFormStore.changePassword(e.target.value)}
+                errorMessage={signupFormStore.errors.password}
+                placeholder="
+                8글자 이상의 영문(대소문자), 숫자, 특수문자가 모두 포함되어야 합니다."
+                height={40}
+              />
+            </InputWrapper>
+            <InputWrapper>
+              <label htmlFor="input-passwordCheck">
+                비밀번호 확인
+              </label>
+              <Input
+                name="passwordCheck"
+                type="password"
+                value={signupFormStore.fields.passwordCheck || ''}
+                onChange={(e) => signupFormStore.changePasswordCheck(e.target.value)}
+                errorMessage={signupFormStore.errors.passwordCheck}
+                placeholder="
+                8글자 이상의 영문(대소문자), 숫자, 특수문자가 모두 포함되어야 합니다."
+                height={40}
+              />
+            </InputWrapper>
+            <InputWrapper>
+              <label htmlFor="input-nickname">
+                닉네임
+              </label>
+              <Input
+                name="nickname"
+                type="text"
+                value={signupFormStore.fields.nickname || ''}
+                onChange={(e) => signupFormStore.changeNickname(e.target.value)}
+                errorMessage={signupFormStore.errors.nickname}
+                placeholder="특수문자 제외, 3~12 자 이내여야 합니다."
+                height={40}
+              />
+            </InputWrapper>
+          </Inputs>
+          <Button
+            type="submit"
+            width={300}
+            height={44}
+            bgcolor="#5e677c"
+          >
+            회원가입
+
+          </Button>
+        </Wrapper>
       </form>
     </Container>
   );

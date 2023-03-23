@@ -31,16 +31,16 @@ const User = styled.div`
   display: flex;
   gap: 10px;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   color: white;
 `;
 
 const ImageBox = styled.div`
-  width: 70px;
   img {
     border-radius: 50%;
-    width: 100%;
-    height: 100%;
+    width: 3em;
+    height: 3em;
     object-fit: cover;
     overflow: hidden;
   }
