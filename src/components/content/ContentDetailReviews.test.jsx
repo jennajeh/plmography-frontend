@@ -1,6 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
 import { reviewStore } from '../../stores/ReviewStore';
+import defaultTheme from '../../styles/defaultTheme';
 import ContentDetailReviews from './ContentDetailReviews';
 
 describe('ContentDetailReviews', () => {
@@ -8,9 +10,11 @@ describe('ContentDetailReviews', () => {
 
   function renderContentDetailReviews() {
     render((
-      <MemoryRouter>
-        <ContentDetailReviews />
-      </MemoryRouter>
+      <ThemeProvider theme={defaultTheme}>
+        <MemoryRouter>
+          <ContentDetailReviews />
+        </MemoryRouter>
+      </ThemeProvider>
     ));
   }
 

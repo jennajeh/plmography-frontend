@@ -67,10 +67,6 @@ const KakaoButton = styled.a`
   background: url(/assets/common/kakao.png) no-repeat 0% 0%;
 `;
 
-const StyledLink = styled(Link)`
-  
-`;
-
 export default function LoginForm() {
   const navigate = useNavigate();
 
@@ -166,7 +162,7 @@ export default function LoginForm() {
           </KakaoButton>
         </ButtonWrapper>
       </form>
-      <StyledLink to="/signup">회원가입</StyledLink>
+      <Link to="/signup">회원가입</Link>
     </Container>
   );
 }

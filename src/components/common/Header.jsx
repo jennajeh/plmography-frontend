@@ -167,14 +167,6 @@ export default function Header() {
                 탐색
               </StyledLink>
             </li>
-            <li>
-              {/* <StyledLink
-                to="/new-contents"
-                selected={pathname === '/new-contents'}
-              >
-                신작
-              </StyledLink> */}
-            </li>
           </List>
         </MainMenu>
         {accessToken ? (
@@ -188,7 +180,7 @@ export default function Header() {
                   로그아웃
                 </Button>
               </li>
-              <li>
+              {/* <li>
                 <StyledUserLink
                   to="/events"
                   selected={pathname === '/events'}
@@ -203,7 +195,7 @@ export default function Header() {
                 >
                   작품 제안
                 </StyledUserLink>
-              </li>
+              </li> */}
               <li>
                 <StyledUserLink to="/profile">
                   <img
@@ -228,12 +220,12 @@ export default function Header() {
               <li>
                 <StyledUserLink to="/login">로그인</StyledUserLink>
               </li>
-              <li>
+              {/* <li>
                 <StyledUserLink to="/events">이벤트</StyledUserLink>
               </li>
               <li>
                 <StyledUserLink to="/login">작품 제안</StyledUserLink>
-              </li>
+              </li> */}
               <li>
                 <StyledUserLink to="/">
                   <img

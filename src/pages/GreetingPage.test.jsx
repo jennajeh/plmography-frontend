@@ -1,9 +1,18 @@
 import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
+import defaultTheme from '../styles/defaultTheme';
 import GreetingPage from './GreetingPage';
 
 describe('GreetingPage', () => {
   function renderGreetingPage() {
-    render(<GreetingPage />);
+    render((
+      <ThemeProvider theme={defaultTheme}>
+        <MemoryRouter>
+          <GreetingPage />
+        </MemoryRouter>
+      </ThemeProvider>
+    ));
   }
 
   it('GreetingPage', () => {

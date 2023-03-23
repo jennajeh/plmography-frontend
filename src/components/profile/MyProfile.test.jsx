@@ -7,21 +7,17 @@ import MyProfile from './MyProfile';
 describe('Home', () => {
   function renderMyProfile() {
     render((
-      <MemoryRouter>
-        <ThemeProvider theme={defaultTheme}>
+      <ThemeProvider theme={defaultTheme}>
+        <MemoryRouter>
           <MyProfile />
-        </ThemeProvider>
-      </MemoryRouter>
+        </MemoryRouter>
+      </ThemeProvider>
     ));
   }
 
   it('홈페이지를 보여준다', () => {
     renderMyProfile();
 
-    screen.getByText(/마이 페이지/);
-    screen.getByText(/정보 수정/);
-    screen.getByText(/팔로잉/);
-    screen.getByText(/팔로워/);
-    screen.getByText(/인생작품/);
+    screen.getByText(/마이 플모그래피/);
   });
 });

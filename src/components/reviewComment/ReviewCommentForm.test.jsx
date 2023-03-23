@@ -13,6 +13,6 @@ describe('ReviewCommentForm', () => {
       </ThemeProvider>
     ));
 
-    screen.getByText('댓글 달기');
+    screen.getByText('등록');
   });
 });

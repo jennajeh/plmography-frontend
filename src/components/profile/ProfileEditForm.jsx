@@ -176,7 +176,7 @@ export default function ProfileEditForm() {
         />
       </div>
       <NicknameBox>
-        <Label>닉네임</Label>
+        <Label htmlFor="input-nickname">닉네임</Label>
         <Input
           width={300}
           height={40}
