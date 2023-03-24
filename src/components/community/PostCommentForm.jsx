@@ -7,6 +7,7 @@ import Input from '../common/Input';
 
 const Container = styled.div`
   padding-bottom: 2rem;
+  color: white;
 `;
 const Form = styled.form`
   display: flex;
@@ -54,6 +55,8 @@ export default function PostCommentForm({ onSubmit }) {
       ) : (
         <Form onSubmit={onSubmit}>
           <Input
+            height={50}
+            width={1000}
             label="댓글 달기"
             placeholder="로그인 해주세요"
           />

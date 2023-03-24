@@ -15,7 +15,8 @@ import ContentsList from './ContentsList';
 const Container = styled.div`
   display: flex;
   padding: 2rem;
-  `;
+  color: white;
+`;
 
 const Main = styled.div`
   width: 100%;
@@ -121,6 +122,8 @@ export default function Category() {
   const [filter, setFilter] = useState({});
   const contentStore = useContentStore();
   const page = searchParams.get('page') ?? 1;
+
+  console.log('page', page);
 
   const handleSearchContents = (e) => {
     e.preventDefault();

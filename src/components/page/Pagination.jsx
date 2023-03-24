@@ -106,6 +106,7 @@ const LinkItem = styled(Link)`
 
 const Button = styled.button`
   background: inherit; 
+  color: inherit;
   border:none; 
   box-shadow:none; 
   border-radius:0; 

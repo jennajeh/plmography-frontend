@@ -36,6 +36,12 @@ export default class ContentApiService {
     return { data };
   }
 
+  async fetchExpiredNetflixContents({ month, page, size }) {
+    const { data } = await this.instance.get(`/contents/expiredNetflix?month=${month}&page=${page}&size=${size}`);
+
+    return { data };
+  }
+
   async fetchContents({ page, size, filter }) {
     const filterQuery = filter
       ? `?${['platform', 'type', 'genre', 'date', 'searchTitle', 'sort']

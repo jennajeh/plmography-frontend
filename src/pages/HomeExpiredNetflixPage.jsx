@@ -1,11 +1,9 @@
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable react/prop-types */
+import { useEffect } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
-import useContentStore from '../../hooks/useContentStore';
-import useUserStore from '../../hooks/useUserStore';
-import Pagination from '../page/Pagination';
-import SearchResultContentItem from './SearchResultContentItem';
+import AllExpiredContentItems from '../components/content/AllExpiredContentItems';
+import Pagination from '../components/page/Pagination';
+import useContentStore from '../hooks/useContentStore';
 
 const Container = styled.div`
   color: white;
@@ -26,18 +24,27 @@ const Error = styled.p`
   color: white;
 `;
 
-export default function SearchResultList() {
+export default function HomeExpiredNetflixPage() {
   const location = useLocation();
   const [searchParams] = useSearchParams();
-  const userStore = useUserStore();
   const contentStore = useContentStore();
 
-  const { user } = userStore;
-  const { contents, favoriteContents } = contentStore;
+  const date = new Date();
+  const month = date.getMonth() + 1;
+  const page = searchParams.get('page') ?? 1;
 
-  if (!contents || !user || !favoriteContents) {
+  const { contents } = contentStore;
+
+  useEffect(() => {
+    contentStore.fetchExpiredNetflix({ month, page, size: 8 });
+  }, [page, month]);
+
+  if (!contents) {
     return <p>Loading...</p>;
   }
+
+  console.log('contents', contents);
+  console.log('page', contentStore.totalPages);
 
   return (
     <Container>
@@ -45,7 +52,7 @@ export default function SearchResultList() {
         <>
           <List>
             {contents.map((content) => (
-              <SearchResultContentItem
+              <AllExpiredContentItems
                 key={content.id}
                 content={content}
               />

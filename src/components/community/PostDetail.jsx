@@ -95,7 +95,18 @@ const StyledLink = styled(Link)`
   height: 30px;
   font-size: 14px;
   font-weight: 600;
-  background-color: #5e677c;
+  background-color: ${((props) => props.theme.colors.fourth)};
+`;
+
+const LikeButton = styled.button`
+  width: 70px;
+  height: 30px;
+  border: none;
+  border-radius: 5px;
+  color: ${((props) => props.theme.text.white)};
+  background-color: ${((props) => (props.selected
+    ? props.theme.colors.first
+    : props.theme.colors.fourth))};
 `;
 
 const Error = styled.p`
@@ -142,8 +153,16 @@ export default function PostDetail() {
 
   const likes = likeStore.isSamePostId(postId);
 
+  const myLikes = likes.filter((like) => (like.userId === userId));
+
   const handleSubmitCreateComment = async (e) => {
     e.preventDefault();
+
+    if (!accessToken) {
+      navigate('/login');
+
+      return;
+    }
 
     postCommentFormStore.validate();
 
@@ -246,17 +265,15 @@ export default function PostDetail() {
         </ContentBox>
         <ButtonBox>
           <div>
-            <Button
-              width={70}
-              height={30}
-              bgcolor="#5e677c"
+            <LikeButton
               type="button"
               onClick={handleClickLike}
+              selected={myLikes[0]?.userId === userId}
             >
               좋아요
               {' '}
               {likes.length}
-            </Button>
+            </LikeButton>
             <Button
               width={70}
               height={30}

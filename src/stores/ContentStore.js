@@ -25,6 +25,17 @@ export default class ContentStore extends Store {
     this.publish();
   }
 
+  async fetchExpiredNetflix({ month, page, size }) {
+    const { data } = await contentApiService.fetchExpiredNetflixContents({ month, page, size });
+
+    const { contents, pages } = data;
+
+    this.contents = contents;
+    this.totalPages = pages.totalPages;
+
+    this.publish();
+  }
+
   async fetchContents({ page, size, filter } = {}) {
     const { contents, pages } = await contentApiService.fetchContents({ page, size, filter });
 

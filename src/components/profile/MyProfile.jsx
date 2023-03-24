@@ -1,13 +1,14 @@
 /* eslint-disable react/no-array-index-key */
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { useEffect } from 'react';
 import useContentStore from '../../hooks/useContentStore';
 import useReviewStore from '../../hooks/useReviewStore';
 import useSubscribeStore from '../../hooks/useSubscribeStore';
 import useUserStore from '../../hooks/useUserStore';
 import UserProfileSubscribeModal from './UserProfileSubscribeModal';
 import Title from '../common/Title';
-import { EditProfile } from '../../assets/profile';
+import { EditProfile, UpdateButton } from '../../assets/profile';
 import StyledLink from '../common/StyledLink';
 import UserProfileContentsModal from './UserProfileContentsModal';
 import UserProfileReviewsModal from './UserProfileReviewsModal';
@@ -27,6 +28,12 @@ const HeaderBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+`;
+
+const ProfileTitle = styled.h2`
+  font-size: 1.5em;
+  font-weight: bold;
+  margin: 1em;
 `;
 
 const UserInfoBox = styled.div`
@@ -51,18 +58,6 @@ const SubscriptionBox = styled.div`
     display: flex;
 `;
 
-const FavoriteContent = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin: 1em;
-  justify-content: center;
-  align-items: center;
-  
-  img {
-    width: 8em;
-  }
-`;
-
 const ContentsInfoBox = styled.div`
   display: flex;
   justify-content: space-evenly;
@@ -84,6 +79,59 @@ const NoContents = styled.div`
   }
 `;
 
+const StyledAddContentLink = styled(Link)`
+  img {
+    width: 1em;
+    margin-left: 10px;
+  }
+`;
+
+const FavoriteList = styled.ul`
+  display: flex;
+
+  li {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+`;
+
+const FavoriteContent = styled.div`
+  display: flex;
+  margin: 0 1.2em;
+  justify-content: center;
+  align-items: center;
+  
+  img {
+    width: 8em;
+  }
+`;
+
+const DeleteButton = styled.button`
+  width: 4em;
+  height: 2em;
+  margin: 1em 0;
+  border: none;
+  border-radius: 0.3em;
+  color: ${((props) => props.theme.text.white)};
+  background-color: ${((props) => props.theme.text.sixthGrey)};
+
+  :hover {
+    color: ${((props) => props.theme.colors.first)};
+  }
+`;
+
+const ShowMoreContentsLink = styled(Link)`
+  font-size: 2em;
+  display: flex;
+  align-items: center;
+  margin: 2em;
+  border: none;
+  color: ${(props) => (props.theme.text.white)};
+  background-color: transparent;
+`;
+
 export default function MyProfile() {
   const userStore = useUserStore();
   const reviewStore = useReviewStore();
@@ -99,12 +147,22 @@ export default function MyProfile() {
   } = user;
 
   const notDeletedMyReviews = reviewStore.isDeletedMyAllReviews();
+  const sliceFavoriteContents = favoriteContents.slice(0, 6);
+  const favoriteContentId = favoriteContentIds?.join(',');
+
+  const handleClickFavorite = async (id) => {
+    await contentStore.toggleFavorite(id);
+
+    await contentStore.fetchFavoriteContents({ userId, favoriteContentId });
+
+    await userStore.fetchMe();
+  };
 
   return (
     <Container>
       <Wrapper>
         <HeaderBox>
-          <Title>마이 플모그래피</Title>
+          <ProfileTitle>마이 플모그래피</ProfileTitle>
           <Link to="/profile/edit">
             <img
               src={EditProfile}
@@ -151,28 +209,43 @@ export default function MyProfile() {
         </ContentsInfoBox>
         <div>
           <Title>
-            인생작품
+            인생 작품
             {' '}
             {favoriteContentIds?.length}
+            {' '}
+            <StyledAddContentLink to="/profile/search">
+              <img src={UpdateButton} alt="addContents" />
+            </StyledAddContentLink>
           </Title>
-          {favoriteContents.length ? (
-            <>
-              <ul>
-                {favoriteContents.map((content, idx) => (
-                  <li key={idx}>
-                    <FavoriteContent>
-                      <Link to={`/contents/${content.contentId}`}>
-                        <img src={content.imageUrl} alt="contentImage" />
-                      </Link>
-                    </FavoriteContent>
-                  </li>
-                ))}
-              </ul>
-              <Link to="/profile/search">
-                추가하기 버튼
-              </Link>
-            </>
-          ) : (
+          {sliceFavoriteContents.length && (
+            <FavoriteList>
+              {sliceFavoriteContents.map((content, idx) => (
+                <li key={idx}>
+                  {content.userId === userId && (
+                    <>
+                      <FavoriteContent>
+                        <Link to={`/contents/${content.contentId}`}>
+                          <img src={content.imageUrl} alt="contentImage" />
+                        </Link>
+                      </FavoriteContent>
+                      <DeleteButton
+                        type="submit"
+                        onClick={() => handleClickFavorite(content.contentId)}
+                      >
+                        삭제
+                      </DeleteButton>
+                    </>
+                  )}
+                </li>
+              ))}
+              {favoriteContentIds.length > 6 && favoriteContents.length > 6 && (
+                <ShowMoreContentsLink to="/profile/favorites">
+                  〉
+                </ShowMoreContentsLink>
+              )}
+            </FavoriteList>
+          )}
+          {favoriteContentIds?.length === 0 && (
             <NoContents>
               <p>등록된 작품이 아직 없습니다.</p>
               <StyledLink width={140} height={50} to="/profile/search">
@@ -181,7 +254,7 @@ export default function MyProfile() {
             </NoContents>
           )}
         </div>
-        <Title>찜한 리스트작품</Title>
+        <Title>찜한 리스트</Title>
         <NoContents>
           <p>내역이 없습니다.</p>
         </NoContents>
