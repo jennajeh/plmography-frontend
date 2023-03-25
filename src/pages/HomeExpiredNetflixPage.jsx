@@ -6,7 +6,15 @@ import Pagination from '../components/page/Pagination';
 import useContentStore from '../hooks/useContentStore';
 
 const Container = styled.div`
-  color: white;
+  color: ${((props) => props.theme.text.white)};
+`;
+
+const Title = styled.h1`
+  display: flex;
+  color: ${((props) => props.theme.text.white)};
+  font-size: 26px;
+  font-weight: bold;
+  margin: 2em 0;
 `;
 
 const List = styled.ul`
@@ -43,11 +51,12 @@ export default function HomeExpiredNetflixPage() {
     return <p>Loading...</p>;
   }
 
-  console.log('contents', contents);
-  console.log('page', contentStore.totalPages);
-
   return (
     <Container>
+      <Title>
+        {month}
+        월 넷플릭스 종료 예정작
+      </Title>
       {contents.length ? (
         <>
           <List>

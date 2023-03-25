@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Link, useLocation, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import useContentStore from '../../hooks/useContentStore';
 import ExpiredContentItem from '../content/ExpiredContentItem';

@@ -9,8 +9,8 @@ const Container = styled.article`
 const ImgWrapper = styled.article`
   h4 {
     text-align: center;
-    font-size: ${((props) => props.theme.size.h6)};
-    color: ${((props) => props.theme.text.primary)};
+    color: ${((props) => props.theme.text.white)};
+    margin-top: 1em;
   }
 
   img {

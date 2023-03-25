@@ -123,8 +123,6 @@ export default function Category() {
   const contentStore = useContentStore();
   const page = searchParams.get('page') ?? 1;
 
-  console.log('page', page);
-
   const handleSearchContents = (e) => {
     e.preventDefault();
 

@@ -18,16 +18,11 @@ const ImageBox = styled.div`
   text-align: left;
   gap: 16px;
 
-
   img {
     display: inline-block;
     border-radius: 0.6em;
     width: 203px;
     height: 280px;
-  }
-
-  h4 {
-
   }
 `;
 
