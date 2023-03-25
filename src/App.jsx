@@ -35,7 +35,6 @@ import MyProfilePage from './pages/MyProfilePage';
 import MyProfileEditPage from './pages/MyProfileEditPage';
 import UserProfilePage from './pages/UserProfilePage';
 import UserWishesPage from './pages/UserWishesPage';
-import UserWatchedPage from './pages/UserWatchedPage';
 import UserReviewsPage from './pages/UserReviewsPage';
 import ProfileSearchPage from './pages/ProfileSearchPage';
 import ThemesPage from './pages/ThemesPage';
@@ -106,7 +105,6 @@ export default function App() {
               <Route path="/profile/edit" element={<MyProfileEditPage />} />
               <Route path="/users/:id" element={<UserProfilePage />} />
               <Route path="/users/:id/wishes" element={<UserWishesPage />} />
-              <Route path="/users/:id/watched" element={<UserWatchedPage />} />
               <Route path="/users/:id/reviews" element={<UserReviewsPage />} />
               <Route path="/signup" element={<SignupPage />} />
               <Route path="/greeting" element={<GreetingPage />} />
