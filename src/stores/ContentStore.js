@@ -6,6 +6,7 @@ export default class ContentStore extends Store {
     super();
 
     this.contents = [];
+    this.expiredContents = [];
     this.content = {};
 
     this.favoriteContents = [];
@@ -13,6 +14,7 @@ export default class ContentStore extends Store {
     this.wishContents = [];
 
     this.totalPages = 0;
+    this.expiredTotalPages = 0;
   }
 
   async fetchTopRatedContents() {
@@ -21,6 +23,17 @@ export default class ContentStore extends Store {
     const { contents } = data;
 
     this.contents = contents;
+
+    this.publish();
+  }
+
+  async fetchExpiredNetflix({ month, page, size }) {
+    const { data } = await contentApiService.fetchExpiredNetflixContents({ month, page, size });
+
+    const { contents, pages } = data;
+
+    this.expiredContents = contents;
+    this.expiredTotalPages = pages.totalPages;
 
     this.publish();
   }

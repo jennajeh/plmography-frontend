@@ -3,23 +3,30 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Container = styled.article`
-  margin-block: 1em;
+  display: flex;
+  flex-direction: column;
+  border-radius: 0.6em;
+  margin: 0 1em 8em 0;
+  gap: 16px;
 `;
 
-const ImgWrapper = styled.article`
-  h4 {
-    text-align: center;
-    color: ${((props) => props.theme.text.white)};
-    margin-top: 1em;
-  }
+const ImageBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: content;
+  align-items: center;
+  text-align: left;
+  gap: 16px;
 
   img {
+    display: inline-block;
     border-radius: 0.6em;
-    width: 100%;
+    width: 203px;
+    height: 280px;
   }
 `;
 
-export default function ContentItem({ content }) {
+export default function ExpiredContentItem({ content }) {
   const {
     tmdbId, imageUrl, korTitle,
   } = content;
@@ -27,10 +34,10 @@ export default function ContentItem({ content }) {
   return (
     <Container>
       <Link to={`/contents/${tmdbId}`}>
-        <ImgWrapper>
+        <ImageBox>
           <img src={imageUrl} alt="img" />
           <h4>{korTitle}</h4>
-        </ImgWrapper>
+        </ImageBox>
       </Link>
     </Container>
   );

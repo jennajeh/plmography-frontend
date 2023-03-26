@@ -35,7 +35,7 @@ li {
 const StyledLink = styled(Link)`
   color: ${((props) => (props.selected
     ? props.theme.colors.first
-    : props.theme.colors.white))};
+    : props.theme.text.white))};
   border-bottom: ${((props) => (props.selected ? '2px solid #3caafa' : 'none'))};
   font-size: 20px;
 
@@ -49,7 +49,9 @@ const StyledLink = styled(Link)`
 `;
 
 const StyledUserLink = styled(Link)`
-  color: ${((props) => (props.selected ? props.theme.colors.first : props.theme.colors.white))};
+  color: ${((props) => (props.selected
+    ? props.theme.colors.first
+    : props.theme.text.white))};
   border-bottom: ${((props) => (props.selected ? '2px solid #3caafa' : 'none'))};
   font-size: 14px;
 

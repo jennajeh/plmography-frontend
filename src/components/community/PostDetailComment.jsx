@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import styled from 'styled-components';
 import dateFormat from '../../utils/dateFormat';
-import Title from '../common/Title';
 
 const Wrapper = styled.div`
   display: flex;

@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useLocalStorage } from 'usehooks-ts';
 import SearchResultList from '../components/content/SearchResultList';
@@ -17,16 +17,50 @@ const Main = styled.div`
   padding-inline: 2rem;
 `;
 
-const SearchBar = styled.div`
+const Header = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  text-align: center;
+`;
+
+const SearchBar = styled.div`
+  display: flex;
+  justify-content: right;
   align-items: center;
   >div{
     display: flex;
   }
+
+  input {
+    width: 20em;
+    height: 2em;
+    border: none;
+    border-radius: 0.3em;
+    margin-right: 1em;
+  }
+
+  button {
+    width: 4em;
+    height: 2em;
+    border: none;
+    border-radius: 0.3em;
+    color: ${((props) => props.theme.text.white)};
+    background-color: ${((props) => props.theme.text.sixthGrey)};
+  }
+`;
+
+const MyPageButton = styled.button`
+  width: 6.5em;
+  height: 3em;
+  border: none;
+  border-radius: 0.3em;
+  color: ${((props) => props.theme.text.white)};
+  background-color: ${((props) => props.theme.text.sixthGrey)};
 `;
 
 export default function ProfileSearchPage() {
+  const navigate = useNavigate();
   const [accessToken] = useLocalStorage('accessToken', '');
   const [searchParams] = useSearchParams();
   const [filter, setFilter] = useState({});
@@ -41,6 +75,16 @@ export default function ProfileSearchPage() {
   const favoriteContentId = favoriteContentIds?.join(',');
   const watchedContentId = watchedContentIds?.join(',');
   const wishContentId = wishContentIds?.join(',');
+
+  const handleClickMyProfile = async () => {
+    if (!accessToken) {
+      navigate('/login');
+
+      return;
+    }
+
+    navigate('/profile');
+  };
 
   const handleSearchContents = (e) => {
     e.preventDefault();
@@ -90,14 +134,28 @@ export default function ProfileSearchPage() {
   return (
     <Container>
       <Main>
-        <SearchBar>
-          <h1>검색하기</h1>
-          <form onSubmit={handleSearchContents}>
-            <label hidden htmlFor="input-search">컨텐츠 검색</label>
-            <input name="search" placeholder="검색" id="input-search" type="text" />
-            <button type="submit">검색</button>
-          </form>
-        </SearchBar>
+        <Header>
+          <MyPageButton type="button" onClick={handleClickMyProfile}>
+            마이 페이지 바로가기
+          </MyPageButton>
+          <SearchBar>
+            <form onSubmit={handleSearchContents}>
+              <label
+                hidden
+                htmlFor="input-search"
+              >
+                컨텐츠 검색
+              </label>
+              <input
+                name="search"
+                placeholder="작품명을 입력하세요"
+                id="input-search"
+                type="text"
+              />
+              <button type="submit">검색</button>
+            </form>
+          </SearchBar>
+        </Header>
         <SearchResultList />
       </Main>
     </Container>

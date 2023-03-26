@@ -19,7 +19,7 @@ const ImgWrapper = styled.article`
   }
 `;
 
-export default function ContentItem({ content }) {
+export default function AllExpiredContentItems({ content }) {
   const {
     tmdbId, imageUrl, korTitle,
   } = content;

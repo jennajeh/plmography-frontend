@@ -43,7 +43,9 @@ export default function Input({
 }) {
   return (
     <div>
-      <Label htmlFor={`input-${name}`}>
+      <Label
+        htmlFor={`input-${name}`}
+      >
         {label}
         {required
           ? (

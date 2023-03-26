@@ -35,7 +35,6 @@ import MyProfilePage from './pages/MyProfilePage';
 import MyProfileEditPage from './pages/MyProfileEditPage';
 import UserProfilePage from './pages/UserProfilePage';
 import UserWishesPage from './pages/UserWishesPage';
-import UserWatchedPage from './pages/UserWatchedPage';
 import UserReviewsPage from './pages/UserReviewsPage';
 import ProfileSearchPage from './pages/ProfileSearchPage';
 import ThemesPage from './pages/ThemesPage';
@@ -44,6 +43,8 @@ import CommunityPostDetailPage from './pages/CommunityPostDetailPage';
 import PostCreatePage from './pages/PostCreatePage';
 import PostEditPage from './pages/PostEditPage';
 import KakaoLoginRedirectPage from './pages/KakaoLoginRedirectPage';
+import MyProfileFavoritesPage from './pages/MyProfileFavoritesPage';
+import HomeExpiredNetflixPage from './pages/HomeExpiredNetflixPage';
 
 const Container = styled.div`
   min-height: 100vh;
@@ -84,6 +85,7 @@ export default function App() {
           <Content>
             <Routes>
               <Route path="/" element={<HomePage />} />
+              <Route path="/expiredNetflix" element={<HomeExpiredNetflixPage />} />
               <Route path="/themes" element={<ThemesPage />} />
               <Route path="/themes/:id" element={<ThemesDetailPage />} />
               <Route path="/community" element={<CommunityPage />} />
@@ -98,11 +100,11 @@ export default function App() {
               <Route path="/articles" element={<ArticlesPage />} />
               <Route path="/articles/:id" element={<ArticleDetailPage />} />
               <Route path="/profile" element={<MyProfilePage />} />
+              <Route path="/profile/favorites" element={<MyProfileFavoritesPage />} />
               <Route path="/profile/search" element={<ProfileSearchPage />} />
               <Route path="/profile/edit" element={<MyProfileEditPage />} />
               <Route path="/users/:id" element={<UserProfilePage />} />
               <Route path="/users/:id/wishes" element={<UserWishesPage />} />
-              <Route path="/users/:id/watched" element={<UserWatchedPage />} />
               <Route path="/users/:id/reviews" element={<UserReviewsPage />} />
               <Route path="/signup" element={<SignupPage />} />
               <Route path="/greeting" element={<GreetingPage />} />

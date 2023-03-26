@@ -70,9 +70,9 @@ export default function ArticleItem({ article, count }) {
           {title}
         </Title>
         <StyledLink>
-          궁금하다면? `
-          {'>'}
-          `
+          궁금하다면?
+          {' '}
+          〉
         </StyledLink>
       </Link>
     </Container>

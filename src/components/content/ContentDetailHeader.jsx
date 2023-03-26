@@ -1,6 +1,7 @@
+/* eslint-disable max-len */
 /* eslint-disable react/prop-types */
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useLocalStorage } from 'usehooks-ts';
 import {
@@ -8,6 +9,7 @@ import {
 } from '../../assets/contents';
 import useContentStore from '../../hooks/useContentStore';
 import useReviewStore from '../../hooks/useReviewStore';
+import useUserStore from '../../hooks/useUserStore';
 
 const ImageWrapper = styled.div`
   width: 100%;
@@ -56,7 +58,7 @@ const HeaderWrapper = styled.div`
   justify-content: space-between;
   margin-block: 50px;
   padding-bottom: 50px;
-  border-bottom: 1px solid ${((props) => props.theme.colors.second)};;
+  border-bottom: 1px solid ${((props) => props.theme.colors.second)};
 `;
 
 const TitleWrapper = styled.div`
@@ -100,7 +102,7 @@ const LogoBox = styled.div`
   p {
     margin-left: 1px;
     display: inline-block;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
     color: #efefef;
     vertical-align: middle;
@@ -141,7 +143,10 @@ const Button = styled.button`
   height: 35px;
   border: none;
   border-radius: 0.7em;
-  background-color: ${((props) => props.theme.text.sixthGrey)};
+  color: ${((props) => props.theme.text.white)};
+  background-color: ${((props) => (props.selected
+    ? props.theme.colors.first
+    : props.theme.text.sixthGrey))};
   animation-fill-mode: forwards;
   
   p {
@@ -160,22 +165,41 @@ const Button = styled.button`
 
 export default function ContentDetailHeader() {
   const navigate = useNavigate();
+  const location = useLocation();
   const reviewStore = useReviewStore();
   const contentStore = useContentStore();
+  const userStore = useUserStore();
   const [accessToken] = useLocalStorage('accessToken', '');
 
+  const path = location.pathname;
+  const pathId = path.split('/')[2];
+
   const { content } = contentStore;
+  const { user } = userStore;
+
+  const { wishContentIds, watchedContentIds, favoriteContentIds } = user;
 
   const {
-    tmdbId, korTitle, engTitle, releaseDate, imageUrl,
+    tmdbId, korTitle, engTitle, releaseDate, imageUrl, imdbScore, rottenTomatoScore,
   } = content;
 
-  const sameContentReviews = reviewStore.isMySameContentReview(tmdbId);
-  const notDeletedReview = reviewStore.isDeletedMyReviews(sameContentReviews);
+  const mySameContentReviews = reviewStore.isMySameContentReview(tmdbId);
+  const notDeletedMyReview = reviewStore.isDeletedMyReviews(mySameContentReviews);
+  const otherSameContentReviews = reviewStore.isOtherSameContentReview(tmdbId);
+  const notDeletedOtherReview = reviewStore.isDeletedAllReviews(otherSameContentReviews);
+
+  const otherStarRate = notDeletedOtherReview.reduce((acc, cur) => acc + cur.starRate, 0);
+  const myStarRate = notDeletedMyReview[0]?.starRate;
+  const sumStarRate = otherStarRate + myStarRate;
+  const averageStarRate = String((sumStarRate / (notDeletedMyReview.length + notDeletedOtherReview.length)).toFixed(1));
+
+  const wishId = wishContentIds?.find((data) => data === tmdbId);
+  const watchId = watchedContentIds?.find((data) => data === tmdbId);
+  const favoriteId = favoriteContentIds?.find((data) => data === tmdbId);
 
   function changeButton(e) {
     const btns = document.querySelectorAll('.button');
-    btns.forEach((btn, i) => {
+    btns.forEach((btn) => {
       if (e.currentTarget === btn) {
         btn.classList.add('active');
       } else {
@@ -191,8 +215,8 @@ export default function ContentDetailHeader() {
       return;
     }
 
-    if (notDeletedReview.length > 0) {
-      navigate(`/reviews/${notDeletedReview[0].id}/edit`);
+    if (notDeletedMyReview.length > 0) {
+      navigate(`/reviews/${notDeletedMyReview[0].id}/edit`);
 
       return;
     }
@@ -210,6 +234,8 @@ export default function ContentDetailHeader() {
     changeButton(e);
 
     await contentStore.toggleWish(tmdbId);
+
+    await userStore.fetchMe();
   };
 
   const handleClickWatched = async (e) => {
@@ -222,6 +248,8 @@ export default function ContentDetailHeader() {
     changeButton(e);
 
     await contentStore.toggleWatched(tmdbId);
+
+    await userStore.fetchMe();
   };
 
   const handleClickFavorite = async (e) => {
@@ -234,7 +262,13 @@ export default function ContentDetailHeader() {
     changeButton(e);
 
     await contentStore.toggleFavorite(tmdbId);
+
+    await userStore.fetchMe();
   };
+
+  useEffect(() => {
+    contentStore.fetchContent(Number(pathId));
+  }, [wishContentIds, watchedContentIds, favoriteContentIds]);
 
   if (!content) {
     return <p>Loading...</p>;
@@ -266,24 +300,33 @@ export default function ContentDetailHeader() {
             <LogoBox>
               <img src={TomatoLogo} alt="TomatoLogo" />
               {' '}
-              <p>82%</p>
+              <p>{rottenTomatoScore}</p>
             </LogoBox>
             <LogoBox>
               <img src={ImdbLogo} alt="ImdbLogo" />
               {' '}
-              <p>7.9</p>
+              <p>{imdbScore}</p>
             </LogoBox>
-            <LogoBox>
-              <img src={ReviewStar} alt="ReviewStar" />
-              {' '}
-              <p>4.0</p>
-            </LogoBox>
+            {sumStarRate !== 0 ? (
+              <LogoBox>
+                <img src={ReviewStar} alt="ReviewStar" />
+                {' '}
+                <p>{averageStarRate}</p>
+              </LogoBox>
+            ) : (
+              <LogoBox>
+                <img src={ReviewStar} alt="ReviewStar" />
+                {' '}
+                <p>0</p>
+              </LogoBox>
+            )}
           </RatingWrapper>
         </TitleWrapper>
         <MyButtonArea>
           <Button
             type="button"
             onClick={handleClickWish}
+            selected={wishId === tmdbId}
           >
             <img src={Heart} alt="imdb-logo" />
             <p>찜하기</p>
@@ -291,6 +334,7 @@ export default function ContentDetailHeader() {
           <Button
             type="button"
             onClick={handleClickWatched}
+            selected={watchId === tmdbId}
           >
             <img src={Eye} alt="imdb-logo" />
             <p>봤어요</p>
@@ -298,6 +342,7 @@ export default function ContentDetailHeader() {
           <Button
             type="button"
             onClick={handleClickFavorite}
+            selected={favoriteId === tmdbId}
           >
             <img src={Heart} alt="imdb-logo" />
             <p>인생작품</p>

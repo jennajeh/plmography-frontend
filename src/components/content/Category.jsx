@@ -15,7 +15,8 @@ import ContentsList from './ContentsList';
 const Container = styled.div`
   display: flex;
   padding: 2rem;
-  `;
+  color: white;
+`;
 
 const Main = styled.div`
   width: 100%;

@@ -65,14 +65,20 @@ const Error = styled.p`
 export default function HomeDailyRanking() {
   const contentStore = useContentStore();
   const { contents } = contentStore;
+
+  const topRated = contents.slice(0, 6);
   let count = 1;
+
+  if (!contents) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <div>
       <Title>오늘의 TOP 6</Title>
       {contents.length ? (
         <List>
-          {contents.map((content) => (
+          {topRated.map((content) => (
             <li key={content.id}>
               <Link to={`/contents/${content.tmdbId}`}>
                 <ImageWrapper>
