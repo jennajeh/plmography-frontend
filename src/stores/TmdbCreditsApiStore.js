@@ -32,7 +32,7 @@ export default class TmdbCreditsApiStore extends Store {
 
   fetchActors() {
     if (this.credits) {
-      this.actors = this.credits.cast.filter((element, index) => (
+      this.actors = this.credits?.cast?.filter((element, index) => (
         element.known_for_department === 'Acting' && index < 10
       ));
     }
