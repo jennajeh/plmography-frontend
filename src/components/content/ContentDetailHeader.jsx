@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable react/prop-types */
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -101,7 +102,7 @@ const LogoBox = styled.div`
   p {
     margin-left: 1px;
     display: inline-block;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 500;
     color: #efefef;
     vertical-align: middle;
@@ -179,11 +180,18 @@ export default function ContentDetailHeader() {
   const { wishContentIds, watchedContentIds, favoriteContentIds } = user;
 
   const {
-    tmdbId, korTitle, engTitle, releaseDate, imageUrl,
+    tmdbId, korTitle, engTitle, releaseDate, imageUrl, imdbScore, rottenTomatoScore,
   } = content;
 
-  const sameContentReviews = reviewStore.isMySameContentReview(tmdbId);
-  const notDeletedReview = reviewStore.isDeletedMyReviews(sameContentReviews);
+  const mySameContentReviews = reviewStore.isMySameContentReview(tmdbId);
+  const notDeletedMyReview = reviewStore.isDeletedMyReviews(mySameContentReviews);
+  const otherSameContentReviews = reviewStore.isOtherSameContentReview(tmdbId);
+  const notDeletedOtherReview = reviewStore.isDeletedAllReviews(otherSameContentReviews);
+
+  const otherStarRate = notDeletedOtherReview.reduce((acc, cur) => acc + cur.starRate, 0);
+  const myStarRate = notDeletedMyReview[0]?.starRate;
+  const sumStarRate = otherStarRate + myStarRate;
+  const averageStarRate = String((sumStarRate / (notDeletedMyReview.length + notDeletedOtherReview.length)).toFixed(1));
 
   const wishId = wishContentIds?.find((data) => data === tmdbId);
   const watchId = watchedContentIds?.find((data) => data === tmdbId);
@@ -207,8 +215,8 @@ export default function ContentDetailHeader() {
       return;
     }
 
-    if (notDeletedReview.length > 0) {
-      navigate(`/reviews/${notDeletedReview[0].id}/edit`);
+    if (notDeletedMyReview.length > 0) {
+      navigate(`/reviews/${notDeletedMyReview[0].id}/edit`);
 
       return;
     }
@@ -292,18 +300,26 @@ export default function ContentDetailHeader() {
             <LogoBox>
               <img src={TomatoLogo} alt="TomatoLogo" />
               {' '}
-              <p>82%</p>
+              <p>{rottenTomatoScore}</p>
             </LogoBox>
             <LogoBox>
               <img src={ImdbLogo} alt="ImdbLogo" />
               {' '}
-              <p>7.9</p>
+              <p>{imdbScore}</p>
             </LogoBox>
-            <LogoBox>
-              <img src={ReviewStar} alt="ReviewStar" />
-              {' '}
-              <p>4.0</p>
-            </LogoBox>
+            {sumStarRate !== 0 ? (
+              <LogoBox>
+                <img src={ReviewStar} alt="ReviewStar" />
+                {' '}
+                <p>{averageStarRate}</p>
+              </LogoBox>
+            ) : (
+              <LogoBox>
+                <img src={ReviewStar} alt="ReviewStar" />
+                {' '}
+                <p>0</p>
+              </LogoBox>
+            )}
           </RatingWrapper>
         </TitleWrapper>
         <MyButtonArea>

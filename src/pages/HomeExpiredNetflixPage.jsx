@@ -41,13 +41,13 @@ export default function HomeExpiredNetflixPage() {
   const month = date.getMonth() + 1;
   const page = searchParams.get('page') ?? 1;
 
-  const { contents } = contentStore;
+  const { expiredContents } = contentStore;
 
   useEffect(() => {
     contentStore.fetchExpiredNetflix({ month, page, size: 8 });
   }, [page, month]);
 
-  if (!contents) {
+  if (!expiredContents) {
     return <p>Loading...</p>;
   }
 
@@ -57,10 +57,10 @@ export default function HomeExpiredNetflixPage() {
         {month}
         월 넷플릭스 종료 예정작
       </Title>
-      {contents.length ? (
+      {expiredContents.length ? (
         <>
           <List>
-            {contents.map((content) => (
+            {expiredContents.map((content) => (
               <AllExpiredContentItems
                 key={content.id}
                 content={content}
@@ -69,7 +69,7 @@ export default function HomeExpiredNetflixPage() {
           </List>
           <Pagination
             url={location.pathname}
-            total={contentStore.totalPages}
+            total={contentStore.expiredTotalPages}
             current={searchParams.get('page') ?? 1}
           />
         </>

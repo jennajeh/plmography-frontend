@@ -47,19 +47,18 @@ export default function HomeExpireContents() {
   const [searchParams] = useSearchParams();
   const page = searchParams.get('page') ?? 1;
   const contentStore = useContentStore();
-
   const date = new Date();
+
+  const { expiredContents } = contentStore;
+
   const month = date.getMonth() + 1;
-
-  const { contents } = contentStore;
-
-  const sliceContents = contents.slice(0, 5);
+  const sliceContents = expiredContents.slice(0, 5);
 
   useEffect(() => {
     contentStore.fetchExpiredNetflix({ month, page, size: 5 });
   }, [page, month]);
 
-  if (!contents) {
+  if (!expiredContents) {
     return <p>Loading...</p>;
   }
 
