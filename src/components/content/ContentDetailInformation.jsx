@@ -105,11 +105,11 @@ export default function ContentDetailInformation() {
         <Title>관련 영상</Title>
       </div>
       <VideoFrame>
-        {videoUrl && videoUrl.results.length > 0
+        {videoUrl && videoUrl?.results?.length > 0
           ? (
             <iframe
               title="video"
-              src={`https://www.youtube-nocookie.com/embed/${videoUrl.results[0].key}?autoplay=0&mute=1&loop=0`}
+              src={`https://www.youtube-nocookie.com/embed/${videoUrl?.results[0]?.key}?autoplay=0&mute=1&loop=0`}
               width="900"
               height="506.25"
             />
