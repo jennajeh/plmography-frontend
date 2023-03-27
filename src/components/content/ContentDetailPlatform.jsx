@@ -90,7 +90,7 @@ export default function ContentDetailPlatform() {
     return a.title;
   };
 
-  if (!content || !platform) {
+  if (!content) {
     return <p>Loading...</p>;
   }
 
@@ -99,7 +99,7 @@ export default function ContentDetailPlatform() {
       <Title>여기서 감상할 수 있어요</Title>
       <br />
       <div>
-        {platformList?.length ? (
+        {platformList?.length > 0 ? (
           <List>
             {platformList.map((item, idx) => (
               <li key={idx}>

@@ -191,7 +191,7 @@ export default function ContentDetailHeader() {
   const otherStarRate = notDeletedOtherReview.reduce((acc, cur) => acc + cur.starRate, 0);
   const myStarRate = notDeletedMyReview[0]?.starRate;
   const sumStarRate = otherStarRate + myStarRate;
-  const averageStarRate = String((sumStarRate / (notDeletedMyReview.length + notDeletedOtherReview.length)).toFixed(1));
+  const averageStarRate = (sumStarRate / (notDeletedMyReview.length + notDeletedOtherReview.length)).toFixed(1);
 
   const wishId = wishContentIds?.find((data) => data === tmdbId);
   const watchId = watchedContentIds?.find((data) => data === tmdbId);
@@ -300,20 +300,24 @@ export default function ContentDetailHeader() {
             <LogoBox>
               <img src={TomatoLogo} alt="TomatoLogo" />
               {' '}
-              <p>{rottenTomatoScore}</p>
+              <p>
+                {rottenTomatoScore}
+                %
+              </p>
             </LogoBox>
             <LogoBox>
               <img src={ImdbLogo} alt="ImdbLogo" />
               {' '}
               <p>{imdbScore}</p>
             </LogoBox>
-            {sumStarRate !== 0 ? (
+            {sumStarRate === Number && (
               <LogoBox>
                 <img src={ReviewStar} alt="ReviewStar" />
                 {' '}
                 <p>{averageStarRate}</p>
               </LogoBox>
-            ) : (
+            )}
+            {isNaN(averageStarRate) && (
               <LogoBox>
                 <img src={ReviewStar} alt="ReviewStar" />
                 {' '}

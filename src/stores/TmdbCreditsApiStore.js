@@ -20,7 +20,7 @@ export default class TmdbCreditsApiStore extends Store {
       ).json();
     }
 
-    if (type === 'drama') {
+    if (type === 'tv') {
       this.credits = await (
         await fetch(`${apiBaseUrl}tv/${tmdbId}/credits?api_key=${apiKey}&language=ko-KR`)
       ).json();
