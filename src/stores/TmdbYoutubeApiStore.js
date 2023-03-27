@@ -15,13 +15,13 @@ export default class TmdbYoutubeApiStore extends Store {
 
     if (type === 'movie') {
       this.videoUrl = await (
-        await fetch(`${apiBaseUrl}/movie/${tmdbId}/videos?api_key=${apiKey}&language=ko-KR`)
+        await fetch(`${apiBaseUrl}movie/${tmdbId}/videos?api_key=${apiKey}&language=ko-KR`)
       ).json();
     }
 
     if (type === 'drama') {
       this.videoUrl = await (
-        await fetch(`${apiBaseUrl}/tv/${tmdbId}/videos?api_key=${apiKey}&language=ko-KR`)
+        await fetch(`${apiBaseUrl}tv/${tmdbId}/videos?api_key=${apiKey}&language=ko-KR`)
       ).json();
     }
 

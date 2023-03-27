@@ -16,13 +16,13 @@ export default class TmdbCreditsApiStore extends Store {
 
     if (type === 'movie') {
       this.credits = await (
-        await fetch(`${apiBaseUrl}/movie/${tmdbId}/credits?api_key=${apiKey}&language=ko-KR`)
+        await fetch(`${apiBaseUrl}movie/${tmdbId}/credits?api_key=${apiKey}&language=ko-KR`)
       ).json();
     }
 
     if (type === 'drama') {
       this.credits = await (
-        await fetch(`${apiBaseUrl}/tv/${tmdbId}/credits?api_key=${apiKey}&language=ko-KR`)
+        await fetch(`${apiBaseUrl}tv/${tmdbId}/credits?api_key=${apiKey}&language=ko-KR`)
       ).json();
     }
 
