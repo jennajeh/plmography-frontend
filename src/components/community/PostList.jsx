@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import usePostStore from '../../hooks/usePostStore';

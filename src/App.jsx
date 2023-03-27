@@ -20,11 +20,8 @@ import HomePage from './pages/HomePage';
 import CommunityPage from './pages/CommunityPage';
 import ContentDetailPage from './pages/ContentDetailPage';
 import ExplorePage from './pages/ExplorePage';
-import NewContentsPage from './pages/NewContentsPage';
 import ReviewEditPage from './pages/ReviewEditPage';
 import LoginPage from './pages/LoginPage';
-import EventsPage from './pages/EventsPage';
-import SupportPage from './pages/SupportPage';
 import GlobalStyle from './styles/GlobalStyle';
 import SignupPage from './pages/SignupPage';
 import GreetingPage from './pages/GreetingPage';
@@ -34,8 +31,6 @@ import ArticleDetailPage from './pages/ArticleDetailPage';
 import MyProfilePage from './pages/MyProfilePage';
 import MyProfileEditPage from './pages/MyProfileEditPage';
 import UserProfilePage from './pages/UserProfilePage';
-import UserWishesPage from './pages/UserWishesPage';
-import UserReviewsPage from './pages/UserReviewsPage';
 import ProfileSearchPage from './pages/ProfileSearchPage';
 import ThemesPage from './pages/ThemesPage';
 import ThemesDetailPage from './pages/ThemesDetailPage';
@@ -96,7 +91,6 @@ export default function App() {
               <Route path="/reviews/write" element={<ReviewCreatePage />} />
               <Route path="/reviews/:id/edit" element={<ReviewEditPage />} />
               <Route path="/explore" element={<ExplorePage />} />
-              <Route path="/new-contents" element={<NewContentsPage />} />
               <Route path="/articles" element={<ArticlesPage />} />
               <Route path="/articles/:id" element={<ArticleDetailPage />} />
               <Route path="/profile" element={<MyProfilePage />} />
@@ -104,14 +98,10 @@ export default function App() {
               <Route path="/profile/search" element={<ProfileSearchPage />} />
               <Route path="/profile/edit" element={<MyProfileEditPage />} />
               <Route path="/users/:id" element={<UserProfilePage />} />
-              <Route path="/users/:id/wishes" element={<UserWishesPage />} />
-              <Route path="/users/:id/reviews" element={<UserReviewsPage />} />
               <Route path="/signup" element={<SignupPage />} />
               <Route path="/greeting" element={<GreetingPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/oauth/kakao" element={<KakaoLoginRedirectPage />} />
-              <Route path="/events" element={<EventsPage />} />
-              <Route path="/support" element={<SupportPage />} />
             </Routes>
           </Content>
           <Footer />
