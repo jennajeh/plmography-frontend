@@ -79,7 +79,7 @@ export default function ArticleDetail() {
       <Information>
         {articleBody}
       </Information>
-      {videoUrl && videoUrl.results.length > 0 && (
+      {videoUrl && videoUrl?.results?.length > 0 && (
         <>
           <Title>
             🎬
@@ -88,7 +88,7 @@ export default function ArticleDetail() {
           <Video>
             <iframe
               title="video"
-              src={`https://www.youtube-nocookie.com/embed/${videoUrl.results[0].key}?autoplay=0&mute=1&loop=0`}
+              src={`https://www.youtube-nocookie.com/embed/${videoUrl?.results[0]?.key}?autoplay=0&mute=1&loop=0`}
               width="420"
               height="280"
             />

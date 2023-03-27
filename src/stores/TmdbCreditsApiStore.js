@@ -12,7 +12,6 @@ export default class TmdbCreditsApiStore extends Store {
 
   async fetchCredits(tmdbId, type) {
     const apiBaseUrl = apiConfig.tmdbApiUrl;
-
     const apiKey = apiConfig.key;
 
     if (type === 'movie') {
