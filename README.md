@@ -1,4 +1,7 @@
 # 플모그래피 🍿
+- 영상 컨텐츠 추천부터 상세 정보까지 알려주는 동영상 큐레이팅 애플리케이션으로서, ‘플레이리스트’ 와 ‘필모그래피’ 를 합친 용어입니다. 
+- 여러 OTT 에서 영화나 드라마/예능을 보기 전에 찾는 필수 서비스로 만들겠다는 것에 가치를 두었습니다.
+
 ## 📍 홈 
 ![image](https://user-images.githubusercontent.com/110010435/227907485-59e20fb5-cffe-4c47-a7e4-1635a1fd003b.png)
 ![image](https://user-images.githubusercontent.com/110010435/227907615-376059e3-54da-4ce9-a583-6e55163c25e7.png)
