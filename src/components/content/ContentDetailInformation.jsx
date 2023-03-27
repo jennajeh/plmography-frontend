@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react/prop-types */
-import { useEffect } from 'react';
 import styled from 'styled-components';
 import useContentStore from '../../hooks/useContentStore';
 import useTmdbYoutubeApiStore from '../../hooks/useTmdbYoutubeApiStore';
@@ -51,29 +50,26 @@ const VideoFrame = styled.div`
 
 export default function ContentDetailInformation() {
   const contentStore = useContentStore();
-
-  const { content } = contentStore;
-
-  const { tmdbId, type, description } = content;
-
   const tmdbYoutubeApiStore = useTmdbYoutubeApiStore();
-
-  const { videoUrl } = tmdbYoutubeApiStore;
-
   const tmdbCreditsApiStore = useTmdbCreditsApiStore();
 
+  const { content } = contentStore;
+  // const { tmdbId, type, description } = content;
+  const { description } = content;
+
+  const { videoUrl } = tmdbYoutubeApiStore;
   const { credits, actors } = tmdbCreditsApiStore;
 
-  useEffect(() => {
-    if (tmdbId) {
-      tmdbYoutubeApiStore.fetchVideo(tmdbId, type);
-      tmdbCreditsApiStore.fetchCredits(tmdbId, type);
-    }
-  }, [tmdbId]);
+  // useEffect(() => {
+  //   if (tmdbId) {
+  //     tmdbYoutubeApiStore.fetchVideo(tmdbId, type);
+  //     tmdbCreditsApiStore.fetchCredits(tmdbId, type);
+  //   }
+  // }, [tmdbId]);
 
-  useEffect(() => {
-    tmdbCreditsApiStore.fetchActors();
-  }, [credits]);
+  // useEffect(() => {
+  //   tmdbCreditsApiStore.fetchActors();
+  // }, [credits]);
 
   if (!credits || !actors || !content || !videoUrl) {
     return <p>Loading...</p>;

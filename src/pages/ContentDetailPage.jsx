@@ -8,26 +8,43 @@ import useContentStore from '../hooks/useContentStore';
 import useReviewStore from '../hooks/useReviewStore';
 import useUserStore from '../hooks/useUserStore';
 import useThemeStore from '../hooks/useThemeStore';
+import useTmdbYoutubeApiStore from '../hooks/useTmdbYoutubeApiStore';
+import useTmdbCreditsApiStore from '../hooks/useTmdbCreditsApiStore';
 
 export default function ContentsDetailPage() {
   const [accessToken] = useLocalStorage('accessToken', '');
+  const location = useLocation();
+  const [searchParams] = useSearchParams();
   const contentStore = useContentStore();
   const reviewStore = useReviewStore();
   const userStore = useUserStore();
   const reviewCommentStore = useReviewCommentStore();
+  const tmdbYoutubeApiStore = useTmdbYoutubeApiStore();
+  const tmdbCreditsApiStore = useTmdbCreditsApiStore();
   const articleStore = useArticleStore();
   const themeStore = useThemeStore();
 
-  const [searchParams] = useSearchParams();
-  const location = useLocation();
+  const { credits } = tmdbCreditsApiStore;
+  const { content } = contentStore;
+  const { tmdbId, type } = content;
 
-  const tmdbId = location.pathname.split('/')[2];
-
+  const contentId = location.pathname.split('/')[2];
   const page = searchParams.get('page') ?? 1;
 
   useEffect(() => {
-    contentStore.fetchContent(tmdbId);
+    if (tmdbId) {
+      tmdbYoutubeApiStore.fetchVideo(tmdbId, type);
+      tmdbCreditsApiStore.fetchCredits(tmdbId, type);
+    }
   }, [tmdbId]);
+
+  useEffect(() => {
+    tmdbCreditsApiStore.fetchActors();
+  }, [credits]);
+
+  useEffect(() => {
+    contentStore.fetchContent(Number(contentId));
+  }, [contentId]);
 
   useEffect(() => {
     if (accessToken === '') {
