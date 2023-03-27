@@ -1,7 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { useEffect } from 'react';
 import useContentStore from '../../hooks/useContentStore';
 import useReviewStore from '../../hooks/useReviewStore';
 import useSubscribeStore from '../../hooks/useSubscribeStore';
@@ -67,6 +66,12 @@ const ContentsInfoBox = styled.div`
   background-color: ${((props) => props.theme.colors.third)};
 `;
 
+const Favorites = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
 const NoContents = styled.div`
   display: flex;
   flex-direction: column;
@@ -80,6 +85,10 @@ const NoContents = styled.div`
 `;
 
 const StyledAddContentLink = styled(Link)`
+  margin: 30px 0;
+  font-size: 18px;
+  color: ${((props) => props.theme.text.white)};
+
   img {
     width: 1em;
     margin-left: 10px;
@@ -208,15 +217,18 @@ export default function MyProfile() {
           />
         </ContentsInfoBox>
         <div>
-          <Title>
-            인생 작품
-            {' '}
-            {favoriteContentIds?.length}
-            {' '}
+          <Favorites>
+            <Title>
+              인생 작품
+              {' '}
+              {favoriteContentIds?.length}
+              {' '}
+            </Title>
             <StyledAddContentLink to="/profile/search">
+              추가하기
               <img src={UpdateButton} alt="addContents" />
             </StyledAddContentLink>
-          </Title>
+          </Favorites>
           {sliceFavoriteContents.length && (
             <FavoriteList>
               {sliceFavoriteContents.map((content, idx) => (
