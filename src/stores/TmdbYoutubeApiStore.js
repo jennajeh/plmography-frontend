@@ -19,7 +19,7 @@ export default class TmdbYoutubeApiStore extends Store {
       ).json();
     }
 
-    if (type === 'drama') {
+    if (type === 'tv') {
       this.videoUrl = await (
         await fetch(`${apiBaseUrl}tv/${tmdbId}/videos?api_key=${apiKey}&language=ko-KR`)
       ).json();

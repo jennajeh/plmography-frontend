@@ -8,6 +8,7 @@ import PLATFORMS from '../../constants/platforms';
 
 const Container = styled.article`
   height: 100%;
+  color: ${((props) => props.theme.text.white)};
 `;
 
 const Title = styled.h1`
@@ -65,6 +66,11 @@ const PlatformInfo = styled.div`
   align-items: center;
 `;
 
+const NoPlatform = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
 export default function ContentDetailPlatform() {
   const contentStore = useContentStore();
 
@@ -90,7 +96,7 @@ export default function ContentDetailPlatform() {
     return a.title;
   };
 
-  if (!content || !platform) {
+  if (!content) {
     return <p>Loading...</p>;
   }
 
@@ -99,7 +105,7 @@ export default function ContentDetailPlatform() {
       <Title>여기서 감상할 수 있어요</Title>
       <br />
       <div>
-        {platformList?.length ? (
+        {platformList?.length > 0 ? (
           <List>
             {platformList.map((item, idx) => (
               <li key={idx}>
@@ -125,7 +131,9 @@ export default function ContentDetailPlatform() {
             ))}
           </List>
         ) : (
-          <p>시청 가능한 플랫폼이 없습니다.</p>
+          <NoPlatform>
+            <p>시청 가능한 플랫폼이 없습니다.</p>
+          </NoPlatform>
         )}
       </div>
     </Container>
