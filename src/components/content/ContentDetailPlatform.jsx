@@ -8,6 +8,7 @@ import PLATFORMS from '../../constants/platforms';
 
 const Container = styled.article`
   height: 100%;
+  color: ${((props) => props.theme.text.white)};
 `;
 
 const Title = styled.h1`
@@ -63,6 +64,11 @@ const ArrowWrapper = styled.div`
 const PlatformInfo = styled.div`
   display: flex;
   align-items: center;
+`;
+
+const NoPlatform = styled.div`
+  display: flex;
+  justify-content: center;
 `;
 
 export default function ContentDetailPlatform() {
@@ -125,7 +131,9 @@ export default function ContentDetailPlatform() {
             ))}
           </List>
         ) : (
-          <p>시청 가능한 플랫폼이 없습니다.</p>
+          <NoPlatform>
+            <p>시청 가능한 플랫폼이 없습니다.</p>
+          </NoPlatform>
         )}
       </div>
     </Container>
