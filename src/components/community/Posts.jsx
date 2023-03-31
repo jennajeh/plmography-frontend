@@ -32,19 +32,19 @@ const SearchForm = styled.form`
 `;
 
 export default function Posts() {
-  const [filter, setFilter] = useState({});
+  // const [filter, setFilter] = useState({});
   const postStore = usePostStore();
   const [searchParams] = useSearchParams();
 
   const page = searchParams.get('page') ?? 1;
 
-  const handleSearchPosts = (e) => {
-    e.preventDefault();
+  // const handleSearchPosts = (e) => {
+  //   e.preventDefault();
 
-    const keyword = e.target.search.value;
+  //   const keyword = e.target.search.value;
 
-    setFilter({ keyword });
-  };
+  //   setFilter({ keyword });
+  // };
 
   useEffect(() => {
     postStore.fetchPosts({ page, size: 5, filter });
@@ -66,7 +66,7 @@ export default function Posts() {
           <Button
             width={80}
             height={38}
-            bgcolor="#afbaca"
+            bgcolor="#5e677c"
             type="submit"
           >
             검색
