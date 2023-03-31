@@ -17,6 +17,7 @@ import PostCommentForm from './PostCommentForm';
 import PostDeleteModal from './PostDeleteModal';
 import PostDetailComment from './PostDetailComment';
 import Button from '../common/Button';
+import Pagination from '../page/Pagination';
 
 const ProfileBox = styled.div`
   display: flex;
@@ -303,42 +304,50 @@ export default function PostDetail() {
           onSubmit={handleSubmitCreateComment}
         />
         {postComments?.length ? (
-          <List>
-            {postComments.map((comment) => (
-              <li key={comment.id}>
-                <PostDetailComment
-                  key={comment.id}
-                  comment={comment}
-                />
-                {comment.writer.id === userId && accessToken && (
-                  <div>
-                    <EditBox>
-                      <Button
-                        width={70}
-                        height={30}
-                        bgcolor="#5e677c"
-                        type="button"
-                        onClick={() => handleClickModifyComment(comment.id)}
-                      >
-                        수정
-                      </Button>
-                      <PostCommentDeleteModal
-                        buttonName="삭제"
-                        content="정말 삭제하시겠습니까?"
-                        onClose={() => handleClickDeleteComment(comment)}
-                      />
-                    </EditBox>
-                    {isOpen === comment.id && (
-                      <PostCommentEditForm
-                        comment={comment}
-                        onSubmit={(e) => handleSubmitModifyComment(e, comment)}
-                      />
-                    )}
-                  </div>
-                )}
-              </li>
-            ))}
-          </List>
+          <>
+            <List>
+              {postComments.map((comment) => (
+                <li key={comment.id}>
+                  <PostDetailComment
+                    key={comment.id}
+                    comment={comment}
+                  />
+                  {comment.writer.id === userId && accessToken && (
+                    <div>
+                      <EditBox>
+                        <Button
+                          width={70}
+                          height={30}
+                          bgcolor="#5e677c"
+                          type="button"
+                          onClick={() => handleClickModifyComment(comment.id)}
+                        >
+                          수정
+                        </Button>
+                        <PostCommentDeleteModal
+                          buttonName="삭제"
+                          content="정말 삭제하시겠습니까?"
+                          onClose={() => handleClickDeleteComment(comment)}
+                        />
+                      </EditBox>
+                      {isOpen === comment.id && (
+                        <PostCommentEditForm
+                          comment={comment}
+                          onSubmit={(e) => handleSubmitModifyComment(e, comment)}
+                        />
+                      )}
+                    </div>
+                  )}
+                </li>
+              ))}
+            </List>
+            <Pagination
+              url={location.pathname}
+              total={postCommentStore.totalPages}
+              current={searchParams.get('page') ?? 1}
+            />
+
+          </>
         ) : (
           <Error>댓글이 존재하지 않습니다.</Error>
         )}

@@ -52,7 +52,7 @@ export default function Posts() {
 
   return (
     <Container>
-      <SearchBar>
+      {/* <SearchBar>
         <SearchForm onSubmit={handleSearchPosts}>
           <label hidden htmlFor="input-search">커뮤니티 검색</label>
           <Input
@@ -72,7 +72,7 @@ export default function Posts() {
             검색
           </Button>
         </SearchForm>
-      </SearchBar>
+      </SearchBar> */}
       <PostList />
     </Container>
   );

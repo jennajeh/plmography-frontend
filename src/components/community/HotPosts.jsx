@@ -5,6 +5,7 @@ import HotPost from './HotPost';
 
 const Container = styled.div`
   border-bottom: solid 1px #5e677c;
+  margin-bottom: 1em;
   padding-bottom: 1rem;
 `;
 const List = styled.ul`
