@@ -32,7 +32,7 @@ const SearchForm = styled.form`
 `;
 
 export default function Posts() {
-  // const [filter, setFilter] = useState({});
+  const [filter, setFilter] = useState({});
   const postStore = usePostStore();
   const [searchParams] = useSearchParams();
 
